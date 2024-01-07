@@ -75,7 +75,7 @@ nav ul li a {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
 }
 .pictures .picture {
   padding: 1rem;

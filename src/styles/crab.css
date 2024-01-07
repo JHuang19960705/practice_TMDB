@@ -514,7 +514,7 @@ html, body{
     font-weight: 700;
     line-height: 1.4;
     font-size: 24px;
-    text-align:justify;
+    text-align: justify;
   }
 
   .media-studies-article-text{
@@ -1173,7 +1173,7 @@ html, body{
   font-size: larger;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: flex-end;
   margin: 50px 0px;
 }
 
