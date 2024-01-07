@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
+import React from 'react';
 import { Outlet, Link } from "react-router-dom";
+const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 function Picture2({ data, cartItem, setCartItem }) {
 
