@@ -1,0 +1,431 @@
+.blog-wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    padding: 2rem 4rem;
+    box-sizing: border-box;
+    margin-top: 40px;
+}
+
+    .blog-left{
+        width: calc(100% - 400px);
+    }
+
+        .blog-title{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .blog-title-text{
+                color: rgb(0, 0, 0);
+                font-size: 35px;
+                font-weight: 700;
+                letter-spacing: .04em;
+                
+            }
+
+            .blog-title-writer{
+                font-size: 25px;
+                color: rgb(0, 0, 0);
+                font-weight: 700;
+                letter-spacing: .04em;
+                padding-top: 1.38889rem;
+                box-sizing: border-box;
+            }
+
+            .blog-title-date{
+                font-size: 13px;
+                text-align: right;
+                color: #1c3300;
+                padding-top: 1.38889rem;
+                box-sizing: border-box;
+            }
+
+        .blog-content{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+            .blog-writer{
+                display: flex;
+                flex-direction: column;
+                height: 100%; 
+            }
+
+               .writer-now{
+                width: 200px;
+                max-height: 500px;
+                background-color: rgb(255, 255, 255);
+                box-shadow: 1px 1px 50px 20px rgba(128, 128, 128, 0.088);
+                border-radius: 10px 0  0 10px ;
+                padding: 40px;
+               }
+
+                    .writer-pic{
+                        margin: 0 auto;
+                        width: 150px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                    }
+
+                        .writer-pic img{
+                            width: 100%;
+                        }
+
+                    .writer-wrap p{
+                        font-weight: 700;
+                        margin: 0 auto;
+                        text-align: center;
+                    }    
+
+                .writer-next{
+                max-height: 300px;
+                color: gray;
+                display: flex;
+                padding: 30px 20px 30px 30px;
+                }    
+
+                .writer-next-left{
+                    padding-right: 10px;
+                }
+                  .writer-next-pic{
+                    width: 30px;
+                    display: flex;
+                    align-items: center;
+                  }
+
+                    .writer-next-pic img{
+                        width: 100%;
+                        cursor: pointer;
+                    }
+
+
+
+                .writer-next-right{
+                    display: flex;
+                    align-items: center;
+                }
+                    .writer-next-right span{
+                        font-size: 15px;
+                        font-weight: 900;
+                        cursor: pointer;
+                    }  
+
+                      .writer-next-right div:hover{
+                        color: black;
+                      }
+
+
+
+                .blog-content-hr{
+                    padding-top: 2.08333rem;
+                    box-sizing: border-box;
+                }
+
+                .blog-tags{
+                    padding-top: 2.08333rem;
+                    box-sizing: border-box;
+                }
+
+
+            .blog-article{
+                width: calc(100% - 250px);
+                padding: 25px;
+                border-radius: 0 10px 10px 0 ;
+                box-sizing: border-box;
+                background-color: white;
+                box-shadow: 100px 1px 50px 20px rgba(128, 128, 128, 0.088);
+            }
+
+                .blog-article-content{
+                    width: 100%;
+                    height: 1500px;
+                    overflow: hidden;
+                }
+
+                    .blog-artical-block p:first-child{
+                        font-size: 30px;
+                        padding-top: 10px;
+                        font-weight: 900;
+                        box-sizing: border-box;
+                    }
+    
+                        .blog-artical-pic{
+                            width: 100%;
+                        }
+        
+                            .blog-artical-pic img{
+                                width: 100%;
+                            }
+
+                        .blog-artical-block p:nth-child(odd){
+                            font-size: 20px;
+                            padding-top: 10px;
+                            font-weight: 800;
+                            box-sizing: border-box;
+                        }
+ 
+               
+                .blog-article-more{
+                    background-color: aquamarine;
+                    width: 140px;
+                }        
+                    .blog-article-more p{
+                        text-align: center;
+                        cursor: pointer;
+                    }
+
+
+    .blog-right{
+        width: 325px;
+        border: 1px solid black;
+        border-radius: 10px;
+        position: sticky;
+        bottom: 165px;
+        align-self: flex-end;
+        background-color: rgb(255, 255, 255);
+    }
+
+        .blog-right-aside{
+          width: 100%;
+          padding-top: 25px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          box-sizing: border-box;
+        }
+
+            .blog-music-calendar{
+                width: 100%;
+                height: 250px;
+                position: relative;  
+                display: flex;
+                align-items: center;
+                justify-content: center;              
+            }
+
+                .blog-year-jp{
+                    position: absolute;
+                    right: 20px;
+                    top: 0;
+                    font-weight: 700;
+                    writing-mode: vertical-rl;
+                    font-size: 15px;
+                }
+
+                .blog-year{
+                    position: absolute;
+                    top: 0;
+                    left: 20px;
+                    font-size: 15px;
+                    font-weight: 100; 
+                }
+
+                .blog-month{
+                    position: absolute;
+                    bottom: 0;
+                    left: 20px;
+                    font-weight: 700; 
+                    writing-mode: vertical-rl;
+                    font-size: 15px;
+                }
+
+                .blog-day{
+                    line-height: 0;
+                    font-size: 200px;
+                }
+
+                .blog-week{
+                    position: absolute;
+                    bottom: 0;
+                    right: 20px;
+                    font-size: 15px;
+                    font-weight: 100;
+                }
+
+            .blog-music{
+                padding: 20px 25px;
+                width: 100%;
+                box-sizing: border-box;
+            }        
+
+                .blog-music-title{
+                   font-weight: 700;
+                   display: flex;
+                   justify-content: center;
+                   padding-bottom: 12.5px;
+                   font-size: 17px;
+                   box-sizing: border-box;
+                }   
+                
+                .blog-music-wrap{
+                    font-weight: 700;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;         
+                }
+
+                    .blog-music-wrap li{
+                        list-style: none;
+                    }
+
+                       .blog-music-wrap li p{
+                        font-size: 14px;
+                        padding-top: 12.5px;
+                        padding-left: 2rem;
+                        text-indent: -2rem;/* 首句凸排 */
+                        box-sizing: border-box;
+                       }
+                       
+            .blog-right-aside-button{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                padding: 0 12.5px 0 25px;
+                height: 50px;
+                box-sizing: border-box;
+            }
+                .blog-right-aside-button:hover{
+                    background-color: black;  
+                    color: aliceblue; 
+                }           
+
+                .blog-right-aside-button p{
+                    font-weight: 700;
+                }
+
+                
+/* RWD */
+@media screen and (max-width: 1280px) {
+
+    .blog-writer{
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .blog-content{
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .blog-article{
+        width: 100%;
+    }
+    
+    .blog-tags{
+        padding-top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    .blog-wrap{
+        flex-direction: column; 
+    }
+
+    .blog-left{
+        width: 100%;
+    }
+    .blog-right{
+        width: 100%;
+        position: static;
+        align-self:center;
+    }
+    
+    .blog-right-aside{
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .blog-music-calendar{
+        width: 40%;
+    }
+
+    .blog-right-aside-button{
+        justify-content: left;
+    }
+
+    .blog-day{
+        font-size: 130px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .blog-wrap{
+        padding: 21px;
+        box-sizing: border-box;
+    }
+
+
+    .blog-day{
+        font-size: 80px;
+    }
+
+    .blog-right-aside{
+        padding-bottom: 25px;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    .blog-music-calendar{
+        min-width: 100%;
+    }
+
+    .blog-year-jp{
+        position: absolute;
+        right: 20px;
+        top: 0;
+        font-weight: 700;
+        writing-mode: vertical-rl;
+        font-size: 15px;
+    }
+    .blog-year{
+        position: absolute;
+        top: 0;
+        left: 20px;
+        font-size: 15px;
+        font-weight: 100; 
+    }
+    .blog-month{
+        position: absolute;
+        bottom: 0;
+        left: 20px;
+        font-weight: 700; 
+        writing-mode: vertical-rl;
+        font-size: 15px;
+    }
+    .blog-day{
+        line-height: 0;
+    }
+    .blog-week{
+        position: absolute;
+        bottom: 0;
+        right: 20px;
+        font-size: 15px;
+        font-weight: 100;
+    }
+
+
+
+
+
+}
+                    
+                    
+
+
+
+
+
