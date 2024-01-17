@@ -33,7 +33,7 @@ export default function PatchContentPage(props) {
           });
       } else if (currentUser.user.role == "free") {
         window.alert("你不是該篇文章的主人。您現在將被重新導向到首頁。");
-        nagivate("/");
+        navigate("/");
       }
     }
   }, []);

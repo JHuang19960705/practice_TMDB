@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 
 export default function Plan({currentUser, setCurrentUser}) {
+  let [message, setMessage] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
 
