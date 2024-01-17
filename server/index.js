@@ -28,9 +28,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/api/user", authRoute);
+app.use("/user", authRoute);
 //要進去必須先登入
-app.use("/api/content",
+app.use("/content",
   passport.authenticate("jwt", { session: false }),
   contentRoute
 );
