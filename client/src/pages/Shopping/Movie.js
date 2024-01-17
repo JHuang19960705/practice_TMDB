@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Information from '../../components/Movie/Information';
 import Charater from '../../components/Movie/Charater';
-import Marquee from '../../components/Movie/Marquee';
-import Comment from '../../components/Movie/Comment';
 import Introduction from '../../components/Movie/Introduction';
 import "../../styles/movie-page.css";
 const API_KEY = process.env.REACT_APP_API_KEY;
