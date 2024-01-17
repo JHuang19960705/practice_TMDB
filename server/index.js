@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(
   {
-    origin: ["https://practice-tmdb-server.vercel.app"],
+    origin: ["https://practice-tmdb-client.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
   }
