@@ -4,8 +4,6 @@ import Reviews from '../components/CRABTV/Reviews/Reviews';
 import BestChoose from '../components/CRABTV/BestChoose';
 import Theme from '../components/CRABTV/Theme/Theme';
 import Appeal from '../components/CRABTV/Appeal';
-import PlanPrice from "../components/CRABTV/PlanPrice";
-import Question from "../components/CRABTV/Question";
 import News from '../components/CRABTV/News/News';
 import Character from '../components/CRABTV/Character/Character';
 import Footer from '../components/CRABTV/Footer';
@@ -23,8 +21,6 @@ export const Crabtv = ({ favoriteMovie }) => {
     <Appeal />
     <Theme favoriteMovie={favoriteMovie}/>
     <BestChoose />
-    <PlanPrice />
-    <Question />
     <Footer />
    </div>
   )

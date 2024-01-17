@@ -8,7 +8,7 @@ export const Layout = ({currentUser}) => {
       <nav>
         <ul>
           <li><Link to="/">搜尋電影</Link></li>
-          {currentUser && (currentUser.user.role == "standard" || "premium") && (          
+          {currentUser && currentUser.user.role !== "free" && (          
             <li><Link to="/crabtv">你的電影大廳</Link></li>
           )}
           {currentUser && currentUser.user.role == "premium" && (              
@@ -20,13 +20,13 @@ export const Layout = ({currentUser}) => {
           {!currentUser && (  
             <li><Link to="/login">登入</Link></li>
           )}
-          {currentUser && (currentUser.user.role == "standard" || "premium") && (  
+          {currentUser && currentUser.user.role !== "free" && (  
             <li><Link to="/enroll">留言</Link></li>
           )}
-          {currentUser && (currentUser.user.role == "standard" || "premium") && (
+          {currentUser && currentUser.user.role !== "free" && (
             <li><Link to="/content">你的文章</Link></li>
           )}  
-          {currentUser && (currentUser.user.role == "standard" || "premium") && (
+          {currentUser && (
             <li><Link to="/profile">個人資料</Link></li>
           )}
         </ul>

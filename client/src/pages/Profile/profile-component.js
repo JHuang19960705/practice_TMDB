@@ -13,6 +13,9 @@ const ProfileComponent = ({ currentUser, setCurrentUser }) => {
   const handleUserPatch = () => {
     nagivate("/patchProfile")
   }
+  const handleUserPlan = () => {
+    nagivate("/plan")
+  }
   return (
     <div style={{ padding: "3rem" }}>
       {!currentUser && <div>在獲取您的個人資料之前，您必須先登錄。</div>}
@@ -46,7 +49,7 @@ const ProfileComponent = ({ currentUser, setCurrentUser }) => {
           <div className="d-flex flex-row-reverse">
             <button onClick={handleUserLogout} className="btn btn-secondary btn-lg p-2">登出</button>
             <button onClick={handleUserPatch} className="btn btn-secondary btn-lg p-2">修改</button>
-            <button className="btn btn-secondary btn-lg p-2">方案</button>
+            <button onClick={handleUserPlan} className="btn btn-secondary btn-lg p-2">方案</button>
           </div>
         </div>
       )}

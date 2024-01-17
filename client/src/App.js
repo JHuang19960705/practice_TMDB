@@ -22,6 +22,7 @@ import axios from "axios";
 import AuthService from "./services/auth.service";
 import PatchContentPage from "./pages/PatchContent/PatchContentPage";
 import PatchProfilePage from "./pages/PatchProfile/PatchProfilePage";
+import Plan from "./pages/Plan/Plan";
 
 
 function App() {
@@ -73,6 +74,7 @@ function App() {
           <Route path="enroll" element={<EnrollComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="profile" element={<ProfileComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="patchProfile" element={<PatchProfilePage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
+          <Route path="plan" element={<Plan currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="postContent/:movieId" element={<PostContentComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="patchContent/:contentId" element={<PatchContentPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="content" element={<ContentComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>

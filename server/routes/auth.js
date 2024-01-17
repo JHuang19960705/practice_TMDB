@@ -29,7 +29,7 @@ router.post("/register", async (req, res) => {
   }
 })
 
-// 修改
+// 修改名字、信箱
 router.patch("/patchProfile/:_id", async(req, res) => {
   // 身分確認後確認文章存在，再儲存新資料
   let { _id } = req.params;
@@ -48,6 +48,42 @@ router.patch("/patchProfile/:_id", async(req, res) => {
       });
       return res.send({
         message: "你的資料更新成功~",
+        token: "JWT " + token,
+        user: updatedProfile,
+      });
+    } else {
+      return res.status(403).send("只有用戶本人才能修改資料。");
+    }
+  } catch(e) {
+    return res.status(500).send("無法修改資料");
+  };
+})
+
+// 修改身分
+router.patch("/patchRole/:_id", async(req, res) => {
+  // 身分確認後確認文章存在，再儲存新資料
+  // 新身分不能跟舊身分一致
+  let { _id } = req.params;
+  let { role } = req.body;
+  try {
+    let profileFound = await User.findOne({ _id }).exec();
+    if (!profileFound) {
+      return res.status(400).send("找不到個資。無法刪除課程。");
+    }
+    let roleFound = await User.findOne({ role }).exec();
+    if ( profileFound.equals(roleFound) ) {
+      return res.status(400).send("與原本身分一致，無法更改");
+    }
+
+    if (profileFound.equals(_id)) {
+      const tokenObject = { _id: profileFound._id, email: profileFound.email };
+      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
+      let updatedProfile = await User.findOneAndUpdate({ _id }, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      return res.send({
+        message: "你的身分更新成功~",
         token: "JWT " + token,
         user: updatedProfile,
       });
