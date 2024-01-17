@@ -30,7 +30,7 @@ app.use(cors(
   {
     origin: ["https://practice-tmdb-server.vercel.app"],
     methods: ["POST", "GET"],
-    credentials: true,
+    credentials: true
   }
 ));
 
