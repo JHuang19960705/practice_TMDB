@@ -35,6 +35,10 @@ app.use("/api/content",
   contentRoute
 );
 
+app.use("/", (req, res) => {
+  res.json("HELLO");
+})
+
 
 app.listen(port, () => {
   console.log("server is listening port 3999...");
