@@ -31,6 +31,9 @@ const contentSchema = new Schema ({
   },
   TMDBId: {
     type: String,
+  },
+  TMDBImg: {
+    type: String,
   }
 
   

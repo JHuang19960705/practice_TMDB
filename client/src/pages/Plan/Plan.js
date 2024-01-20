@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
+// https://github.com/atherosai/ui/tree/main/pricing-03
 
 export default function Plan({currentUser, setCurrentUser}) {
   let [message, setMessage] = useState("");
@@ -31,8 +32,10 @@ export default function Plan({currentUser, setCurrentUser}) {
               <div className="plans-and-pricing-plan1 js-plans">
                   <div><p>免費試用1個月</p></div>
                   <ul>
-                      <li>上萬小時影片無限觀看</li>
-                      <li>上萬首音樂無限聆聽</li>
+                      <li>上萬部電影無限搜尋</li>
+                      <li>上萬篇影評無限瀏覽</li>
+                      <li>免費評分電影</li>
+                      <li>免費回應電影評論</li>
                   </ul>
                   <button onClick={handlePlanChanging} data-role="free" className='btn btn-primary'>立即選購</button>
               </div>

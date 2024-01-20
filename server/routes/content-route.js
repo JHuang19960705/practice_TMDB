@@ -16,13 +16,14 @@ router.post("/", async (req, res) => {
     return res.status(400).send("只有加入會員才可以發文唷~");
   }
   // 身分確認後儲存
-  let { title, content, tags, TMDBId } = req.body;
+  let { title, content, tags, TMDBId, TMDBImg } = req.body;
   try {
     let newContent = new Content({
       title, 
       content,
       tags,
       TMDBId,
+      TMDBImg,
       writer: req.user._id, 
     });
     let savedContent = await newContent.save();
@@ -45,7 +46,7 @@ router.patch("/:_id", async (req, res) => {
   try {
     let contentFound = await Content.findOne({ _id }).exec();
     if (!contentFound) {
-      return res.status(400).send("找不到課程。無法刪除課程。");
+      return res.status(400).send("找不到文章。無法修改文章。");
     }
 
     if (contentFound.writer.equals(req.user._id)) {
@@ -105,7 +106,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 用writer找發文
+// 用作者Id找發文
 router.get("/writer/:_writer_id", async (req, res) => {
   let { _writer_id } = req.params;
   let contentFound = await Content.find({ writer: _writer_id })

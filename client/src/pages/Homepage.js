@@ -4,7 +4,7 @@ import axios from 'axios';
 import Picture from '../components/Picture';
 import "../styles/style.css";
 
-const Homepage = () => {
+const Homepage = ({ currentUser }) => {
   let [input, setInput] = useState("");
   let [data, setData] = useState(null);
   let [page, setPage] =useState(1);
@@ -47,7 +47,7 @@ const Homepage = () => {
         {
           data &&
           data.map((d) => {
-            return <Picture data={d}/>
+            return <Picture data={d} currentUser={currentUser}/>
           })
         }
       </div>

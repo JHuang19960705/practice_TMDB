@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ContentService from "../../services/content.service";
+import AuthService from "../../services/auth.service";
 
 const ContentComponent = ({ currentUser, setCurrentUser }) => {
   let [message, setMessage] = useState("");
+  let [slideImg, setSlideImg] = useState([]);
   const navigate = useNavigate();
   const handleTakeToLogin = () => {
     navigate("/login");
@@ -34,8 +36,9 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
     }
   }, []);
 
-  const handleComment = () => {
-    navigate(`/comment/${currentUser.user._id}`);
+  const handleComment = (e) => {
+    let _id = e.currentTarget.dataset.id;
+    navigate(`/comment/${_id}`);
   }
 
   const handlePatch = (e) => {
@@ -54,6 +57,24 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
         console.log(error.response);
         setMessage(error.response.data);
       });
+  }
+
+  const handleSlide = (e) => {
+    let TMDBImg = e.currentTarget.dataset.tmdbImg;
+    setSlideImg([...slideImg, TMDBImg]);
+  }
+
+  const handlePatchSlide = async() => {
+    console.log(slideImg);
+    try{  
+      let response = await AuthService.patchSlide(currentUser.user._id, slideImg)
+      window.alert("修改成功。您現在將被導向到電影大廳");
+      localStorage.setItem("user", JSON.stringify(response.data));
+      setCurrentUser(AuthService.getCurrentUser());
+      navigate("/crabtv");
+    } catch (e) {
+      setMessage(e.response.data);
+    };
   }
 
   return (
@@ -75,8 +96,8 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
         </div>
       )}
       {currentUser && (currentUser.user.role == "standard" || "premium") && (
-        <div>
-          <h1>快來創作你的新文章。</h1>
+        <div className="d-flex justify-content-center">
+          <button onClick={handlePatchSlide} className="btn btn-primary">把文章放到電影大廳</button>
         </div>
       )}
       {currentUser && currentUser.user.role == "free" && (
@@ -90,8 +111,11 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
             return (
               <div className="card" style={{ width: "18rem", margin: "1rem" }}>
                 <div className="card-body">
-                  <h5 className="card-title">文章題目:{content.title}</h5>
-                  <p style={{ margin: "1rem 0rem", overflow: "hidden",  display: "-webkit-box",  webkitBoxOrient: "vertical",   webkitLineClamp: "10"}} className="card-text">
+                  <div>
+                    <h5 className="card-title">文章題目:{content.title}</h5>
+                    <button onClick={handleSlide} data-tmdb-img={content.TMDBImg} className="btn btn-light btn-sm">選取</button>
+                  </div>
+                  <p style={{ margin: "1rem 0rem", overflow: "hidden",  display: "-webkit-box",  WebkitBoxOrient: "vertical",  WebkitLineClamp: "10"}} className="card-text">
                     {content.content}
                   </p>
                   <p style={{ margin: "0.5rem 0rem" }}>

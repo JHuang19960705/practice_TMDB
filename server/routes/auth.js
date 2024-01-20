@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models").user;
+const Content = require("../models").content;
 const jwt = require("jsonwebtoken");
 
 
@@ -9,8 +10,15 @@ router.use((req, res, next) => {
   next();
 })
 
-router.get("/testAPI", (req, res) => {
-  return res.send("Connect auth route successfully...");
+// 獲得系統中的所有會員
+router.get("/", async (req, res) => {
+  try{
+    let userFound = await User.find({})
+      .exec();
+    return res.send(userFound);
+  } catch(e){
+    return res.status(500).send(e);
+  }
 });
 
 // 註冊
@@ -140,16 +148,34 @@ router.delete("/:username", async(req, res) => {
 })
 
 
-// 獲得系統中的所有會員
-router.get("/", async (req, res) => {
-  try{
-    let userFound = await User.find({})
-      .exec();
-    return res.send(userFound);
-  } catch(e){
-    return res.status(500).send(e);
-  }
-});
+//放入幻燈片
+router.patch("/patchSlide/:_id", async(req, res) => {
+  let { _id } = req.params;
+  try {
+    let profileFound = await User.findOne({ _id }).exec();
+    if (!profileFound) {
+      return res.status(400).send("找不到個資。無法放入幻燈片。");
+    }
+
+    if (profileFound.equals(_id)) {
+      const tokenObject = { _id: profileFound._id, email: profileFound.email };
+      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
+      let patchSlide = await User.findOneAndUpdate({ _id }, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      return res.send({
+        message: "你的資料更新成功~",
+        token: "JWT " + token,
+        user: patchSlide,
+      });
+    } else {
+      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+    }
+  } catch(e) {
+    return res.status(500).send("無法修改資料");
+  };
+})
 
 
 module.exports = router;

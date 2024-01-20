@@ -1,10 +1,10 @@
 import axios from "axios";
-const API_URL = "https://practice-tmdb-server.vercel.app/content";
+const API_URL = "http://localhost:3999/api/content";
 
 class ContentService {
   
   //發文
-  post(title, content, tags, TMDBId) {
+  post(title, content, tags, TMDBId, TMDBImg) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -13,7 +13,7 @@ class ContentService {
     }
     return axios.post(
       API_URL,
-      { title, content, tags, TMDBId },
+      { title, content, tags, TMDBId, TMDBImg },
       {
         headers: {
           Authorization: token,
@@ -75,7 +75,7 @@ class ContentService {
     );
   }
 
-  // 以文章Id，找到找到發文
+  // 以文章Id，找到發文
   getContentByContentId(_id) {
     let token;
     if (localStorage.getItem("user")) {

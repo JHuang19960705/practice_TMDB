@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://practice-tmdb-server.vercel.app/user";
+const API_URL = "http://localhost:3999/api/user";
 
 class AuthService {
   login(email, password ) {
@@ -43,6 +43,23 @@ class AuthService {
     return axios.patch(
       API_URL +  "/patchRole/" + _id,
       { role },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );    
+  }
+  patchSlide(_id, slideImg ) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL +  "/patchSlide/" + _id,
+      { slideImg },
       {
         headers: {
           Authorization: token,

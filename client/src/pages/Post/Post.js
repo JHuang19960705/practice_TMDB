@@ -3,17 +3,22 @@ import { useParams, useNavigate } from "react-router-dom";
 import ContentService from "../../services/content.service";
 import axios from 'axios';
 const API_KEY = process.env.REACT_APP_API_KEY;
-
+const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 const PostContentComponent = (props) => {
   const { movieId } = useParams();
   const [isLoading, setLoading] = useState(true);
   let [movieAll, setMovieAll] = useState(null);
+  let [TMDBId, setTMDBId] = useState("");
+  let [TMDBImg, setTMDBImg] = useState("");
   const MovieURL = `https://api.themoviedb.org/3/tv/${movieId}?api_key=${API_KEY}&language=ja-JP`
   const search = async (URL1) => {
     let result = await axios.get(URL1);
     setMovieAll(result.data);
     setTMDBId(result.data.id);
+    result.data.backdrop_path && (
+      setTMDBImg(result.data.backdrop_path)
+    )
     setLoading(false);
   };
   useEffect(()=>{
@@ -25,7 +30,6 @@ const PostContentComponent = (props) => {
   let [content, setContent] = useState("");
   let [tags, setTags] = useState(0);
   let [message, setMessage] = useState("");
-  let [TMDBId, setTMDBId] = useState("");
   const navigate = useNavigate();
   const handleTakeToLogin = () => {
     navigate("/login");
@@ -40,9 +44,9 @@ const PostContentComponent = (props) => {
     setTags(e.target.value);
   };
   const postContent = () => {
-    ContentService.post(title, content, tags, TMDBId)
+    ContentService.post(title, content, tags, TMDBId, TMDBImg)
       .then(() => {
-        window.alert("新課程已創建成功");
+        window.alert("您的影評成功上傳");
         navigate("/content");
       })
       .catch((error) => {
@@ -112,6 +116,9 @@ const PostContentComponent = (props) => {
           <button className="btn btn-primary" onClick={postContent}>
             刊登發表
           </button>
+
+
+          <img src={ tmdbBaseURL + TMDBImg} />
 
           <br />
           <br />

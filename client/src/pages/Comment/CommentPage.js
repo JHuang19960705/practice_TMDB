@@ -1,33 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ContentService from "../../services/content.service";
 
 export default function CommentPage({ currentUser, setCurrentUser }) {
   const [contentData, setContentData] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  let { contentId } = useParams();
   useEffect(() => {
-    let _id;
     if (currentUser) {
-      _id = currentUser.user._id;
       if (currentUser.user.role ==  "standard" || currentUser.user.role ==  "premium") {
-        ContentService.get(_id)
+        ContentService.getContentByContentId(contentId)
           .then((data) => {
-            setContentData(data.data);
+            setContentData(data.data[0]);
             setLoading(false);
           })
           .catch((e) => {
             console.log(e);
           });
       } else if (currentUser.user.role == "free") {
-        ContentService.getEnrolledContents(_id)
-          .then((data) => {
-            console.log(data);
-            setContentData(data.data);
-            setLoading(false);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        navigate("*")
       }
     }
   }, []);
@@ -36,7 +28,8 @@ export default function CommentPage({ currentUser, setCurrentUser }) {
     return <div className="App">Loading...</div>;
   }
 
-  let last = contentData.length - 1;
+//   let last = contentData.length - 1;
+  console.log(contentData)
 
   return (
     <div class="movie--comment-system">
@@ -45,9 +38,9 @@ export default function CommentPage({ currentUser, setCurrentUser }) {
         <div class="movie-user-left">
           {/* <!-- 影片的評論 --> */}
           <div class="movie-user-thought">
-            {contentData[last] && (
+            {contentData && (
               <div class="movie-user-thought-title">
-                  <p>『{contentData[last].TMDBId}』に</p>
+                  <p>『{contentData.TMDBId}』に</p>
                   <p>投稿された感想・評価</p>
               </div>
             )}
@@ -62,16 +55,16 @@ export default function CommentPage({ currentUser, setCurrentUser }) {
                   <div class="movie-user-title-line-one"></div>
                   <div class="movie-user-title-line-two"></div>
               </div>
-              {contentData[last] && (
+              {contentData && (
                 <div class="movie-user-title-word">
-                  <p>{contentData[last].title}</p>
+                  <p>{contentData.title}</p>
                 </div>
               )}              
           </div>
           {/* <!-- 使用者名稱 --> */}
-          {contentData[last] && (
+          {contentData && (
             <div class="movie-user-name">
-                <p>{contentData[last].writer.username}</p>
+                <p>{contentData.writer.username}</p>
             </div>
           )}            
           {/* <!-- 星星評分 --> */}
@@ -89,16 +82,16 @@ export default function CommentPage({ currentUser, setCurrentUser }) {
 
           </div>
           {/* <!-- 評論時間 --> */}
-          {contentData[last] && (
+          {contentData && (
             <div class="movie-user-detail">
                 <div class="movie-user-detail-device">
                     <p>iPhoneアプリから投稿</p>
                 </div>
                 <div class="movie-user-detail-date">
-                    <p>{contentData[last].date.slice(0, 10)}</p>
+                    <p>{contentData.date.slice(0, 10)}</p>
                 </div>
                 <div class="movie-user-detail-time">
-                    <p>{contentData[last].date.slice(11, 16)}</p>
+                    <p>{contentData.date.slice(11, 16)}</p>
                 </div>
             </div>
           )}
@@ -132,8 +125,8 @@ export default function CommentPage({ currentUser, setCurrentUser }) {
         {/* <!-- 右半邊 --> */}
         <div class="movie-user-right">
           <div class="movie-user-right-content">
-            {contentData[last] && (
-              <p>{contentData[last].content}</p>
+            {contentData && (
+              <p>{contentData.content}</p>
             )}  
           </div>
           <div class="movie-user-right-more">

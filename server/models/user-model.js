@@ -24,11 +24,15 @@ const userSchema = new Schema({
   role: {
     required: true,
     type: String,
-    enum: ["free", "standard", "premium"]
+    enum: ["free", "standard", "premium"],
   },
   date: {
     type: Date,
     default: Date.now,
+  },
+  slideImg: {
+    type: [String],
+    default: [],
   }
 })
 

@@ -2,18 +2,21 @@ import React from 'react';
 import SlidePic from "./SlidePic";
 import SlideEffect from "../../../jseffect/SlideEffect";
 
-export const Slide = ({ favoriteMovie }) => {
+
+
+export const Slide = ({ currentUser, favoriteMovie }) => {
   const handleSlideEffect = () => {
-    SlideEffect();
+    // SlideEffect();
   }
+
   return (
     <div id="carousel-wrap">
       <div id="carousel-container">
         <ul id="carousel" className="animate js-slider-wrap">
           {
-            favoriteMovie &&
-            favoriteMovie.slice(0, 5).map((f) => {         
-              return <SlidePic favoriteMovie={f}/>
+            currentUser &&
+            currentUser.user.slideImg.map((slideImg) => {         
+              return <SlidePic slideImg={slideImg} />
             })
           }
         </ul>

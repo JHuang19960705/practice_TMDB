@@ -78,7 +78,7 @@ function App() {
           <Route path="postContent/:movieId" element={<PostContentComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="patchContent/:contentId" element={<PatchContentPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="content" element={<ContentComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
-          <Route path="comment/:userId" element={<CommentPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
+          <Route path="comment/:contentId" element={<CommentPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         </Route>  
       </Routes>
     </BrowserRouter>

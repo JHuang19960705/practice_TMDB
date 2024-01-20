@@ -9,10 +9,10 @@ import Character from '../components/CRABTV/Character/Character';
 import Footer from '../components/CRABTV/Footer';
 import "../styles/crab.css";
 
-export const Crabtv = ({ favoriteMovie }) => {
+export const Crabtv = ({ currentUser, favoriteMovie }) => {
   return (
    <div>
-    <Slide favoriteMovie={favoriteMovie}/>
+    <Slide currentUser={currentUser} favoriteMovie={favoriteMovie}/>
     <div className='big-wrap'>
       <News favoriteMovie={favoriteMovie}/>
       <Character />
