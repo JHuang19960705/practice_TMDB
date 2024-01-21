@@ -4,7 +4,7 @@ import SlideEffect from "../../../jseffect/SlideEffect";
 
 
 
-export const Slide = ({ currentUser, favoriteMovie }) => {
+export const Slide = ({ currentUser }) => {
   const handleSlideEffect = () => {
     // SlideEffect();
   }

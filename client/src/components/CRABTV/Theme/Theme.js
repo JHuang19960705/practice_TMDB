@@ -4,7 +4,7 @@ import ThemePic from './ThemePic';
 import axios from "axios";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const comedyTV_id = '215197';
-function Theme({ favoriteMovie }) {
+function Theme() {
   const [isLoading, setLoading] = useState(true);
   const [comedy, setComedy] = useState([]);
   const comedyURL = `https://api.themoviedb.org/3/tv/${comedyTV_id}/similar?api_key=${API_KEY}&language=ja-JP&page=1`;
