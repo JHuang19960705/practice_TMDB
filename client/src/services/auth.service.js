@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://practice-tmdb-client.vercel.app/user";
+const API_URL = "https://practice-tmdb-server.vercel.app/user";
 
 class AuthService {
   login(email, password ) {

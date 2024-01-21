@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://practice-tmdb-client.vercel.app/content";
+const API_URL = "https://practice-tmdb-server.vercel.app/content";
 
 class ContentService {
   
