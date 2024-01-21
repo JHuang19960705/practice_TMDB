@@ -6,16 +6,21 @@ import NewsPic from "../../components/NewsPic/NewsPic";
 import NewsRanking from "../../components/NewsPic/NewsRanking";
 
 export default function NewsIndex() {
+  const [isLoading, setLoading] = useState(true);    
   let [newsData, setNewsData] = useState(null);
   const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
   const newsURL = `https://newsapi.org/v2/top-headlines?country=jp&category=entertainment&apiKey=${NEWS_API_KEY}`
   const search = async() =>{
     let result = await axios.get(newsURL);
     setNewsData(result.data.articles);
+    setLoading(false);
   }
   useEffect(() => {
     search();
   }, [])
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
   return (
     <div className="cont">
       <div className="cont-left">
