@@ -8,7 +8,7 @@ export default function NewsPic({ news }) {
         <div className="news-wrap-icon">
           <div>
             <Link to={news.url} target="_blank">
-              <img src={news.urlToImage} className="js-news-click js-new-drag" datanewsid="${news[i].id}" />
+              <img src={news.image} className="js-news-click js-new-drag" datanewsid="${news[i].id}" />
             </Link>
           </div>  
         </div>

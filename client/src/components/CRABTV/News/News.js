@@ -26,7 +26,7 @@ export default function News() {
             {
               newsData && 
               newsData.slice(6, 12).map((news) => {
-                if (news.urlToImage) {
+                if (news.image) {
                   return <NewsPic news={news}/>
                 }
               })

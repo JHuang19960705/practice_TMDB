@@ -8,7 +8,7 @@ export default function NewsRanking({news}) {
           <Link to={news.url}  target="_blank">
               <div class="img-box">
                   <p class="img js-news-page-click" 
-                      style={{backgroundImage: `url(${news.urlToImage})`}}>
+                      style={{backgroundImage: `url(${news.image})`}}>
                   </p>
               </div>
               <div class="txt-box">

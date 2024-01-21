@@ -8,7 +8,7 @@ export default function NewsPic({news}) {
           <Link to={news.url} target="_blank">
               <div class="img-box js-news-page-click" >
                   <div class="img" 
-                    style={{backgroundImage: `url(${news.urlToImage})`}}
+                    style={{backgroundImage: `url(${news.image})`}}
                   >
                   </div>
                   <p class="tag">本週最新</p>
