@@ -9,7 +9,7 @@ export default function NewsIndex() {
   const [isLoading, setLoading] = useState(true);    
   let [newsData, setNewsData] = useState(null);
   const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-  const newsURL = `https://newsapi.org/v2/top-headlines?country=jp&category=entertainment&apiKey=${NEWS_API_KEY}`
+  const newsURL = `https://gnews.io/api/v4/top-headlines?country=jp&category=entertainment&apikey=${NEWS_API_KEY}`
   const search = async(URL) =>{
     let result = await axios.get(URL);
     setNewsData(result.data.articles);
