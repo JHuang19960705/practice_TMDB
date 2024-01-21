@@ -12,7 +12,6 @@ export default function NewsIndex() {
   const search = async() =>{
     let result = await axios.get(newsURL);
     setNewsData(result.data.articles);
-    console.log(newsData);
   }
   useEffect(() => {
     search();
