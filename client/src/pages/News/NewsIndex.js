@@ -10,13 +10,13 @@ export default function NewsIndex() {
   let [newsData, setNewsData] = useState(null);
   const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
   const newsURL = `https://newsapi.org/v2/top-headlines?country=jp&category=entertainment&apiKey=${NEWS_API_KEY}`
-  const search = async() =>{
-    let result = await axios.get(newsURL);
+  const search = async(URL) =>{
+    let result = await axios.get(URL);
     setNewsData(result.data.articles);
     setLoading(false);
   }
   useEffect(() => {
-    search();
+    search(newsURL);
   }, [])
   if (isLoading) {
     return <div className="App">Loading...</div>;
