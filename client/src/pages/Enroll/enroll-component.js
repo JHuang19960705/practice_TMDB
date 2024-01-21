@@ -24,7 +24,6 @@ const EnrollComponent = (props) => {
       });
   };
   const handleEnroll = (e) => {
-    console.log(e.target.id);
     ContentService.enroll(e.target.id)
       .then(() => {
         window.alert("課程註冊成功。重新導向到課程頁面。");

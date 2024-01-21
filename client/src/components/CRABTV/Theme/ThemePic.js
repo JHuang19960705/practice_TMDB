@@ -3,11 +3,11 @@ import { Outlet, Link } from "react-router-dom";
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 
-function ThemePic({ favoriteMovie }) {
+function ThemePic({ comedy }) {
   return (
     <div class="theme-pic js-theme-pic">
-      <Link to={`/movie/${favoriteMovie.id}`} target="_blank">
-        <img src={tmdbBaseURL + favoriteMovie.backdrop_path} />
+      <Link to={`/movie/${comedy.id}`} target="_blank">
+        <img src={tmdbBaseURL + comedy.backdrop_path} />
         <Outlet />
       </Link>
     </div>

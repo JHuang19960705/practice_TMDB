@@ -1,8 +1,25 @@
-import React from 'react';
-import ThemePic from './ThemePic';
+import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
-
+import ThemePic from './ThemePic';
+import axios from "axios";
+const API_KEY = process.env.REACT_APP_API_KEY;
+const comedyTV_id = '215197';
 function Theme({ favoriteMovie }) {
+  const [isLoading, setLoading] = useState(true);
+  const [comedy, setComedy] = useState([]);
+  const comedyURL = `https://api.themoviedb.org/3/tv/${comedyTV_id}/similar?api_key=${API_KEY}&language=ja-JP&page=1`;
+  const search = async(url) => {
+    let result = await axios.get(url);
+    setComedy(result.data.results);
+    setLoading(false);
+  }
+  useEffect(()=>{
+    search(comedyURL);
+  }, [])
+
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
   return (
     <div class="theme-wrap">
       <div class="theme">
@@ -21,9 +38,11 @@ function Theme({ favoriteMovie }) {
             <div class="theme-right-wrap">
                 <div class="theme-pic-wrap">
                   {
-                    favoriteMovie && 
-                    favoriteMovie.slice(0, 6).map((f) => {
-                      return <ThemePic favoriteMovie={f}/>
+                    comedy &&
+                    comedy.map((comedy) => {
+                      if (comedy.origin_country[0] == "JP" && comedy.backdrop_path) { 
+                        return <ThemePic comedy={comedy}/>
+                      }
                     })
                   }
                 </div>

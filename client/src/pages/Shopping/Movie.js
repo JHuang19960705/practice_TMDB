@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Outlet, Link } from 'react-router-dom';
 import axios from 'axios';
 import Information from '../../components/Movie/Information';
 import Charater from '../../components/Movie/Charater';
@@ -36,9 +36,8 @@ export default function Movie({ favoriteMovie }) {
       <Charater casts={casts}/>
       {/* <Marquee /> */}
       {/* <Comment /> */}
-      <Introduction  movieId={movieId} 
-        favoriteMovie={favoriteMovie}
-      />
+      <Introduction  movieId={movieId} favoriteMovie={favoriteMovie}/>
+      <Link to={`/reviews/${movieId}`} className='d-flex justify-content-center'><button className="btn btn-success">看影評</button></Link>
     </div>
 
   )

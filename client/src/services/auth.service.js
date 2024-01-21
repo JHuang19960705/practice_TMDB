@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "http://localhost:3999/api/user";
+const API_URL = "https://practice-tmdb-client.vercel.app/user";
 
 class AuthService {
   login(email, password ) {
@@ -50,7 +50,7 @@ class AuthService {
       }
     );    
   }
-  patchSlide(_id, slideImg ) {
+  patchSlide(_id, slide ) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -59,7 +59,58 @@ class AuthService {
     }
     return axios.patch(
       API_URL +  "/patchSlide/" + _id,
-      { slideImg },
+      { slide },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );    
+  }
+  patchReviews(_id, contentId ) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL +  "/patchReviews/" + _id,
+      { contentId },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );    
+  }
+  patchCast(_id, cast ) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL +  "/patchCast/" + _id,
+      { cast },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );    
+  }
+  patchFavoritePerson(_id, favoritePerson ) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL +  "/patchFavoritePerson/" + _id,
+      { favoritePerson },
       {
         headers: {
           Authorization: token,

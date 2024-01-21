@@ -5,10 +5,10 @@ export default function Information({ movieAll }) {
   return (
     <div>
       <div class="movie-pic">
-        <img src={tmdbBaseURL + movieAll.backdrop_path} />
+        <img src={movieAll.backdrop_path && (tmdbBaseURL + movieAll.backdrop_path)} />
       </div>
       <div class="movie-title">
-          <p>{movieAll.original_name}</p>
+          <p>{ movieAll.original_name && (movieAll.original_name)}</p>
       </div>
       <div class="movie-time">
           <p>毎週</p>
@@ -19,7 +19,7 @@ export default function Information({ movieAll }) {
         <div class="movie-detail">
             <div class="movie-detail-wrap">
                 <div>
-                    <p>{movieAll.origin_country}</p>
+                    <p>{movieAll.origin_country && (movieAll.origin_country)}</p>
                 </div>
                 <div>
                     <p>
@@ -40,13 +40,13 @@ export default function Information({ movieAll }) {
 
             <div class="movie-video">
                 <a class="movie-video-play">
-                <img src={tmdbBaseURL + movieAll.backdrop_path} />
+                <img src={movieAll.backdrop_path && (tmdbBaseURL + movieAll.backdrop_path)} />
                 </a>
             </div>
 
             <div class="movie-story">
                 <div class="movie-story-wrap">
-                    <p>{movieAll.overview}</p>
+                    <p>{movieAll.overview && (tmdbBaseURL + movieAll.overview)}</p>
                 </div>
             </div>
 

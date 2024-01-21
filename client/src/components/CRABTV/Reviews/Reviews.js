@@ -1,33 +1,7 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
 import ReviewsPic from "./ReviewsPic1";
 import { Outlet, Link } from "react-router-dom";
-// import ReviewsFn from '../jseffect/ReviewsFn';
-// const API_KEY = "b21b68f3533ff915dc66b2c221644a22";
-// const account_id = "20725670";
-// const favoriteMovieURL = `https://api.themoviedb.org/3/account/${account_id}/favorite/movies?api_key=${API_KEY}&page=1`;
-// const personDetailURL = `https://api.themoviedb.org/3/person/${person_id}?api_key=${API_KEY}`;
 
-
-
-function Reviews({ favoriteMovie }) {
-  // let [favoriteMovie, setFavoriteMovie] = useState(null);
-  // let [personDetail, setPersonDetail] = useState(null);
-  // let result1;
-  // let result2;
-  // const searchAll = async(URL1) => {
-  //   result1 = await axios.get(URL1);
-  //   setFavoriteMovie(result1.data.crew);
-  //   result2 = await axios.get(URL2);
-  //   setPersonDetail(result2.data);
-  // }
-
-  // useEffect(()=>{
-  //   searchAll(favoriteMovieURL);
-  // }, [])
-    // setTimeout(() => {
-    //   reviews();
-    // }, 1000)
+function Reviews({currentUser }) {
 
   return (
     <div className="media-studies-wrap">
@@ -75,9 +49,9 @@ function Reviews({ favoriteMovie }) {
       <div className="media-studies-long">
         <div className="media-studies-wrap-right js-media-studies-wrap">
           {
-            favoriteMovie && 
-            favoriteMovie.slice(0, 4).map((f) => {
-              return <ReviewsPic favoriteMovie={f}/>
+            currentUser && 
+            currentUser.user.contentId.map((contentId) => {  
+              return <ReviewsPic contentId={contentId}/>
             })
           }
         </div> 

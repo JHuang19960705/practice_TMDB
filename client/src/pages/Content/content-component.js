@@ -6,6 +6,7 @@ import AuthService from "../../services/auth.service";
 const ContentComponent = ({ currentUser, setCurrentUser }) => {
   let [message, setMessage] = useState("");
   let [slideImg, setSlideImg] = useState([]);
+  let [contentId, setContentId] = useState([]);
   const navigate = useNavigate();
   const handleTakeToLogin = () => {
     navigate("/login");
@@ -60,14 +61,31 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
   }
 
   const handleSlide = (e) => {
-    let TMDBImg = e.currentTarget.dataset.tmdbImg;
-    setSlideImg([...slideImg, TMDBImg]);
+    let TMDBId = e.currentTarget.dataset.tmdbId;
+    setSlideImg([...slideImg, TMDBId]);
   }
 
   const handlePatchSlide = async() => {
-    console.log(slideImg);
     try{  
       let response = await AuthService.patchSlide(currentUser.user._id, slideImg)
+      window.alert("修改成功。您現在將被導向到電影大廳");
+      localStorage.setItem("user", JSON.stringify(response.data));
+      setCurrentUser(AuthService.getCurrentUser());
+      navigate("/crabtv");
+    } catch (e) {
+      setMessage(e.response.data);
+    };
+  }
+
+  const handleReviews = (e) => {
+    let contentIdfront = e.currentTarget.dataset.contentId;
+    setContentId([...contentId, contentIdfront]);
+  }
+
+  const handlePatchReviews = async() => {
+    console.log(contentId);
+    try{  
+      let response = await AuthService.patchReviews(currentUser.user._id, contentId)
       window.alert("修改成功。您現在將被導向到電影大廳");
       localStorage.setItem("user", JSON.stringify(response.data));
       setCurrentUser(AuthService.getCurrentUser());
@@ -96,9 +114,11 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
         </div>
       )}
       {currentUser && (currentUser.user.role == "standard" || "premium") && (
-        <div className="d-flex justify-content-center">
-          <button onClick={handlePatchSlide} className="btn btn-primary">把文章放到電影大廳</button>
+        <div className="d-flex justify-content-around">
+          <button onClick={handlePatchSlide} className="btn btn-primary">把圖片放到前台Slide</button>
+          <button onClick={handlePatchReviews} className="btn btn-primary">把圖片放到前台影評區</button>
         </div>
+        
       )}
       {currentUser && currentUser.user.role == "free" && (
         <div>
@@ -113,7 +133,8 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
                 <div className="card-body">
                   <div>
                     <h5 className="card-title">文章題目:{content.title}</h5>
-                    <button onClick={handleSlide} data-tmdb-img={content.TMDBImg} className="btn btn-light btn-sm">選取</button>
+                    <button onClick={handleSlide} data-tmdb-id={content.TMDBId} className="btn btn-light btn-sm">選取slide</button>
+                    <button onClick={handleReviews} data-content-id={content._id} className="btn btn-light btn-sm">選取reviews</button>
                   </div>
                   <p style={{ margin: "1rem 0rem", overflow: "hidden",  display: "-webkit-box",  WebkitBoxOrient: "vertical",  WebkitLineClamp: "10"}} className="card-text">
                     {content.content}

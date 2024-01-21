@@ -1,27 +1,42 @@
-import React from 'react'
-import NewsPic from './NewsPic'
+import React, { useState, useEffect } from "react";
+import { Outlet, Link } from "react-router-dom"
+import NewsPic from './NewsPic';
+import axios from "axios";
 
-export default function News({ favoriteMovie }) {
+export default function News() {
+  let [newsData, setNewsData] = useState(null);
+  const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
+  const newsURL = `https://newsapi.org/v2/top-headlines?country=jp&category=entertainment&apiKey=${NEWS_API_KEY}`
+  const search = async() =>{
+    let result = await axios.get(newsURL);
+    setNewsData(result.data.articles);
+    console.log(newsData);
+  }
+  useEffect(() => {
+    search();
+  }, [])
   return (
     <div>
       <div className="news-container">
         <div className="news-all">
-          <a href="/新著記事.html" target="_blank">
+          <Link to="/newsIndex" target="_blank">
             <div className="news-title">最新消息 ／</div>
-          </a>
+          </Link>
           <div className="news-all-wrap js-news-all-wrap">
             {
-              favoriteMovie && 
-              favoriteMovie.slice(6, 9).map((f) => {
-                return <NewsPic favoriteMovie={f}/>
+              newsData && 
+              newsData.slice(6, 12).map((news) => {
+                if (news.urlToImage) {
+                  return <NewsPic news={news}/>
+                }
               })
             }
           </div>
         </div>
         <div className="view-all">
-          <a href="/新著記事.html" target="_blank">
+          <Link to="/newsIndex" target="_blank">
             <span>VIEW ALL</span>
-          </a>
+          </Link>
         </div>
       </div>
 

@@ -30,10 +30,29 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  slide: {
+    type: [String],
+    default: [],
+  },
   slideImg: {
     type: [String],
     default: [],
+  },
+  contentId: {
+    type: [String],
+    default: [],
+  },
+  cast: {
+    cast1: {type: String, default: "1257220"},
+    cast2: {type: String, default: "100765"},
+    cast3: {type: String, default: "585211"},
+    cast4: {type: String, default: "100766"},
+  },
+  favoritePerson: {
+    type: String,
+    default: "87661",
   }
+
 })
 
 

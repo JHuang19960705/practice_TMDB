@@ -37,12 +37,7 @@ const Homepage = ({ currentUser }) => {
 
   return (
     <div>
-      <Search
-        search={() => {
-          search(searchURL);
-        }} 
-        setInput={setInput} 
-      />
+      <Search search={() => {search(searchURL);}} setInput={setInput} />
       <div className="pictures">
         {
           data &&
@@ -52,10 +47,7 @@ const Homepage = ({ currentUser }) => {
         }
       </div>
       <div className="morePicture">
-        <button 
-        onClick={ morePicture }
-          >＞MORE＜
-        </button>
+        <button onClick={ morePicture }>MORE</button>
       </div>
     </div>
   )

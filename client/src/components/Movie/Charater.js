@@ -9,11 +9,11 @@ export default function Charater({ casts }) {
             <div class="movie-character-wrap">
                 <div class="movie-character-left">
                     <div class="movie-character-list1">
-                        <img class="movie-first-img" src={tmdbBaseURL + casts[0].profile_path} alt="" data-cast={casts[0].id}/>
+                        <img class="movie-first-img" src={casts[0].profile_path && (tmdbBaseURL + casts[0].profile_path)} alt="" data-cast={casts[0].id}/>
                         <div class="movie-character-list2">
-                            <img src={tmdbBaseURL + casts[1].profile_path} alt="" data-cast={casts[1].id}/>
-                            <img src={tmdbBaseURL + casts[2].profile_path} alt="" data-cast={casts[2].id}/>
-                            <img src={tmdbBaseURL + casts[3].profile_path} alt="" data-cast={casts[3].id}/>
+                            <img src={casts[1].profile_path && (tmdbBaseURL + casts[1].profile_path)} alt="" data-cast={casts[1].id}/>
+                            <img src={casts[2].profile_path && (tmdbBaseURL + casts[2].profile_path)} alt="" data-cast={casts[2].id}/>
+                            <img src={casts[3].profile_path && (tmdbBaseURL + casts[3].profile_path)} alt="" data-cast={casts[3].id}/>
                         </div>
                     </div>
                     <div class="movie-character-profile">

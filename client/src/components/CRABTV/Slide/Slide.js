@@ -15,8 +15,8 @@ export const Slide = ({ currentUser, favoriteMovie }) => {
         <ul id="carousel" className="animate js-slider-wrap">
           {
             currentUser &&
-            currentUser.user.slideImg.map((slideImg) => {         
-              return <SlidePic slideImg={slideImg} />
+            currentUser.user.slide.map((TMDBId) => {         
+              return <SlidePic TMDBId={TMDBId} />
             })
           }
         </ul>

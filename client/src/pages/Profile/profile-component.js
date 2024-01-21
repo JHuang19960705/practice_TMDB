@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 
 const ProfileComponent = ({ currentUser, setCurrentUser }) => {
@@ -42,6 +43,12 @@ const ProfileComponent = ({ currentUser, setCurrentUser }) => {
               <tr>
                 <td>
                   <strong>身份: {currentUser.user.role}</strong>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>最愛的人物: {currentUser.user.favoritePerson}</strong>
+                  <button><Link to="/character">修改</Link></button>
                 </td>
               </tr>
             </tbody>
