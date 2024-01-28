@@ -24,6 +24,8 @@ import PatchContentPage from "./pages/PatchContent/PatchContentPage";
 import PatchProfilePage from "./pages/PatchProfile/PatchProfilePage";
 import Plan from "./pages/Plan/Plan";
 import NewsIndex from "./pages/News/NewsIndex";
+import Theme from "./pages/Theme/Theme";
+import Theater from "./pages/Theater/Theater";
 
 
 function App() {
@@ -82,6 +84,8 @@ function App() {
           <Route path="patchContent/:contentId" element={<PatchContentPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="content" element={<ContentComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="comment/:contentId" element={<CommentPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
+          <Route path="theme" element={<Theme currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
+          <Route path="theater" element={<Theater currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         </Route>  
       </Routes>
     </BrowserRouter>

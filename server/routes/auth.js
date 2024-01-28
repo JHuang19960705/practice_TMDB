@@ -236,6 +236,7 @@ router.patch("/patchCast/:_id", async(req, res) => {
   };
 })
 
+//修改人物主題
 router.patch("/patchFavoritePerson/:_id", async(req, res) => {
   let { _id } = req.params;
   try {
@@ -256,6 +257,66 @@ router.patch("/patchFavoritePerson/:_id", async(req, res) => {
         message: "你的資料更新成功~",
         token: "JWT " + token,
         user: patchFavoritePerson,
+      });
+    } else {
+      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+    }
+  } catch(e) {
+    return res.status(500).send("無法修改資料");
+  };  
+})
+
+//修改主題
+router.patch("/patchTheme/:_id", async(req, res) => {
+  let { _id } = req.params;
+  try {
+    let profileFound = await User.findOne({ _id }).exec();
+    if (!profileFound) {
+      return res.status(400).send("找不到個資。無法放入幻燈片。");
+    }
+
+    if (profileFound.equals(_id)) {
+      const tokenObject = { _id: profileFound._id, email: profileFound.email };
+      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
+      let patchTheme = await User.findOneAndUpdate(
+        { _id }, 
+        req.body, 
+        { new: true, runValidators: true },
+      );
+      return res.send({
+        message: "你的資料更新成功~",
+        token: "JWT " + token,
+        user: patchTheme,
+      });
+    } else {
+      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+    }
+  } catch(e) {
+    return res.status(500).send("無法修改資料");
+  };  
+})
+
+//放入電影院
+router.patch("/patchTheater/:_id", async(req, res) => {
+  let { _id } = req.params;
+  try {
+    let profileFound = await User.findOne({ _id }).exec();
+    if (!profileFound) {
+      return res.status(400).send("找不到個資。無法放入幻燈片。");
+    }
+
+    if (profileFound.equals(_id)) {
+      const tokenObject = { _id: profileFound._id, email: profileFound.email };
+      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
+      let patchTheater = await User.findOneAndUpdate(
+        { _id }, 
+        req.body, 
+        { new: true, runValidators: true },
+      );
+      return res.send({
+        message: "保存成功",
+        token: "JWT " + token,
+        user: patchTheater,
       });
     } else {
       return res.status(403).send("只有用戶本人才能放入幻燈片。");

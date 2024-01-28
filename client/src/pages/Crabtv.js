@@ -19,7 +19,7 @@ export const Crabtv = ({currentUser}) => {
     </div>
     <Reviews currentUser={currentUser} />
     <Appeal />
-    <Theme />
+    <Theme currentUser={currentUser} />
     <BestChoose currentUser={currentUser}  />
     <Footer/>
    </div>

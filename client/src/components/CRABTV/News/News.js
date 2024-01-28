@@ -4,17 +4,21 @@ import NewsPic from './NewsPic';
 import axios from "axios";
 
 export default function News() {
+  const [isLoading, setLoading] = useState(true);   
   let [newsData, setNewsData] = useState(null);
   const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
   const newsURL = `https://gnews.io/api/v4/top-headlines?country=jp&category=entertainment&apikey=${NEWS_API_KEY}`
   const search = async() =>{
     let result = await axios.get(newsURL);
     setNewsData(result.data.articles);
-    console.log(newsData);
+    setLoading(false);
   }
   useEffect(() => {
     search();
   }, [])
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
   return (
     <div>
       <div className="news-container">

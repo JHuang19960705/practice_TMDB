@@ -136,9 +136,9 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
                     <button onClick={handleSlide} data-tmdb-id={content.TMDBId} className="btn btn-light btn-sm">選取slide</button>
                     <button onClick={handleReviews} data-content-id={content._id} className="btn btn-light btn-sm">選取reviews</button>
                   </div>
-                  <p style={{ margin: "1rem 0rem", overflow: "hidden",  display: "-webkit-box",  WebkitBoxOrient: "vertical",  WebkitLineClamp: "10"}} className="card-text">
+                  <textarea style={{ margin: "1rem 0rem", height:"100px"}} className="card-text">
                     {content.content}
-                  </p>
+                  </textarea>
                   <p style={{ margin: "0.5rem 0rem" }}>
                     回應人數: {content.commenters.length}
                   </p>

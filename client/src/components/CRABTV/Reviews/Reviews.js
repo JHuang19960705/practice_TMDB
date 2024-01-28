@@ -1,7 +1,7 @@
 import ReviewsPic from "./ReviewsPic1";
 import { Outlet, Link } from "react-router-dom";
 
-function Reviews({currentUser}) {
+function Reviews({currentUser }) {
 
   return (
     <div className="media-studies-wrap">

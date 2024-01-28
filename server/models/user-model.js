@@ -51,6 +51,15 @@ const userSchema = new Schema({
   favoritePerson: {
     type: String,
     default: "87661",
+  },
+  theme: {
+    type: [String],
+    default: ["35", "16", "9648", "10759", "80"],
+  },
+  theater: {
+    releases: {type: [String], default:[]},
+    leaving: {type: [String], default:[]},
+    upcoming: {type: [String], default:[]},
   }
 
 })

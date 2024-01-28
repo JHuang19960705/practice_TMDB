@@ -4,12 +4,13 @@ import "../../styles/news-index.css";
 import axios from "axios";
 import NewsPic from "../../components/NewsPic/NewsPic";
 import NewsRanking from "../../components/NewsPic/NewsRanking";
+const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
+let page = "1";
 
 export default function NewsIndex() {
   const [isLoading, setLoading] = useState(true);    
   let [newsData, setNewsData] = useState(null);
-  const NEWS_API_KEY = process.env.REACT_APP_NEWS_API_KEY;
-  const newsURL = `https://gnews.io/api/v4/top-headlines?country=jp&category=entertainment&apikey=${NEWS_API_KEY}`
+  let newsURL = `https://gnews.io/api/v4/top-headlines?country=jp&category=entertainment&page=${page}&max=10&apikey=${NEWS_API_KEY}`
   const search = async(URL) =>{
     let result = await axios.get(URL);
     setNewsData(result.data.articles);
@@ -20,6 +21,13 @@ export default function NewsIndex() {
   }, [])
   if (isLoading) {
     return <div className="App">Loading...</div>;
+  }
+  const nextPage = async(e) =>{
+    page = e.currentTarget.dataset.pagenum;
+    newsURL = `https://gnews.io/api/v4/top-headlines?country=jp&category=entertainment&page=${page}&max=10&apikey=${NEWS_API_KEY}`
+    let result = await axios.get(newsURL);
+    setNewsData(result.data.articles);
+    console.log(newsURL)
   }
   return (
     <div className="cont">
@@ -100,67 +108,58 @@ export default function NewsIndex() {
                   <li className="detail-pager pager-prev">
                       <Link href="?page=1"></Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="1">
+                  <li className="detail-pager pager-active" data-pagenum="1" onClick={nextPage}>
                       <Link href="?page=1">
-                          <span>
-                              1 </span>
+                          <span>1</span>
                       </Link>
                   </li>
-                  <li className="detail-pager pager-active" data-pagenum="2">
+                  <li className="detail-pager" data-pagenum="2" onClick={nextPage}>
                       <Link href="?page=2">
-                          <span>
-                              2 </span>
+                          <span>2</span>
                       </Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="3">
+                  <li className="detail-pager " data-pagenum="3" onClick={nextPage}>
                       <Link href="?page=3">
-                          <span>
-                              3 </span>
+                          <span>3</span>
                       </Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="4">
+                  <li className="detail-pager " data-pagenum="4" onClick={nextPage}>
                       <Link href="?page=4">
-                          <span>
-                              4 </span>
+                          <span>4</span>
                       </Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="5">
+                  <li className="detail-pager " data-pagenum="5" onClick={nextPage}>
                       <Link href="?page=5">
-                          <span>
-                              5 </span>
+                          <span>5</span>
                       </Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="6">
+                  <li className="detail-pager " data-pagenum="6" onClick={nextPage}>
                       <Link href="?page=6">
                           <span>
                               6 </span>
                       </Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="7">
+                  <li className="detail-pager " data-pagenum="7" onClick={nextPage}>
                       <Link href="?page=7">
-                          <span>
-                              7 </span>
+                          <span>7</span>
                       </Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="8">
+                  <li className="detail-pager " data-pagenum="8" onClick={nextPage}>
                       <Link href="?page=8">
-                          <span>
-                              8 </span>
+                          <span>8</span>
                       </Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="9">
+                  <li className="detail-pager " data-pagenum="9" onClick={nextPage}>
                       <Link href="?page=9">
-                          <span>
-                              9 </span>
+                          <span>9</span>
                       </Link>
                   </li>
-                  <li className="detail-pager " data-pagenum="10">
+                  <li className="detail-pager " data-pagenum="10" onClick={nextPage}>
                       <Link href="?page=10">
-                          <span>
-                              10 </span>
+                          <span>10</span>
                       </Link>
                   </li>
-                  <li className="detail-pager pager-next">
+                  <li className="detail-pager pager-next" onClick={nextPage}>
                       <Link href="?page=1017"></Link>
                   </li>
               </ul>
@@ -176,7 +175,7 @@ export default function NewsIndex() {
               <ul className="js-index-news-right-wrap">
                 {
                   newsData && 
-                  newsData.slice(0, 10).map((news) => {
+                  newsData.map((news) => {
                     return <NewsRanking news={news} />
                   })
                 }

@@ -1,13 +1,17 @@
 import axios from "axios";
-const API_URL = "https://practice-tmdb-server.vercel.app/user";
+const API_URL = "http://localhost:3999/api/user";
+// const API_URL = "https://practice-tmdb-server.vercel.app/user";
 
 class AuthService {
+  // 登入
   login(email, password ) {
     return axios.post(API_URL + "/login", { email, password });
   }
+  // 登出
   logout() {
     localStorage.removeItem("user");
   }
+  // 註冊
   register(username, email, password, role ) {
     return axios.post(API_URL + "/register", {
       username,
@@ -16,6 +20,7 @@ class AuthService {
       role,
     });
   }
+  // 改個資
   patchProfile( _id, username, email ) {
     let token;
     if (localStorage.getItem("user")) {
@@ -33,6 +38,7 @@ class AuthService {
       }
     );
   }
+  // 改身分
   patchRole(_id, role ) {
     let token;
     if (localStorage.getItem("user")) {
@@ -50,6 +56,7 @@ class AuthService {
       }
     );    
   }
+  // 改slide
   patchSlide(_id, slide ) {
     let token;
     if (localStorage.getItem("user")) {
@@ -67,6 +74,7 @@ class AuthService {
       }
     );    
   }
+  // 改評論
   patchReviews(_id, contentId ) {
     let token;
     if (localStorage.getItem("user")) {
@@ -84,6 +92,7 @@ class AuthService {
       }
     );    
   }
+  // 改卡司
   patchCast(_id, cast ) {
     let token;
     if (localStorage.getItem("user")) {
@@ -101,6 +110,7 @@ class AuthService {
       }
     );    
   }
+  // 改人物
   patchFavoritePerson(_id, favoritePerson ) {
     let token;
     if (localStorage.getItem("user")) {
@@ -118,6 +128,43 @@ class AuthService {
       }
     );    
   }
+  // 改主題
+  patchTheme(_id, theme ) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL +  "/patchTheme/" + _id,
+      { theme },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );    
+  } 
+  // 放電影院
+  patchTheater(_id, theater ) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL +  "/patchTheater/" + _id,
+      { theater },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );    
+  }  
+  //拿到全部會員
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }

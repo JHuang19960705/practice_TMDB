@@ -5,8 +5,10 @@ import Navigation from '../../components/Navigation';
 import Cart from '../../components/Shopping/Cart';
 import "../../styles/movie-index.css";
 
-const Shopping = ({ favoriteMovie, cartItem, setCartItem }) => {
- 
+
+
+const Shopping = ({ currentUser, setCurrentUser, favoriteMovie, cartItem, setCartItem }) => {
+
   // setTimeout(() => {
   //   let wrap = document.querySelector('.js-wheel-sideScrollPage');
   //   wrap.addEventListener('wheel',(evt)=>{
@@ -31,10 +33,10 @@ const Shopping = ({ favoriteMovie, cartItem, setCartItem }) => {
                   <div className="gallery_inner">
                     <div className="items js-products-wrap" >
                       {
-                        favoriteMovie &&
-                        favoriteMovie.map((d) => {
+                        currentUser.user.theater &&
+                        currentUser.user.theater.releases.map((id) => {
                           return (
-                            <Picture2 data={d} cartItem={cartItem} setCartItem={setCartItem}/>
+                            <Picture2 currentUser={currentUser} setCurrentUser={setCurrentUser} data={id} cartItem={cartItem} setCartItem={setCartItem}/>
                           )
                         })
                       }

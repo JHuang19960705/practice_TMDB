@@ -5,7 +5,6 @@ import AuthService from "../../services/auth.service";
 
 
 export default function FavoritePerson({ newCast, currentUser, setCurrentUser}) {
-  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   const favoritePersonChange = async() => {
     try{  
