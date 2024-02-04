@@ -20,9 +20,6 @@ export const Layout = ({currentUser}) => {
           {!currentUser && (  
             <li><Link to="/login">登入</Link></li>
           )}
-          {currentUser && currentUser.user.role !== "free" && (  
-            <li><Link to="/enroll">留言</Link></li>
-          )}
           {currentUser && currentUser.user.role !== "free" && (
             <li><Link to="/content">你的文章</Link></li>
           )}  

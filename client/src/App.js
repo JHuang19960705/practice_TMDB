@@ -26,7 +26,8 @@ import Plan from "./pages/Plan/Plan";
 import NewsIndex from "./pages/News/NewsIndex";
 import Theme from "./pages/Theme/Theme";
 import Theater from "./pages/Theater/Theater";
-
+import Back from "./pages/Back/Back";
+import Test from "./test";
 
 function App() {
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -86,7 +87,9 @@ function App() {
           <Route path="comment/:contentId" element={<CommentPage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="theme" element={<Theme currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="theater" element={<Theater currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
+          <Route path="back" element={<Back currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         </Route>  
+        <Route path="test" element={<Test currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
       </Routes>
     </BrowserRouter>
   )

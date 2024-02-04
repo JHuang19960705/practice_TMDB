@@ -113,16 +113,15 @@ const ContentComponent = ({ currentUser, setCurrentUser }) => {
           </button>
         </div>
       )}
+      {currentUser && currentUser.user.role == "free" && (
+        <div>
+          <h1>立即加入會員創作新文章。</h1>
+        </div>
+      )}
       {currentUser && (currentUser.user.role == "standard" || "premium") && (
         <div className="d-flex justify-content-around">
           <button onClick={handlePatchSlide} className="btn btn-primary">把圖片放到前台Slide</button>
           <button onClick={handlePatchReviews} className="btn btn-primary">把圖片放到前台影評區</button>
-        </div>
-        
-      )}
-      {currentUser && currentUser.user.role == "free" && (
-        <div>
-          <h1>立即加入會員創作新文章。</h1>
         </div>
       )}
       {currentUser && contentData && contentData.length != 0 &&(

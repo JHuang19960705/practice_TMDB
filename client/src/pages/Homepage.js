@@ -37,6 +37,7 @@ const Homepage = ({ currentUser }) => {
 
   return (
     <div>
+      <h1>影評吧!</h1>
       <Search search={() => {search(searchURL);}} setInput={setInput} />
       <div className="pictures">
         {

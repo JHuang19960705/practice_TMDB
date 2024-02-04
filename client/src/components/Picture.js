@@ -12,29 +12,15 @@ export const Picture = ({ currentUser, data }) => {
         </Link>
         <Outlet/>
       </div>
-      { currentUser && currentUser.user.role == "premium" && (
+      { currentUser && currentUser.user.role !== "free" && (
           <div className="member-button">
             <Link to={`/postContent/${data.id}`} className='reviews-writing' target="_blank">
-              撰寫影評
+              寫影評
             </Link>
-            <Link to="/shopping" target="_blank">
-              放入電影院
-            </Link>
-            <Link to="/" target="_blank">
-              放入電影大廳
+            <Link to={`/reviews/${data.id}`} className='reviews-writing' target="_blank">
+              看影評
             </Link>
           </div>
-        )
-      }
-      { currentUser && currentUser.user.role == "standard" && (
-        <div className="member-button">
-          <Link to={`/postContent/${data.id}`} className='reviews-writing' target="_blank">
-            撰寫影評
-          </Link>
-          <Link to="/" target="_blank">
-            放入電影大廳
-          </Link>
-        </div>
         )
       }
       { currentUser && currentUser.user.role == "free" && (
