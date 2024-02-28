@@ -1,6 +1,6 @@
 import axios from "axios";
-// const API_URL = "http://localhost:3999/api/user";
-const API_URL = "https://practice-tmdb-server.vercel.app/user";
+const API_URL = "http://localhost:3999/api/user";
+// const API_URL = "https://practice-tmdb-server.vercel.app/user";
 
 class AuthService {
   // 登入

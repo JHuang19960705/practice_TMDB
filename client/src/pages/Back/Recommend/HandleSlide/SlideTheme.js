@@ -3,6 +3,7 @@ import { Outlet, Link } from "react-router-dom"
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 export default function SlideTheme({data}) {
+  const [slide, setSlide] = useState([]);
   const handleSlide = (e) => {
     let TMDBId = e.currentTarget.dataset.tmdbId;
     setSlide([...slide, TMDBId]);

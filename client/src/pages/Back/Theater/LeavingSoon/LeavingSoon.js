@@ -1,7 +1,11 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 import SearchTheme from '../SearchTheme/SearchTheme';
+import AuthService from '../../../../services/auth.service';
 
 export default function LeavingSoon({currentUser, setCurrentUser}) {
+  const navigate = useNavigate();
+  const [slide, setSlide] = useState([]);
   const handlePatchSlide = async() => {
     try{  
       let response = await AuthService.patchSlide(currentUser.user._id, slide)

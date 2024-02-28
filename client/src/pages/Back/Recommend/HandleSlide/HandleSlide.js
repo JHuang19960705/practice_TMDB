@@ -11,6 +11,8 @@ export default function HandleSlide({currentUser, setCurrentUser}) {
   const navigate = useNavigate();
   const [isOpen1, setIsOpen1] = useState(true);// 默认打开
   const [isOpen2, setIsOpen2] = useState(false);
+  const [slide, setSlide] = useState([]);
+  const [message, setMessage] = useState([]);
   const toggleOpen = (tabNumber) => {
     // 关闭所有标签页
     setIsOpen1(false);
