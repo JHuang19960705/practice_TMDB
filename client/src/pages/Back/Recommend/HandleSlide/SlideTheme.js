@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet, Link } from "react-router-dom"
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 

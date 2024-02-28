@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import SearchTheme from '../SearchTheme/SearchTheme';
 import AuthService from '../../../../services/auth.service';
@@ -6,6 +6,7 @@ import AuthService from '../../../../services/auth.service';
 export default function OnTime({currentUser, setCurrentUser}) {
   const navigate = useNavigate();
   const [slide, setSlide] = useState([]);
+  const [message, setMessage] = useState([]);
   const handlePatchSlide = async() => {
     try{  
       let response = await AuthService.patchSlide(currentUser.user._id, slide)
