@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ContentService from "../../services/content.service";
 
-const EnrollComponent = (props) => {
-  let { currentUser, setCurrentUser } = props;
+const EnrollComponent = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
   let [searchInput, setSearchInput] = useState("");
   let [searchResult, setSearchResult] = useState(null);
@@ -39,10 +38,7 @@ const EnrollComponent = (props) => {
       {!currentUser && (
         <div>
           <p>You must login first before searching for contents.</p>
-          <button
-            className="btn btn-primary btn-lg"
-            onClick={handleTakeToLogin}
-          >
+          <button className="btn btn-primary btn-lg" onClick={handleTakeToLogin}>
             Take me to login page.
           </button>
         </div>
@@ -54,10 +50,7 @@ const EnrollComponent = (props) => {
       )}
       {currentUser && (currentUser.user.role == "standard" || "premium") && (
         <div className="search input-group mb-3">
-          <input
-            onChange={handleChangeInput}
-            type="text"
-            className="form-control"
+          <input onChange={handleChangeInput} type="text" className="form-control"
           />
           <button onClick={handleSearch} className="btn btn-primary">
             Search
@@ -74,12 +67,7 @@ const EnrollComponent = (props) => {
                 <p className="card-text">{content.content}</p>
                 <p># {content.tags}</p>
                 <p>互動人數: {content.commenters.length}</p>
-                <a
-                  href="#"
-                  onClick={handleEnroll}
-                  className="card-text btn btn-primary"
-                  id={content._id}
-                >
+                <a href="#" onClick={handleEnroll} className="card-text btn btn-primary" id={content._id}>
                   回覆文章
                 </a>
               </div>

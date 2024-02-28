@@ -13,12 +13,15 @@ class AuthService {
   }
   // 註冊
   register(username, email, password, role ) {
-    return axios.post(API_URL + "/register", {
-      username,
-      email,
-      password,
-      role,
-    });
+    return axios.post(API_URL + "/register", { username, email, password, role });
+  }
+  // 拿到所有會員
+  getAllUser() {
+    return axios.get(API_URL + "/");
+  }
+  // 透過Id拿到該會員
+  getUserById(_id) {
+    return axios.get(API_URL + "/getUserById/" + _id);
   }
   // 改個資
   patchProfile( _id, username, email ) {
@@ -164,7 +167,7 @@ class AuthService {
       }
     );    
   }  
-  //拿到全部會員
+  //拿到登入後的會員
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }

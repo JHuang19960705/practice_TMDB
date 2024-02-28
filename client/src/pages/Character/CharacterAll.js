@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Cast from "../../components/Charactor/Cast";
 import axios from "axios";
 import "../../styles/celebrity-index.css";
-import Search from "../../components/Search";
+import Search from "../../components/Search2";
 import FavoritePerson from "./FavoritePerson";
 const API_KEY = process.env.REACT_APP_API_KEY;
 

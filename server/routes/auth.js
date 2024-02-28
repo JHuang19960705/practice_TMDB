@@ -13,7 +13,19 @@ router.use((req, res, next) => {
 // 獲得系統中的所有會員
 router.get("/", async (req, res) => {
   try{
-    let userFound = await User.find({})
+    let userFound = await User.find({}, { username: 1, email: 1, role: 1, _id: 1, date: 1 })
+      .exec();
+    return res.send(userFound);
+  } catch(e){
+    return res.status(500).send(e);
+  }
+});
+
+// 透過Id拿到該會員
+router.get("/getUserById/:userId", async (req, res) => {
+  let { userId } = req.params;
+  try{
+    let userFound = await User.findOne({ _id: userId }, { username: 1, email: 1, role: 1, _id: 1, date: 1 })
       .exec();
     return res.send(userFound);
   } catch(e){

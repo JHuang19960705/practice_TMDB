@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 export default function Information({ movieAll }) {

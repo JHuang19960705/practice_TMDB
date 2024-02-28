@@ -4,13 +4,12 @@ import { Outlet, Link } from "react-router-dom"
 export const Picture = ({ currentUser, data }) => {
   const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
   return (
-    <div>
+    <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
       <div className="picture">
         <p>{data.title}</p>
-        <Link to={`/movie/${data.id}`} className="imageContainer" target="_blank">
+        <Link to={`/${data.id}/movie`} className="imageContainer" target="_blank">
           <img src={ tmdbBaseURL + data.poster_path} />
         </Link>
-        <Outlet/>
       </div>
       { currentUser && currentUser.user.role !== "free" && (
           <div className="member-button">
@@ -31,7 +30,8 @@ export const Picture = ({ currentUser, data }) => {
         </div>
         )
       }
-    </div>
+    <Outlet />
+    </button>
   )
 }
 
