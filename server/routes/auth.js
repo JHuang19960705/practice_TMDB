@@ -21,11 +21,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 透過Id拿到該會員
+// 透過Id拿到該會員基本資料
 router.get("/getUserById/:userId", async (req, res) => {
   let { userId } = req.params;
   try{
     let userFound = await User.findOne({ _id: userId }, { username: 1, email: 1, role: 1, _id: 1, date: 1 })
+      .exec();
+    return res.send(userFound);
+  } catch(e){
+    return res.status(500).send(e);
+  }
+});
+
+// 透過Id拿到該會員recommend資料
+router.get("/getUserRecommendById/:userId", async (req, res) => {
+  let { userId } = req.params;
+  try{
+    let userFound = await User.findOne({ _id: userId }, { slide: 1, cast: 1, favoritePerson: 1, theme: 1, _id: 1, contentId: 1, theater: 1})
       .exec();
     return res.send(userFound);
   } catch(e){
