@@ -17,7 +17,7 @@ export default function UserReviews() {
   }, []);
 
   return (
-    <div>
+    <div className="flex items-center justify-center overflow-hidden h-50">
       {contentData && contentData.map((content)=>{
         return(
           <div className="card" style={{ width: "18rem", margin: "1rem" }}>

@@ -23,6 +23,10 @@ class AuthService {
   getUserById(_id) {
     return axios.get(API_URL + "/getUserById/" + _id);
   }
+  // 透過Id拿到該會員recommend資料
+  getUserRecommendById(_id) {
+    return axios.get(API_URL + "/getUserRecommendById/" + _id);
+  }
   // 改個資
   patchProfile( _id, username, email ) {
     let token;

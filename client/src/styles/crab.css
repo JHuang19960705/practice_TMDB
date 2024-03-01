@@ -781,7 +781,6 @@
 /* XXX電影精選  */
 .best-wrap{
   width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   background-color: #f3d93c;
@@ -792,20 +791,21 @@
   }
 
     .best-up{
-      width: 100%;
       padding: 20px;
       margin-bottom: 40px;
       box-sizing: border-box;
     }
 
-      .best-title p{
+      .best-title {
         font-size: 3rem;
         font-weight: 900;
+        margin-bottom: 30px;
       }
-      .best-subtitle p{
+      .best-subtitle {
         font-size: 2rem;
+        margin-bottom: 30px;
       }
-      .best-logline p{
+      .best-logline {
         font-size: 1rem;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -822,16 +822,19 @@
     }    
 
       .best-pic-wrap{
-        white-space: nowrap;
-        overflow: hidden;
-        cursor: pointer;
+        height: 150px;
+        display: flex;
+        align-items: center; 
+        background-color: #8dd3ff; 
       }
-        .best-pic-wrap img{
+        .best-pic{
+          width: 300px;
           margin-left: 14px;
-          height: 200px;
-          cursor: pointer;
-          object-fit: cover;    
         }
+          .best-pic-wrap img{
+            cursor: pointer;
+            object-fit: cover;    
+          }
 
 @media screen and ( max-width: 426px ){   
   .best-wrap{

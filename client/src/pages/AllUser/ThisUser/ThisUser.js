@@ -46,18 +46,16 @@ export default function ThisUser({ currentUser, setCurrentUser }) {
             </div>
           </div>
           <div className="flex items-center space-x-3 sm:mt-7 mt-4">
-            <Link to="userReviews" className="px-3 dark:text-white dark:border-white pb-1.5 border-blue-500 text-blue-500 border-transparent">Review</Link>
+            <Link to="userReviews" className="px-3 dark:text-white dark:border-white pb-1.5 border-blue-500 text-blue-500 border-transparent">Reviews</Link>
             <Link to="userRecommend" className="px-3 border-b-2 pb-1.5 text-gray-600 dark:text-gray-400">Recommend</Link>
             <Link to="userTheater" className="px-3 border-b-2 pb-1.5 border-transparent text-gray-600 dark:text-gray-400 ">Theater</Link>
           </div>
         </div>
       )}
-      <div className="flex items-center justify-center overflow-hidden h-50">
-        <Outlet />
-        {/* <iframe src="https://practice-tmdb-client.vercel.app/content" width="90%" height="400" ></iframe>
-        <UserRecommend currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        <UserTheater currentUser={currentUser} setCurrentUser={setCurrentUser} /> */}
-      </div>
+      <Outlet />
+      {/* <iframe src="https://practice-tmdb-client.vercel.app/content" width="90%" height="400" ></iframe>
+      <UserRecommend currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <UserTheater currentUser={currentUser} setCurrentUser={setCurrentUser} /> */}
     </div>
   )
 }
