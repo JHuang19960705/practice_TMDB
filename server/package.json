@@ -19,7 +19,7 @@
     "passport-jwt": "^4.0.1"
   },
   "engines": {
-    "node": "20.11.1"
+    "node": "20.x"
   },
   "description": ""
 }
