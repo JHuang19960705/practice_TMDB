@@ -58,7 +58,7 @@ function Reviews({ userRecommend }) {
           {
             userRecommend.contentId && 
             userRecommend.contentId.map((id) => {  
-              return <ReviewsPic contentId={id}/>
+              return <ReviewsPic key={id} contentId={id}/>
             })
           }
         </div> 

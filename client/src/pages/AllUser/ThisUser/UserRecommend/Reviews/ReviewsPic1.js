@@ -14,7 +14,7 @@ function ReviewsPic({ contentId }) {
       .catch((e) => {
         console.log(e);
       });
-  }, [contentData]);
+  }, []);
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }

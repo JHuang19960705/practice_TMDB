@@ -31,7 +31,7 @@ export default function YourReviews({ currentUser, setCurrentUser }) {
       }
     }
     setLoading(false);
-  }, [contentData]);
+  }, []);
 
    const displayContent = (e)=>{
     setClickContent(e.currentTarget.dataset.contentId)

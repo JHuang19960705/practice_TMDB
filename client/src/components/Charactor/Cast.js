@@ -8,20 +8,19 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 export default function Cast({ castId , cast, newCast, currentUser, setCurrentUser}) {
   const [isLoading, setLoading] = useState(true);
   const [character, setCharacter] = useState([]);
-  let [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const characterURL = `https://api.themoviedb.org/3/person/${castId}?api_key=${API_KEY}`;
+
   const search = async(url) => {
     let result = await axios.get(url);
     setCharacter(result.data);
     setLoading(false);
   }
+
   useEffect(()=>{
     search(characterURL);
   }, [])
 
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
   const handleChangeCast = () => {
     if (cast.cast1 == castId){
       cast.cast1 = newCast;
@@ -37,6 +36,7 @@ export default function Cast({ castId , cast, newCast, currentUser, setCurrentUs
       ChangeServerCast();
     }
   }
+
   const ChangeServerCast = async() => {
     try{  
       let response = await AuthService.patchCast(currentUser.user._id, cast)
@@ -51,6 +51,11 @@ export default function Cast({ castId , cast, newCast, currentUser, setCurrentUs
       setMessage(e.response.data);
     };
   }
+
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
+
   return (
     <div>
       <h2 className="archive_label f-serif">CHARACHER</h2> 
@@ -82,7 +87,7 @@ export default function Cast({ castId , cast, newCast, currentUser, setCurrentUs
           </div>
           {/* <!-- 小圖 --> */}
           <div className="archive_col2 js-celebrity-click" >
-            <img src="${celebrity.event[1].img}" data-cast-id="${celebrity.id}"/>
+            {/* <img src="${celebrity.event[1].img}" data-cast-id="${celebrity.id}"/> */}
           </div>
         </div>
       </div>

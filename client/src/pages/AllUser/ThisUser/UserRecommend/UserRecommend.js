@@ -25,11 +25,11 @@ export default function Crabtv () {
     <div>
     <Slide userRecommend={userRecommend} />
     <div className='big-wrap'>
-      <News />
-      <Character userRecommend={userRecommend}/>
+      {/* <News /> */}
+      {/* <Character userRecommend={userRecommend}/> */}
     </div>
     <Reviews userRecommend={userRecommend}/>
-    <Theme userRecommend={userRecommend}/>
+    {/* <Theme userRecommend={userRecommend}/> */}
     <BestChoose userRecommend={userRecommend}/>
     </div>
   )
