@@ -6,6 +6,7 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 function Theme({userRecommend}) {
   const [isLoading, setLoading] = useState(true);
   let [genresId, setGenresId] = useState(null);
+  let [genresURL, setGenresURL] = useState(null);
   let genres = [
     {
       "id": "10759",
@@ -49,8 +50,8 @@ function Theme({userRecommend}) {
     }]
   useEffect(() => {
     if(userRecommend){
-      let genreId = userRecommend.theme[0];
-      let genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genreId}`
+      setGenresId(userRecommend.theme[0]);
+      setGenresURL( `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genresId}`)
       search(genresURL)
     }
   },[userRecommend])
@@ -66,8 +67,8 @@ function Theme({userRecommend}) {
   }
 
   const changeTheme = async(e) => {
-    genreId = e.currentTarget.dataset.genreId;
-    genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genreId}`
+    setGenresId(e.currentTarget.dataset.genreId);
+    setGenresURL(`https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genresId}`)
     await search(genresURL)
   }
 
