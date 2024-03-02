@@ -21,8 +21,8 @@ export default function TheaterStage({theater, setTheater, currentUser, setCurre
       releases: theater.releases.filter((t) => (t != e.currentTarget.dataset.tmdbid)),
       leaving: theater.leaving.filter((t) => (t != e.currentTarget.dataset.tmdbid)),
       upcoming: theater.upcoming.filter((t) => (t != e.currentTarget.dataset.tmdbid))
-  }
-  setTheater(newTheater);
+    }
+    setTheater(newTheater);
   }
   return (
     <div style={{width:"60%", height:"200px", border:"3px solid black", display: "flex", justifyContent:"space-around", flexDirection:"column" }}>

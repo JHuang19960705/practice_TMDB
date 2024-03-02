@@ -50,7 +50,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
           <div className="space-y-4 mt-3">
             {allUser && allUser.map((user)=>{
               return(
-                <Link to={`${user._id}`} onClick={handleChange}  data-user-id={user._id} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
+                <Link to={`${user._id}/userReviews`} onClick={handleChange}  data-user-id={user._id} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
                   <div className="flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
                     {user.username}
                   </div>

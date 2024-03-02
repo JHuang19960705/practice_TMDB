@@ -11,6 +11,9 @@ export default function UserTheater () {
   const [cartItem, setCartItem] = useState([]);
   const [userRecommend, setUserRecommend] = useState();
   const [isLoading, setLoading] = useState(true);
+  const [isOpen1, setIsOpen1] = useState(true);// 默认打开
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
   useEffect(() => {
     AuthService.getUserRecommendById(userId)
       .then((data) => {
@@ -24,6 +27,26 @@ export default function UserTheater () {
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }
+  const toggleOpen = (tabNumber) => {
+    // 关闭所有标签页
+    setIsOpen1(false);
+    setIsOpen2(false);
+    setIsOpen3(false);
+    // 打开指定的标签页
+    switch (tabNumber) {
+      case 1:
+        setIsOpen1(true);
+        break;
+      case 2:
+        setIsOpen2(true);
+        break;
+      case 3:
+        setIsOpen3(true);
+      break;
+      default:
+        break;
+    }
+  };
   return (
     <div>
       <main className="pageWrap">
@@ -34,19 +57,35 @@ export default function UserTheater () {
               <div className="gallery">
 
                   {/* <!-- 頁數 --> */}
-                  <Navigation />
+                  <Navigation toggleOpen={toggleOpen}/>
 
                   {/* <!-- 產品 --> */}
                   <div className="gallery_inner">
                     <div className="items js-products-wrap" >
-                      {
+                      {isOpen1 && (
                         userRecommend.theater &&
                         userRecommend.theater.releases.map((id) => {
                           return (
                             <TheaterItems data={id} cartItem={cartItem} setCartItem={setCartItem}/>
                           )
                         })
-                      }
+                      )}
+                      {isOpen2 && (
+                        userRecommend.theater &&
+                        userRecommend.theater.leaving.map((id) => {
+                          return (
+                            <TheaterItems data={id} cartItem={cartItem} setCartItem={setCartItem}/>
+                          )
+                        })
+                      )}
+                      {isOpen3 && (
+                        userRecommend.theater &&
+                        userRecommend.theater.upcoming.map((id) => {
+                          return (
+                            <TheaterItems data={id} cartItem={cartItem} setCartItem={setCartItem}/>
+                          )
+                        })
+                      )}
                     </div>    
                   </div>
 

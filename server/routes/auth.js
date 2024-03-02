@@ -321,10 +321,11 @@ router.patch("/patchTheme/:_id", async(req, res) => {
 })
 
 //放入電影院
-router.patch("/patchTheater/:_id", async(req, res) => {
-  let { _id } = req.params;
+// 更新 releases 屬性
+router.patch("/patchTheater/releases/:_id", async (req, res) => {
+  const { _id } = req.params;
   try {
-    let profileFound = await User.findOne({ _id }).exec();
+    const profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
       return res.status(400).send("找不到個資。無法放入幻燈片。");
     }
@@ -332,11 +333,20 @@ router.patch("/patchTheater/:_id", async(req, res) => {
     if (profileFound.equals(_id)) {
       const tokenObject = { _id: profileFound._id, email: profileFound.email };
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
+
+      let updateFields = {};
+      if (req.body.releases !== undefined) { // 檢查 releases 是否為 undefined
+        updateFields['theater.releases'] = req.body.releases;
+      } else {
+        return res.status(400).send("前端資料為null。");
+      }
+
       let patchTheater = await User.findOneAndUpdate(
-        { _id }, 
-        req.body, 
+        { _id },
+        { $set: updateFields },
         { new: true, runValidators: true },
       );
+
       return res.send({
         message: "保存成功",
         token: "JWT " + token,
@@ -345,9 +355,87 @@ router.patch("/patchTheater/:_id", async(req, res) => {
     } else {
       return res.status(403).send("只有用戶本人才能放入幻燈片。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改資料");
-  };  
-})
+  };
+});
+
+// 更新 leaving 屬性
+router.patch("/patchTheater/leaving/:_id", async (req, res) => {
+  const { _id } = req.params;
+  try {
+    const profileFound = await User.findOne({ _id }).exec();
+    if (!profileFound) {
+      return res.status(400).send("找不到個資。無法放入幻燈片。");
+    }
+
+    if (profileFound.equals(_id)) {
+      const tokenObject = { _id: profileFound._id, email: profileFound.email };
+      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
+
+      let updateFields = {};
+      if (req.body.leaving !== undefined) { 
+        updateFields['theater.leaving'] = req.body.leaving;
+      } else {
+        return res.status(400).send("前端資料為null。"); 
+      }
+
+      let patchTheater = await User.findOneAndUpdate(
+        { _id },
+        { $set: updateFields },
+        { new: true, runValidators: true },
+      );
+
+      return res.send({
+        message: "保存成功",
+        token: "JWT " + token,
+        user: patchTheater,
+      });
+    } else {
+      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+    }
+  } catch (e) {
+    return res.status(500).send("無法修改資料");
+  };
+});
+
+// 更新 upcoming 屬性
+router.patch("/patchTheater/upcoming/:_id", async (req, res) => {
+  const { _id } = req.params;
+  try {
+    const profileFound = await User.findOne({ _id }).exec();
+    if (!profileFound) {
+      return res.status(400).send("找不到個資。無法放入幻燈片。");
+    }
+
+    if (profileFound.equals(_id)) {
+      const tokenObject = { _id: profileFound._id, email: profileFound.email };
+      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
+
+      let updateFields = {};
+      if (req.body.upcoming !== undefined) { 
+        updateFields['theater.upcoming'] = req.body.upcoming;
+      } else {
+        return res.status(400).send("前端資料為null。"); 
+      }
+
+      let patchTheater = await User.findOneAndUpdate(
+        { _id },
+        { $set: updateFields },
+        { new: true, runValidators: true },
+      );
+
+      return res.send({
+        message: "保存成功",
+        token: "JWT " + token,
+        user: patchTheater,
+      });
+    } else {
+      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+    }
+  } catch (e) {
+    return res.status(500).send("無法修改資料");
+  };
+});
 
 module.exports = router;

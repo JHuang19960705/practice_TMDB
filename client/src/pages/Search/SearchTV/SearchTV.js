@@ -49,36 +49,38 @@ export default function SearchTV({ currentUser, setCurrentUser }) {
         <div className="space-y-4 mt-3">
           {
             data &&
-            data.map((d) => {        
-              return (
-                <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
-                  <div className="picture">
-                    <p>{d.title}</p>
-                    <Link to={`${d.id}`} onClick={handleChange} data-movie-id={d.id} className="imageContainer">
-                      <img src={ tmdbBaseURL + d.poster_path} />
-                    </Link>
-                  </div>
-                  { currentUser && currentUser.user.role !== "free" && (
+            data.map((d) => {    
+              if (d.original_name && d.origin_country && d.backdrop_path) {    
+                return (
+                  <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
+                    <div className="picture">
+                      <p>{d.title}</p>
+                      <Link to={`${d.id}`} onClick={handleChange} data-movie-id={d.id} className="imageContainer">
+                        <img src={ tmdbBaseURL + d.poster_path} />
+                      </Link>
+                    </div>
+                    { currentUser && currentUser.user.role !== "free" && (
+                        <div className="member-button">
+                          <Link to={`postTVContent/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
+                            寫影評
+                          </Link>
+                          <Link to={`reviews/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
+                            看影評
+                          </Link>
+                        </div>
+                      )
+                    }
+                    { currentUser && currentUser.user.role == "free" && (
                       <div className="member-button">
-                        <Link to={`postTVContent/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
-                          寫影評
-                        </Link>
-                        <Link to={`reviews/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
+                        <Link to={`/reviews/${data.id}`} className='reviews-writing' target="_blank">
                           看影評
                         </Link>
                       </div>
-                    )
-                  }
-                  { currentUser && currentUser.user.role == "free" && (
-                    <div className="member-button">
-                      <Link to={`/reviews/${data.id}`} className='reviews-writing' target="_blank">
-                        看影評
-                      </Link>
-                    </div>
-                    )
-                  }
-                </button>
-              )
+                      )
+                    }
+                  </button>
+                )
+              }
             })
           }
         </div>

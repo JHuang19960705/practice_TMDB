@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SlidePic from "./SlidePic";
+import SearchPic from "./SearchPic";
 import AuthService from "../../../../services/auth.service";
-import SlideTheme from "./SlideTheme";
+import SlideAfterSearch from "./SlideAfterSearch";
 import axios from "axios";
 import "../../../../styles/handleSlide.css"
+import CurrentSlide from "./CurrentSlide/CurrentSlide";
+import ChoosedImg from "./ChoosedImg/ChoosedImg";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function HandleSlide({currentUser, setCurrentUser}) {
   const navigate = useNavigate();
   const [isOpen1, setIsOpen1] = useState(true);// 默认打开
   const [isOpen2, setIsOpen2] = useState(false);
-  const [slide, setSlide] = useState([]);
+  const [newSlide, setNewSlide] = useState([]);
+  const [data, setData] = useState(false);
   const [message, setMessage] = useState([]);
   const toggleOpen = (tabNumber) => {
     // 关闭所有标签页
@@ -32,16 +35,18 @@ export default function HandleSlide({currentUser, setCurrentUser}) {
   
   const handlePatchSlide = async() => {
     try{  
-      let response = await AuthService.patchSlide(currentUser.user._id, slide)
+      const allNewSlide = newSlide.reduce((acc, cur) => {
+        return [...acc, cur.slide];
+      }, []);
+      let response = await AuthService.patchSlide(currentUser.user._id, allNewSlide)
       window.alert("修改成功。您現在將被導向到電影大廳");
       localStorage.setItem("user", JSON.stringify(response.data));
       setCurrentUser(AuthService.getCurrentUser());
-      navigate("/");
+      navigate("/back/yourRecommend/handleSlide");
     } catch (e) {
       setMessage(e.response.data);
     };
   }
-  const [data, setData] = useState(false);
   const search = async(URL) => {
     let result = await axios.get(URL);
     setData(result.data.results);
@@ -51,25 +56,32 @@ export default function HandleSlide({currentUser, setCurrentUser}) {
     let genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genreId}`
     await search(genresURL);
   }
+  const deleteSlideImg = (e) => {
+    const xxx = newSlide.filter((s) => {
+      return s.slide !== e.currentTarget.dataset.tmdbId;
+    })
+    setNewSlide(xxx)
+  }
 
   return (
     <div>
-      {/* 類型 */}
-      <div className="flex justify-between p-2 bg-orange-300">
-        <div className="flex justify-start">
-          <button className="w-20 h-5 bg-teal-200 mr-10">目前</button>
-          <button className="w-20 h-5 bg-teal-200 mr-10">修改</button>
-          <button className="w-20 h-5 bg-teal-200 mr-10">編輯</button>
-        </div>
-        <button onClick={handlePatchSlide} className="btn btn-primary">把圖片放到前台Slide</button>
+      {/* 目前幻燈片 */}
+      <div className="flex items-center justify-center p-2">
+        {/* <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
+        <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
+        <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
+        <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
+        <div className="w-40 h-10 bg-neutral-300 mr-10"></div> */}
+        <CurrentSlide key={currentUser} currentUser={currentUser} setCurrentUser={setCurrentUser} />
       </div>
-      {/* 幻燈片 */}
-      <div className="flex items-center justify-center p-2 bg-lime-500">
-        <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
-        <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
-        <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
-        <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
-        <div className="w-40 h-10 bg-neutral-300 mr-10"></div>
+      {/* 編輯區 */}
+      <div className="flex justify-between items-center bg-slate-400">
+        <div className="w-4/5 flex justify-start p-3 overflow-x-auto">
+          {newSlide && newSlide.map((ns)=>{
+              return <ChoosedImg key={ns} ns={ns} deleteSlideImg={deleteSlideImg} newSlide={newSlide} setNewSlide={setNewSlide}/> 
+          })}
+        </div>
+        <div className="w-1/5 flex justify-center"><button onClick={handlePatchSlide} className="btn btn-primary">把圖片放到前台Slide</button></div>
       </div>
       {/* 搜尋區 */}
       <div>
@@ -158,14 +170,14 @@ export default function HandleSlide({currentUser, setCurrentUser}) {
           </div>
           <div>
             {isOpen1 && (
-               <SlidePic currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+              <SearchPic currentUser={currentUser} setCurrentUser={setCurrentUser} newSlide={newSlide} setNewSlide={setNewSlide} />
             )}
             {isOpen2 && (
               data && data.map((d)=>{
                 return (
                   <button className="p-3 w-full flex flex-col rounded-md dark:bg-gray-800 relative focus:outline-none">
                     <table className="w-full text-left">
-                      <SlideTheme data={d} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+                      <SlideAfterSearch data={d} currentUser={currentUser} setCurrentUser={setCurrentUser} newSlide={newSlide} setNewSlide={setNewSlide} />
                     </table>
                   </button>
                 )     

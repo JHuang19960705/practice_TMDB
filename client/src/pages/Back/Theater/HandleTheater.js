@@ -60,8 +60,10 @@ export default function HandleTheater({currentUser, setCurrentUser}) {
           </Link>
         </div>
       </div>
-      {/* 右內容 */}
-      <Outlet />
+      <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
+        {/* 右內容 */}
+        <Outlet />
+      </div>
     </div>
   )
 }

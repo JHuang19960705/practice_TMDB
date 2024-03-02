@@ -11,7 +11,7 @@ export default function SearchMovie({ currentUser, setCurrentUser }) {
   let [data, setData] = useState(null);
   let [page, setPage] =useState(1);
   let [currentSearch, setCurrentSearch] = useState("");
-  const initialURL = `https://api.themoviedb.org/3/movie/popular?language=ja-JP&page=1&api_key=${API_KEY}`;
+  const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`黑暗騎士`}&page=1&include_adult=false`;
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
 
   const search = async (URL) => {
@@ -44,7 +44,6 @@ export default function SearchMovie({ currentUser, setCurrentUser }) {
     <div className="flex-grow flex overflow-x-hidden">
     {/* <!--   左內容   --> */}
     <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
-      <div className="text-xs text-gray-400 tracking-wider">Movie</div>
       <Search2 search={() => {search(searchURL);}} setInput={setInput} />
       <div className="space-y-4 mt-3">
         {

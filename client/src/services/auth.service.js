@@ -1,6 +1,6 @@
 import axios from "axios";
-// const API_URL = "http://localhost:3999/api/user";
-const API_URL = "https://practice-tmdb-server.vercel.app/user";
+const API_URL = "http://localhost:3999/api/user";
+// const API_URL = "https://practice-tmdb-server.vercel.app/user";
 
 class AuthService {
   // 登入
@@ -154,7 +154,8 @@ class AuthService {
     );    
   } 
   // 放電影院
-  patchTheater(_id, theater ) {
+  // 更新 releases 屬性
+  patchTheaterReleases(_id, releases) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -162,15 +163,54 @@ class AuthService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/patchTheater/" + _id,
-      { theater },
+      API_URL + "/patchTheater/releases/" + _id,
+      { releases },
       {
         headers: {
           Authorization: token,
         },
       }
-    );    
-  }  
+    );
+  }
+
+  // 更新 upcoming 屬性
+  patchTheaterUpcoming(_id, upcoming) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL + "/patchTheater/upcoming/" + _id,
+      { upcoming },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+  }
+
+  // 更新 leaving 屬性
+  patchTheaterLeaving(_id, leaving) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL + "/patchTheater/leaving/" + _id,
+      { leaving },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+  }
+
   //拿到登入後的會員
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));

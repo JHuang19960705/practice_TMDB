@@ -34,7 +34,7 @@ export const Layout = ({currentUser}) => {
           </button>
           {/* 搜尋 */}
           <button className="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center bg-blue-100 text-blue-500">
-            <Link to="/search">
+            <Link to="/search/movie">
               <svg viewBox="0 0 24 24" className="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="3" width="7" height="7"></rect>
                 <rect x="14" y="3" width="7" height="7"></rect>

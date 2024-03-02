@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import axios from "axios";
 import AuthService from "./services/auth.service";
 import "./styles/reset.css";
 import FirstEnroll from "./pages/First-Enroll/FirstEnroll";
@@ -31,9 +30,6 @@ import ComingSoon from "./pages/Back/Theater/ComingSoon/ComingSoon";
 import OnTime from "./pages/Back/Theater/OnTime/OnTime";
 import LeavingSoon from "./pages/Back/Theater/LeavingSoon/LeavingSoon";
 import Search from "./pages/Search/Search";
-import SearchTV from "./pages/Search/SearchTV/SearchTV";
-import TVDetail from "./pages/Search/SearchTV/TVDetail/TVDetail";
-import PostTVContent from "./pages/Search/SearchTV/PostTVContent/PostTVContent";
 import SearchMovie from "./pages/Search/SearchMovie/SearchMovie";
 import MovieDetail from "./pages/Search/SearchMovie/MovieDetail/MovieDetail";
 import PostMovieContent from "./pages/Search/SearchMovie/PostMovieContent/PostMovieContent";
@@ -56,26 +52,7 @@ import Reviews from "./pages/Search/Reviews/Reviews";
 
 
 function App() {
-  const API_KEY = process.env.REACT_APP_API_KEY;
-  const session_id = process.env.REACT_APP_SESSION_ID;
-  const account_id = process.env.REACT_APP_ACCOUNT_ID;
-  const initialURL = `https://api.themoviedb.org/3/movie/upcoming?page=1&api_key=${API_KEY}&region=JP`;
-  const favoriteMovieURL = `https://api.themoviedb.org/3/account/${account_id}/favorite/tv?api_key=${API_KEY}&session_id=${session_id}&page=1`;
   let [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
-  let [cartItem, setCartItem] = useState([]);
-  let [data, setData] = useState(null);
-  let [favoriteMovie, setfavoriteMovie] = useState(null);
-  const search = async (URL1, URL2) => {
-    let result1 = await axios.get(URL1);
-    let result2 = await axios.get(URL2);
-    setData(result1.data.results);
-    setfavoriteMovie(result2.data.results);
-  };
-  
-  useEffect(()=>{
-    search(initialURL, favoriteMovieURL);
-  }, []);
-  
   return(
     <Router>
       <Routes>
@@ -114,11 +91,6 @@ function App() {
             </Route>
           </Route>
           <Route path="search" element={<Search currentUser={currentUser} setCurrentUser={setCurrentUser} />}>
-            <Route path="TV" element={<SearchTV currentUser={currentUser} setCurrentUser={setCurrentUser} />} >
-              <Route path=":TMDBId" element={<TVDetail currentUser={currentUser} setCurrentUser={setCurrentUser}/>}/>
-              <Route path="postTVContent/:TMDBId" element={<PostTVContent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}/>
-              <Route path="reviews/:TMDBId" element={<Reviews currentUser={currentUser} setCurrentUser={setCurrentUser}/>}/>
-            </Route>
             <Route path="movie" element={<SearchMovie currentUser={currentUser} setCurrentUser={setCurrentUser} />} >
               <Route path=":TMDBId" element={<MovieDetail currentUser={currentUser} setCurrentUser={setCurrentUser}/>}/>
               <Route path="postMovieContent/:TMDBId" element={<PostMovieContent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}/>

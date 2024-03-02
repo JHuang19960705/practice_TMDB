@@ -263,7 +263,7 @@
 .navigation_link.active ,
 .navigation_link.link-exact-active  {
     opacity: 1;
-    pointer-events: none
+    /* pointer-events: none */
 }
 
 .navigation_link.active:before,
