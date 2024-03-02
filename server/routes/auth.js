@@ -10,10 +10,10 @@ router.use((req, res, next) => {
   next();
 })
 
-// 獲得系統中的所有會員
+// ç²å¾ç³»çµ±ä¸­çæææå¡
 router.get("/", async (req, res) => {
   try{
-    let userFound = await User.find({}, { username: 1, email: 1, role: 1, _id: 1, date: 1 })
+    let userFound = await User.find({})
       .exec();
     return res.send(userFound);
   } catch(e){
@@ -21,31 +21,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 透過Id拿到該會員基本資料
-router.get("/getUserById/:userId", async (req, res) => {
-  let { userId } = req.params;
-  try{
-    let userFound = await User.findOne({ _id: userId }, { username: 1, email: 1, role: 1, _id: 1, date: 1 })
-      .exec();
-    return res.send(userFound);
-  } catch(e){
-    return res.status(500).send(e);
-  }
-});
-
-// 透過Id拿到該會員recommend資料
-router.get("/getUserRecommendById/:userId", async (req, res) => {
-  let { userId } = req.params;
-  try{
-    let userFound = await User.findOne({ _id: userId }, { slide: 1, cast: 1, favoritePerson: 1, theme: 1, _id: 1, contentId: 1, theater: 1})
-      .exec();
-    return res.send(userFound);
-  } catch(e){
-    return res.status(500).send(e);
-  }
-});
-
-// 註冊
+// è¨»å
 router.post("/register", async (req, res) => {
   let { email, username, password, role } = req.body;
   let newUser = new User({ email, username, password, role });
@@ -53,22 +29,22 @@ router.post("/register", async (req, res) => {
   try{
     let savedUser = await newUser.save();
     return res.send({
-      msg: "歡迎加入",
+      msg: "æ­¡è¿å å¥",
       savedUser,
     })
   } catch(e) {
-    res.status(500).send("無法儲存使用者...");
+    res.status(500).send("ç¡æ³å²å­ä½¿ç¨è...");
   }
 })
 
-// 修改名字、信箱
+// ä¿®æ¹åå­ãä¿¡ç®±
 router.patch("/patchProfile/:_id", async(req, res) => {
-  // 身分確認後確認文章存在，再儲存新資料
+  // èº«åç¢ºèªå¾ç¢ºèªæç« å­å¨ï¼åå²å­æ°è³æ
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
-      return res.status(400).send("找不到個資。無法刪除課程。");
+      return res.status(400).send("æ¾ä¸å°åè³ãç¡æ³åªé¤èª²ç¨ã");
     }
 
     if (profileFound.equals(_id)) {
@@ -79,32 +55,32 @@ router.patch("/patchProfile/:_id", async(req, res) => {
         runValidators: true,
       });
       return res.send({
-        message: "你的資料更新成功~",
+        message: "ä½ çè³ææ´æ°æå~",
         token: "JWT " + token,
         user: updatedProfile,
       });
     } else {
-      return res.status(403).send("只有用戶本人才能修改資料。");
+      return res.status(403).send("åªæç¨æ¶æ¬äººæè½ä¿®æ¹è³æã");
     }
   } catch(e) {
-    return res.status(500).send("無法修改資料");
+    return res.status(500).send("ç¡æ³ä¿®æ¹è³æ");
   };
 })
 
-// 修改身分
+// ä¿®æ¹èº«å
 router.patch("/patchRole/:_id", async(req, res) => {
-  // 身分確認後確認文章存在，再儲存新資料
-  // 新身分不能跟舊身分一致
+  // èº«åç¢ºèªå¾ç¢ºèªæç« å­å¨ï¼åå²å­æ°è³æ
+  // æ°èº«åä¸è½è·èèº«åä¸è´
   let { _id } = req.params;
   let { role } = req.body;
   try {
     let profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
-      return res.status(400).send("找不到個資。無法刪除課程。");
+      return res.status(400).send("æ¾ä¸å°åè³ãç¡æ³åªé¤èª²ç¨ã");
     }
     let roleFound = await User.findOne({ role }).exec();
     if ( profileFound.equals(roleFound) ) {
-      return res.status(400).send("與原本身分一致，無法更改");
+      return res.status(400).send("èåæ¬èº«åä¸è´ï¼ç¡æ³æ´æ¹");
     }
 
     if (profileFound.equals(_id)) {
@@ -115,56 +91,56 @@ router.patch("/patchRole/:_id", async(req, res) => {
         runValidators: true,
       });
       return res.send({
-        message: "你的身分更新成功~",
+        message: "ä½ çèº«åæ´æ°æå~",
         token: "JWT " + token,
         user: updatedProfile,
       });
     } else {
-      return res.status(403).send("只有用戶本人才能修改資料。");
+      return res.status(403).send("åªæç¨æ¶æ¬äººæè½ä¿®æ¹è³æã");
     }
   } catch(e) {
-    return res.status(500).send("無法修改資料");
+    return res.status(500).send("ç¡æ³ä¿®æ¹è³æ");
   };
 })
 
-// 登入
+// ç»å¥
 router.post("/login", async (req, res) => {
   const foundUser = await User.findOne( { email: req.body.email } );
   if ( !foundUser ){
-    return res.status(401).send("這個信箱沒註冊過喔...");
+    return res.status(401).send("éåä¿¡ç®±æ²è¨»åéå...");
   } 
 
   foundUser.comparePassword(req.body.password, (err, isMatch) => {
     if(err) return res.status(500).send(err);
 
     if (isMatch) {
-      // 製作json web token
+      // è£½ä½json web token
       const tokenObject = { _id: foundUser._id, email: foundUser.email };
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
       console.log(foundUser);
       return res.send({
-        message: "成功登入",
+        message: "æåç»å¥",
         token: "JWT " + token,
         user: foundUser,
       });
     }else {
-      return res.status(401).send("密碼錯誤");
+      return res.status(401).send("å¯ç¢¼é¯èª¤");
     }
   });
 })
 
-// 刪除
+// åªé¤
 router.delete("/:username", async(req, res) => {
   let { username } = req.params;
-  // 確認用戶存在
+  // ç¢ºèªç¨æ¶å­å¨
   try {
     let userFound = await User.findOne({ username }).exec();
     if (!userFound) {
-      return res.status(400).send("找不到這位User。無法刪除課程。");
+      return res.status(400).send("æ¾ä¸å°éä½Userãç¡æ³åªé¤èª²ç¨ã");
     } else {
-      // 使用者必須是此課程講師，才能刪
+      // ä½¿ç¨èå¿é æ¯æ­¤èª²ç¨è¬å¸«ï¼æè½åª
       await User.deleteOne({ username }).exec();
-      return res.send("用戶刪除成功~");
+      return res.send("ç¨æ¶åªé¤æå~");
     }
   } catch (e) {
     return res.status(500).send(e);
@@ -172,13 +148,13 @@ router.delete("/:username", async(req, res) => {
 })
 
 
-//放入幻燈片
+//æ¾å¥å¹»çç
 router.patch("/patchSlide/:_id", async(req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
-      return res.status(400).send("找不到個資。無法放入幻燈片。");
+      return res.status(400).send("æ¾ä¸å°åè³ãç¡æ³æ¾å¥å¹»ççã");
     }
 
     if (profileFound.equals(_id)) {
@@ -189,25 +165,25 @@ router.patch("/patchSlide/:_id", async(req, res) => {
         runValidators: true,
       });
       return res.send({
-        message: "你的資料更新成功~",
+        message: "ä½ çè³ææ´æ°æå~",
         token: "JWT " + token,
         user: patchSlide,
       });
     } else {
-      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+      return res.status(403).send("åªæç¨æ¶æ¬äººæè½æ¾å¥å¹»ççã");
     }
   } catch(e) {
-    return res.status(500).send("無法修改資料");
+    return res.status(500).send("ç¡æ³ä¿®æ¹è³æ");
   };
 })
 
-//放入文章Id
+//æ¾å¥æç« Id
 router.patch("/patchReviews/:_id", async(req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
-      return res.status(400).send("找不到個資。無法放入幻燈片。");
+      return res.status(400).send("æ¾ä¸å°åè³ãç¡æ³æ¾å¥å¹»ççã");
     }
 
     if (profileFound.equals(_id)) {
@@ -218,25 +194,25 @@ router.patch("/patchReviews/:_id", async(req, res) => {
         runValidators: true,
       });
       return res.send({
-        message: "你的資料更新成功~",
+        message: "ä½ çè³ææ´æ°æå~",
         token: "JWT " + token,
         user: patchReviews,
       });
     } else {
-      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+      return res.status(403).send("åªæç¨æ¶æ¬äººæè½æ¾å¥å¹»ççã");
     }
   } catch(e) {
-    return res.status(500).send("無法修改資料");
+    return res.status(500).send("ç¡æ³ä¿®æ¹è³æ");
   };
 })
 
-//修改人物
+//ä¿®æ¹äººç©
 router.patch("/patchCast/:_id", async(req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
-      return res.status(400).send("找不到個資。無法放入幻燈片。");
+      return res.status(400).send("æ¾ä¸å°åè³ãç¡æ³æ¾å¥å¹»ççã");
     }
 
     if (profileFound.equals(_id)) {
@@ -248,25 +224,25 @@ router.patch("/patchCast/:_id", async(req, res) => {
         { new: true, runValidators: true },
       );
       return res.send({
-        message: "你的資料更新成功~",
+        message: "ä½ çè³ææ´æ°æå~",
         token: "JWT " + token,
         user: patchCast,
       });
     } else {
-      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+      return res.status(403).send("åªæç¨æ¶æ¬äººæè½æ¾å¥å¹»ççã");
     }
   } catch(e) {
-    return res.status(500).send("無法修改資料");
+    return res.status(500).send("ç¡æ³ä¿®æ¹è³æ");
   };
 })
 
-//修改人物主題
+//ä¿®æ¹äººç©ä¸»é¡
 router.patch("/patchFavoritePerson/:_id", async(req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
-      return res.status(400).send("找不到個資。無法放入幻燈片。");
+      return res.status(400).send("æ¾ä¸å°åè³ãç¡æ³æ¾å¥å¹»ççã");
     }
 
     if (profileFound.equals(_id)) {
@@ -278,25 +254,25 @@ router.patch("/patchFavoritePerson/:_id", async(req, res) => {
         { new: true, runValidators: true },
       );
       return res.send({
-        message: "你的資料更新成功~",
+        message: "ä½ çè³ææ´æ°æå~",
         token: "JWT " + token,
         user: patchFavoritePerson,
       });
     } else {
-      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+      return res.status(403).send("åªæç¨æ¶æ¬äººæè½æ¾å¥å¹»ççã");
     }
   } catch(e) {
-    return res.status(500).send("無法修改資料");
+    return res.status(500).send("ç¡æ³ä¿®æ¹è³æ");
   };  
 })
 
-//修改主題
+//ä¿®æ¹ä¸»é¡
 router.patch("/patchTheme/:_id", async(req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
-      return res.status(400).send("找不到個資。無法放入幻燈片。");
+      return res.status(400).send("æ¾ä¸å°åè³ãç¡æ³æ¾å¥å¹»ççã");
     }
 
     if (profileFound.equals(_id)) {
@@ -308,134 +284,46 @@ router.patch("/patchTheme/:_id", async(req, res) => {
         { new: true, runValidators: true },
       );
       return res.send({
-        message: "你的資料更新成功~",
+        message: "ä½ çè³ææ´æ°æå~",
         token: "JWT " + token,
         user: patchTheme,
       });
     } else {
-      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+      return res.status(403).send("åªæç¨æ¶æ¬äººæè½æ¾å¥å¹»ççã");
     }
   } catch(e) {
-    return res.status(500).send("無法修改資料");
+    return res.status(500).send("ç¡æ³ä¿®æ¹è³æ");
   };  
 })
 
-//放入電影院
-// 更新 releases 屬性
-router.patch("/patchTheater/releases/:_id", async (req, res) => {
-  const { _id } = req.params;
+//æ¾å¥é»å½±é¢
+router.patch("/patchTheater/:_id", async(req, res) => {
+  let { _id } = req.params;
   try {
-    const profileFound = await User.findOne({ _id }).exec();
+    let profileFound = await User.findOne({ _id }).exec();
     if (!profileFound) {
-      return res.status(400).send("找不到個資。無法放入幻燈片。");
+      return res.status(400).send("æ¾ä¸å°åè³ãç¡æ³æ¾å¥å¹»ççã");
     }
 
     if (profileFound.equals(_id)) {
       const tokenObject = { _id: profileFound._id, email: profileFound.email };
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
-
-      let updateFields = {};
-      if (req.body.releases !== undefined) { // 檢查 releases 是否為 undefined
-        updateFields['theater.releases'] = req.body.releases;
-      } else {
-        return res.status(400).send("前端資料為null。");
-      }
-
       let patchTheater = await User.findOneAndUpdate(
-        { _id },
-        { $set: updateFields },
+        { _id }, 
+        req.body, 
         { new: true, runValidators: true },
       );
-
       return res.send({
-        message: "保存成功",
+        message: "ä¿å­æå",
         token: "JWT " + token,
         user: patchTheater,
       });
     } else {
-      return res.status(403).send("只有用戶本人才能放入幻燈片。");
+      return res.status(403).send("åªæç¨æ¶æ¬äººæè½æ¾å¥å¹»ççã");
     }
-  } catch (e) {
-    return res.status(500).send("無法修改資料");
-  };
-});
-
-// 更新 leaving 屬性
-router.patch("/patchTheater/leaving/:_id", async (req, res) => {
-  const { _id } = req.params;
-  try {
-    const profileFound = await User.findOne({ _id }).exec();
-    if (!profileFound) {
-      return res.status(400).send("找不到個資。無法放入幻燈片。");
-    }
-
-    if (profileFound.equals(_id)) {
-      const tokenObject = { _id: profileFound._id, email: profileFound.email };
-      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
-
-      let updateFields = {};
-      if (req.body.leaving !== undefined) { 
-        updateFields['theater.leaving'] = req.body.leaving;
-      } else {
-        return res.status(400).send("前端資料為null。"); 
-      }
-
-      let patchTheater = await User.findOneAndUpdate(
-        { _id },
-        { $set: updateFields },
-        { new: true, runValidators: true },
-      );
-
-      return res.send({
-        message: "保存成功",
-        token: "JWT " + token,
-        user: patchTheater,
-      });
-    } else {
-      return res.status(403).send("只有用戶本人才能放入幻燈片。");
-    }
-  } catch (e) {
-    return res.status(500).send("無法修改資料");
-  };
-});
-
-// 更新 upcoming 屬性
-router.patch("/patchTheater/upcoming/:_id", async (req, res) => {
-  const { _id } = req.params;
-  try {
-    const profileFound = await User.findOne({ _id }).exec();
-    if (!profileFound) {
-      return res.status(400).send("找不到個資。無法放入幻燈片。");
-    }
-
-    if (profileFound.equals(_id)) {
-      const tokenObject = { _id: profileFound._id, email: profileFound.email };
-      const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
-
-      let updateFields = {};
-      if (req.body.upcoming !== undefined) { 
-        updateFields['theater.upcoming'] = req.body.upcoming;
-      } else {
-        return res.status(400).send("前端資料為null。"); 
-      }
-
-      let patchTheater = await User.findOneAndUpdate(
-        { _id },
-        { $set: updateFields },
-        { new: true, runValidators: true },
-      );
-
-      return res.send({
-        message: "保存成功",
-        token: "JWT " + token,
-        user: patchTheater,
-      });
-    } else {
-      return res.status(403).send("只有用戶本人才能放入幻燈片。");
-    }
-  } catch (e) {
-    return res.status(500).send("無法修改資料");
-  };
-});
+  } catch(e) {
+    return res.status(500).send("ç¡æ³ä¿®æ¹è³æ");
+  };  
+})
 
 module.exports = router;

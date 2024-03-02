@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Content = require("../models").content;
 
 router.use("/", (req, res, next) => {
-  console.log("這裡是你的文章頁面...");
+  console.log("éè£¡æ¯ä½ çæç« é é¢...");
   next();
 });
 
@@ -10,12 +10,12 @@ router.get("/test", (req, res) => {
   return res.send("...");
 });
 
-// 發文
+// ç¼æ
 router.post("/", async (req, res) => {
   if (req.user.isFree()) {
-    return res.status(400).send("只有加入會員才可以發文唷~");
+    return res.status(400).send("åªæå å¥æå¡æå¯ä»¥ç¼æå·~");
   }
-  // 身分確認後儲存
+  // èº«åç¢ºèªå¾å²å­
   let { title, content, tags, TMDBId, TMDBImg } = req.body;
   try {
     let newContent = new Content({
@@ -28,25 +28,25 @@ router.post("/", async (req, res) => {
     });
     let savedContent = await newContent.save();
     return res.send({
-      message: "新文章已經保存",
+      message: "æ°æç« å·²ç¶ä¿å­",
       savedContent
     });
   } catch(e) {
-    return res.status(500).send("無法新增內容");
+    return res.status(500).send("ç¡æ³æ°å¢å§å®¹");
   };
 });
 
-// 改文
+// æ¹æ
 router.patch("/:_id", async (req, res) => {
   if (req.user.isFree()) {
-    return res.status(400).send("只有加入會員才可以發文唷~");
+    return res.status(400).send("åªæå å¥æå¡æå¯ä»¥ç¼æå·~");
   }
-  // 身分確認後確認文章存在，再儲存新資料
+  // èº«åç¢ºèªå¾ç¢ºèªæç« å­å¨ï¼åå²å­æ°è³æ
   let { _id } = req.params;
   try {
     let contentFound = await Content.findOne({ _id }).exec();
     if (!contentFound) {
-      return res.status(400).send("找不到文章。無法修改文章。");
+      return res.status(400).send("æ¾ä¸å°æç« ãç¡æ³ä¿®æ¹æç« ã");
     }
 
     if (contentFound.writer.equals(req.user._id)) {
@@ -55,43 +55,43 @@ router.patch("/:_id", async (req, res) => {
         runValidators: true,
       });
       return res.send({
-        message: "課程更新成功~",
+        message: "èª²ç¨æ´æ°æå~",
         updatedContent
       });
     } else {
-      return res.status(403).send("只有此文章的用戶才能刪除課程。");
+      return res.status(403).send("åªææ­¤æç« çç¨æ¶æè½åªé¤èª²ç¨ã");
     }
   } catch(e) {
-    return res.status(500).send("無法修改內容");
+    return res.status(500).send("ç¡æ³ä¿®æ¹å§å®¹");
   };
 });
 
-// 刪文
+// åªæ
 router.delete("/:_id", async(req, res) => {
   if (req.user.isFree()) {
-    return res.status(400).send("只有加入會員才可以發文唷~");
+    return res.status(400).send("åªæå å¥æå¡æå¯ä»¥ç¼æå·~");
   }
   let { _id } = req.params;
-  // 確認文章存在
+  // ç¢ºèªæç« å­å¨
   try {
     let contentFound = await Content.findOne({ _id }).exec();
     if (!contentFound) {
-      return res.status(400).send("找不到課程。無法刪除課程。");
+      return res.status(400).send("æ¾ä¸å°èª²ç¨ãç¡æ³åªé¤èª²ç¨ã");
     }
 
-    // 使用者必須是此課程講師，才能刪除課程
+    // ä½¿ç¨èå¿é æ¯æ­¤èª²ç¨è¬å¸«ï¼æè½åªé¤èª²ç¨
     if (contentFound.writer.equals(req.user._id)) {
       await Content.deleteOne({ _id }).exec();
-      return res.send("課程刪除成功~");
+      return res.send("èª²ç¨åªé¤æå~");
     } else {
-      return res.status(403).send("只有此課程的講師才能刪除課程。");
+      return res.status(403).send("åªææ­¤èª²ç¨çè¬å¸«æè½åªé¤èª²ç¨ã");
     }
   } catch (e) {
     return res.status(500).send(e);
   }
 });
 
-// 獲得系統中的所有發文
+// ç²å¾ç³»çµ±ä¸­çææç¼æ
 router.get("/", async (req, res) => {
   try{
     let contentFound = await Content.find({})
@@ -106,7 +106,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// 用作者Id找發文
+// ç¨ä½èIdæ¾ç¼æ
 router.get("/writer/:_writer_id", async (req, res) => {
   let { _writer_id } = req.params;
   let contentFound = await Content.find({ writer: _writer_id })
@@ -115,7 +115,7 @@ router.get("/writer/:_writer_id", async (req, res) => {
   return res.send(contentFound);
 });
 
-// 用標題尋找文章
+// ç¨æ¨é¡å°æ¾æç« 
 router.get("/findByContentTitle/:title", async (req, res) => {
   let { name } = req.params;
   try {
@@ -128,7 +128,7 @@ router.get("/findByContentTitle/:title", async (req, res) => {
   }
 });
 
-// 用TMDBId尋找文章
+// ç¨TMDBIdå°æ¾æç« 
 router.get("/findByTMDBId/:TMDBId", async (req, res) => {
   let { TMDBId } = req.params;
   try {
@@ -141,7 +141,7 @@ router.get("/findByTMDBId/:TMDBId", async (req, res) => {
   }
 });
 
-// 用文章ID尋找文章
+// ç¨æç« IDå°æ¾æç« 
 router.get("/findByContentId/:_id", async (req, res) => {
   let { _id } = req.params;
   try {
