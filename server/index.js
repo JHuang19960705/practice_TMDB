@@ -10,7 +10,6 @@ require("./config/passport")(passport);
 const cors = require("cors");
 const port = 3999;
 
-
 // mongoDB
 // MONGODB_LOCALHOST
 // MONGODB_CONNECTION
@@ -39,3 +38,6 @@ app.use("/api/content",
 app.listen(port, () => {
   console.log("server is listening port 3999...");
 });
+
+
+module.exports = app;
