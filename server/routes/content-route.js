@@ -2,7 +2,6 @@ const router = require("express").Router();
 const Content = require("../models").content;
 
 router.use("/", (req, res, next) => {
-  res.send("...");
   next();
 });
 
