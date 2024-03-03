@@ -1,9 +1,6 @@
 const router = require("express").Router();
 const User = require("../models").user;
-const Content = require("../models").content;
 const jwt = require("jsonwebtoken");
-
-
 
 router.use((req, res, next) => {
   console.log("allowing access to a request about auth...");

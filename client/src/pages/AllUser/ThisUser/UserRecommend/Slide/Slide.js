@@ -2,6 +2,7 @@ import React from 'react';
 import SlidePic from "./SlidePic";
 
 export default function Slide ({ userRecommend }) {
+
   return (
     <div id="carousel-wrap">
       <div id="carousel-container">

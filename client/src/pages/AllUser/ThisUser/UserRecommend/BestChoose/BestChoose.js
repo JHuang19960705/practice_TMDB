@@ -7,6 +7,7 @@ function BestChoose({userRecommend}) {
   const [isLoading, setLoading] = useState(true);
   const [personTV, setPersonTV] = useState(null);
   const [personDetail, setPersonDetail] = useState(null);
+
   useEffect(()=>{
     if(userRecommend){
       const personTVURL = `https://api.themoviedb.org/3/person/${userRecommend.favoritePerson}/tv_credits?&api_key=${API_KEY}`;
@@ -14,6 +15,7 @@ function BestChoose({userRecommend}) {
       searchAll(personTVURL, personDetailURL);
     }
   }, [userRecommend])
+
   const searchAll = async(URL1, URL2) => {
     let result1 = await axios.get(URL1);
     let result2 = await axios.get(URL2);
@@ -21,6 +23,7 @@ function BestChoose({userRecommend}) {
     setPersonDetail(result2.data);
     setLoading(false);
   }
+  
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }

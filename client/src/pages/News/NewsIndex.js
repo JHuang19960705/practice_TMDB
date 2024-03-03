@@ -11,24 +11,37 @@ export default function NewsIndex() {
   const [isLoading, setLoading] = useState(true);    
   let [newsData, setNewsData] = useState(null);
   let newsURL = `https://gnews.io/api/v4/top-headlines?country=jp&category=entertainment&page=${page}&max=10&apikey=${NEWS_API_KEY}`
+  
   const search = async(URL) =>{
-    let result = await axios.get(URL);
-    setNewsData(result.data.articles);
-    setLoading(false);
+    try {
+        let result = await axios.get(URL);
+        setNewsData(result.data.articles);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false); // 設定為 false 以停止 loading 狀態
+        console.error("Failed to fetch news data:", error);
+      }
   }
+
   useEffect(() => {
     search(newsURL);
   }, [])
+
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }
+
   const nextPage = async(e) =>{
-    page = e.currentTarget.dataset.pagenum;
-    newsURL = `https://gnews.io/api/v4/top-headlines?country=jp&category=entertainment&page=${page}&max=10&apikey=${NEWS_API_KEY}`
-    let result = await axios.get(newsURL);
-    setNewsData(result.data.articles);
-    console.log(newsURL)
+    const nextPageNum = e.currentTarget.dataset.pagenum;
+    const nextNewsURL = `https://gnews.io/api/v4/top-headlines?country=jp&category=entertainment&page=${nextPageNum}&max=10&apikey=${NEWS_API_KEY}`;
+    try {
+      let result = await axios.get(nextNewsURL);
+      setNewsData(result.data.articles);
+    } catch (error) {
+      console.error("Failed to fetch news data:", error);
+    }
   }
+
   return (
     <div className="cont">
       <div className="cont-left">
@@ -39,7 +52,6 @@ export default function NewsIndex() {
                 <p className="en">最新消息</p>
               </h2>
           </div>
-
 
           {/* <!-- 標籤 --> */}
           <div className="list-menu">
@@ -100,7 +112,6 @@ export default function NewsIndex() {
                 }
               </ul>
           </div>
-
 
           {/* <!-- 頁數 --> */}
           <div className="detail-pager-wrap">

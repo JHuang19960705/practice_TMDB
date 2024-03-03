@@ -7,11 +7,13 @@ export default function CharacterPic({ castId }) {
   const [isLoading, setLoading] = useState(true);
   const [character, setCharacter] = useState([]);
   const characterURL = `https://api.themoviedb.org/3/person/${castId}?api_key=${API_KEY}`;
+
   const search = async(url) => {
     let result = await axios.get(url);
     setCharacter(result.data);
     setLoading(false);
   }
+
   useEffect(()=>{
     search(characterURL);
   }, [])
@@ -19,6 +21,7 @@ export default function CharacterPic({ castId }) {
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }
+  
   return (
     <button className="js-character-pic" data-cast-id={character.id} target="_blank">
       <div className="character-pic" >

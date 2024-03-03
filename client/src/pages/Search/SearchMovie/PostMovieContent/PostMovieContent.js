@@ -46,7 +46,7 @@ export default function PostMovieContent ({ currentUser, setCurrentUser }) {
     ContentService.post(title, content, tags, getTMDBId, TMDBImg)
       .then(() => {
         window.alert("您的影評成功上傳");
-        navigate("/content");
+        navigate("/back/yourReviews");
       })
       .catch((error) => {
         console.log(error.response);

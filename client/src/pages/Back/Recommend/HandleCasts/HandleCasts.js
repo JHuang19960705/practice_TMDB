@@ -7,18 +7,17 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function HandleCasts({currentUser, setCurrentUser}) {
   const [isLoading, setLoading] = useState(true);
-  const [input, setInput] = useState("");
-  const [data, setData] = useState(null);
-  const [cast, setCast] = useState("");
-  const [newCast, setNewCast] = useState("");
   useEffect(() => {
     setLoading(false);
     setCast(currentUser.user.cast)
   },[])
+
+  
   //搜尋角色
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
+  let [input, setInput] = useState("");
+  let [data, setData] = useState(null);
+  let [cast, setCast] = useState("");
+  let [newCast, setNewCast] = useState("");
   const searchURL = `https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=ja-JP&query=${input}&page=1`; 
   const search2 = async(URL) => {
     let result = await axios.get(URL);
@@ -28,6 +27,9 @@ export default function HandleCasts({currentUser, setCurrentUser}) {
     setNewCast(e.target.value);
   }
 
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
   return (
     <div>
       <Search search={() => {search2(searchURL);}} setInput={setInput} />

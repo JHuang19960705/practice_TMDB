@@ -9,9 +9,10 @@ import Theme from './Theme/Theme';
 import "../../../../styles/crab.css";
 import AuthService from '../../../../services/auth.service';
 
-export default function Crabtv () {
+export default function UserRecommend () {
   const {userId} = useParams()
   const [userRecommend, setUserRecommend] = useState();
+
   useEffect(() => {
     AuthService.getUserRecommendById(userId)
       .then((data) => {
@@ -21,15 +22,16 @@ export default function Crabtv () {
         console.log(e);
       });
   }, []);
+
   return (
     <div>
     <Slide userRecommend={userRecommend} />
     <div className='big-wrap'>
       {/* <News /> */}
-      {/* <Character userRecommend={userRecommend}/> */}
+      <Character userRecommend={userRecommend}/>
     </div>
     <Reviews userRecommend={userRecommend}/>
-    {/* <Theme userRecommend={userRecommend}/> */}
+    <Theme userRecommend={userRecommend}/>
     <BestChoose userRecommend={userRecommend}/>
     </div>
   )

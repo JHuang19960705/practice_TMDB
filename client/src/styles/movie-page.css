@@ -413,13 +413,22 @@ body{
 
 
 /* 評論系統 */
-.movie--comment-system{
-    /* display: none; */
+.movie-comment-system{
+    position: fixed;
+    z-index: 1;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)
 }
 
 .movie-user{
     padding: 50px;
-    background-color: #ffffff;
+    overflow-y: auto;
     display: flex;
     justify-content: space-between;
     position: relative;

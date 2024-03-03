@@ -53,9 +53,6 @@ export default function ThisUser({ currentUser, setCurrentUser }) {
         </div>
       )}
       <Outlet />
-      {/* <iframe src="https://practice-tmdb-client.vercel.app/content" width="90%" height="400" ></iframe>
-      <UserRecommend currentUser={currentUser} setCurrentUser={setCurrentUser} />
-      <UserTheater currentUser={currentUser} setCurrentUser={setCurrentUser} /> */}
     </div>
   )
 }

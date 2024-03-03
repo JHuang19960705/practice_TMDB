@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
-import ReviewsPic from "./ReviewsPic1";
+import React from "react";
+import ReviewsPic from "./ReviewsPic";
 import { useNavigate } from "react-router-dom";
 
 function Reviews({ userRecommend }) {
   const navigate = useNavigate();
-  const [isLoading, setLoading] = useState(true);  
-  useEffect(() => {
-    if(userRecommend){setLoading(false);}
-  }, [userRecommend])
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
+
   return (
     <div className="media-studies-wrap">
       <div className="media-studies-wrap-left" id="media-studies-wrap-left">
@@ -56,9 +50,9 @@ function Reviews({ userRecommend }) {
       <div className="media-studies-long">
         <div className="media-studies-wrap-right js-media-studies-wrap">
           {
-            userRecommend.contentId && 
+            userRecommend && 
             userRecommend.contentId.map((id) => {  
-              return <ReviewsPic key={id} contentId={id}/>
+              return <ReviewsPic contentId={id}/>
             })
           }
         </div> 

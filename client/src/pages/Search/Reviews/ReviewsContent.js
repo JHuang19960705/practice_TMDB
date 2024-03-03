@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import ContentService from "../../../services/content.service";
 
-
 export default function ReviewsContent({currentUser}) {
   const { TMDBId } = useParams();
   const [contentData, setContentData] = useState(null);

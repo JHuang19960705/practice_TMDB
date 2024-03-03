@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link, Outlet } from "react-router-dom";
 import ContentService from "../../../../services/content.service";
 
-export default function PatchContentPage(props) {
-  let { currentUser, setCurrentUser, clickContent, setClickContent } = props;
+export default function PatchContentPage({ currentUser }) {
   const navigate = useNavigate();
   const {contentId} = useParams();
   const [contentData, setContentData] = useState(null);
@@ -15,7 +14,7 @@ export default function PatchContentPage(props) {
 
   useEffect(() => {
     if (currentUser) {
-      if (currentUser.user.role ==  "standard" || currentUser.user.role ==  "premium") {
+      if (currentUser.user.role == "standard" || currentUser.user.role ==  "premium") {
         ContentService.getContentByContentId(contentId)
           .then((data) => {
             setContentData(data.data);
@@ -49,14 +48,23 @@ export default function PatchContentPage(props) {
   const patchContent = () => {
     ContentService.patch( contentId , title, content, tags)
       .then(() => {
-        window.alert("文章修改成功");
+        window.alert("修改成功");
         navigate(0);
       })
       .catch((error) => {
-        console.log(error.response);
-        setMessage(error.response.data);
+        setMessage(error.response);
       });
   };
+  const handleDelete = async () => {
+    try {
+      await ContentService.delete(contentId);
+      navigate("/back/yourReviews");
+      setTimeout(()=>{navigate(0);},1)
+    } catch (error) {
+      setMessage(error.response);
+    }
+  };
+  
 
   if (isLoading) {
     return <div className="App">Loading...</div>;
@@ -115,10 +123,9 @@ export default function PatchContentPage(props) {
           />
           <br />
 
-          <button className="btn btn-primary" onClick={patchContent}>
-            修改文章
-          </button>
-
+          <button className="btn btn-primary" onClick={patchContent}>上傳影評</button>
+          <button onClick={handleDelete} className="btn btn-danger">刪除影評</button>
+          <Link to="reviewsComment" className="btn btn-success">查看回覆</Link>
           <br />
           <br />
           {message && (
@@ -126,6 +133,7 @@ export default function PatchContentPage(props) {
               {message}
             </div>
           )}
+          <Outlet />
         </div>
       )}
     </div>

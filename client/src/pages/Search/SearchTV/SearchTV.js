@@ -6,12 +6,12 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function SearchTV({ currentUser, setCurrentUser }) {
-  let [movie, setMovie] = useState(null);
+  let [tv, setTV] = useState(null);
   let [input, setInput] = useState("");
   let [data, setData] = useState(null);
   let [page, setPage] =useState(1);
   let [currentSearch, setCurrentSearch] = useState("");
-  const initialURL = `https://api.themoviedb.org/3/tv/popular?language=ja-JP&page=1&api_key=${API_KEY}`;
+  const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`絕命`}&page=1&include_adult=false`;
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
 
   const search = async (URL) => {
@@ -37,7 +37,7 @@ export default function SearchTV({ currentUser, setCurrentUser }) {
   };
 
   const handleChange = (e) => {
-    setMovie(e.currentTarget.dataset.movieId)
+    setTV(e.currentTarget.dataset.movieId)
   }
 
   return (
@@ -90,7 +90,7 @@ export default function SearchTV({ currentUser, setCurrentUser }) {
       </div>
       {/* <!--    右內容    --> */}
       <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-        <Outlet key={movie} />
+        <Outlet key={tv} />
       </div>
     </div>
   )

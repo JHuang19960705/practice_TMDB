@@ -33,11 +33,11 @@ export default function TVDetail() {
   return (
     <div className="kondo-wrap js-kondo-wrap">
       {TVAll && <Information videoAll={TVAll} />}
-      {casts[0] && casts[1] && casts[2] && casts[3] && <Charater casts={casts}/>}
+      {casts && casts.length > 4 && <Charater casts={casts}/>}
       {/* <Marquee /> */}
       {/* <Comment /> */}
       {/* <Introduction  movieId={TVId} /> */}
-      {/* <Link to={`/reviews/${TVId}`} className='d-flex justify-content-center'><button className="btn btn-success">看影評</button></Link> */}
+      <Link to={`/search/TV/reviews/${TMDBId}`} className='d-flex justify-content-center'><button className="btn btn-success">看影評</button></Link>
     </div>
 
   )

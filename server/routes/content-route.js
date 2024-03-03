@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Content = require("../models").content;
 
 router.use("/", (req, res, next) => {
-  console.log("這裡是你的文章頁面...");
+  res.send("...");
   next();
 });
 
@@ -117,9 +117,9 @@ router.get("/writer/:_writer_id", async (req, res) => {
 
 // 用標題尋找文章
 router.get("/findByContentTitle/:title", async (req, res) => {
-  let { name } = req.params;
+  let { title } = req.params;
   try {
-    let contentFound = await Content.find({ title: name })
+    let contentFound = await Content.find({ title: title })
       .populate("writer", ["email", "username"])
       .exec();
     return res.send(contentFound);

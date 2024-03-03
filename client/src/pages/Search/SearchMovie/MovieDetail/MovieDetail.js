@@ -13,7 +13,7 @@ export default function MovieDetail() {
   const [isLoading, setLoading] = useState(true);
   let [movieAll, setMovieAll] = useState(null);
   let [casts, setCasts] = useState(null);
-  const MovieURL = `https://api.themoviedb.org/3/movie/${TMDBId}?api_key=${API_KEY}&language=ja-JP`
+  const movieURL = `https://api.themoviedb.org/3/movie/${TMDBId}?api_key=${API_KEY}&language=ja-JP`
   const CastURL = `https://api.themoviedb.org/3/movie/${TMDBId}/credits?api_key=${API_KEY}&language=ja-JP`
   const search = async (URL1, URL2) => {
     let result1 = await axios.get(URL1);
@@ -23,7 +23,7 @@ export default function MovieDetail() {
     setLoading(false);
   };
   useEffect(()=>{
-    search(MovieURL, CastURL);  
+    search(movieURL, CastURL);  
   }, [])
 
   if (isLoading) {
@@ -33,11 +33,11 @@ export default function MovieDetail() {
   return (
     <div className="kondo-wrap js-kondo-wrap">
       {movieAll && <Information videoAll={movieAll} />}
-      {casts[0] && casts[1] && casts[2] && casts[3] && <Charater casts={casts}/>}
+      {casts && casts.length > 4 && <Charater casts={casts}/>}
       {/* <Marquee /> */}
       {/* <Comment /> */}
       {/* <Introduction  movieId={movieId} /> */}
-      {/* <Link to={`/reviews/${movieId}`} className='d-flex justify-content-center'><button className="btn btn-success">看影評</button></Link> */}
+      <Link to={`/search/movie/reviews/${TMDBId}`} className='d-flex justify-content-center'><button className="btn btn-success">看影評</button></Link>
     </div>
 
   )

@@ -8,19 +8,22 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 export default function PostTVContent ({ currentUser, setCurrentUser }) {
   const { TMDBId } = useParams();
   const [isLoading, setLoading] = useState(true);
-  let [movieAll, setMovieAll] = useState(null);
+  let [tvAll, setTVAll] = useState(null);
   let [getTMDBId, setGetTMDBId] = useState("");
   let [TMDBImg, setTMDBImg] = useState("");
+
   const TVURL = `https://api.themoviedb.org/3/tv/${TMDBId}?api_key=${API_KEY}`
+  
   const search = async (URL1) => {
     let result = await axios.get(URL1);
-    setMovieAll(result.data);
+    setTVAll(result.data);
     setGetTMDBId(result.data.id);
     result.data.backdrop_path && (
       setTMDBImg(result.data.backdrop_path)
     )
     setLoading(false);
   };
+
   useEffect(()=>{
     search(TVURL);  
   }, [])
@@ -46,7 +49,7 @@ export default function PostTVContent ({ currentUser, setCurrentUser }) {
     ContentService.post(title, content, tags, getTMDBId, TMDBImg)
       .then(() => {
         window.alert("您的影評成功上傳");
-        navigate("/content");
+        navigate("/back/yourReviews");
       })
       .catch((error) => {
         console.log(error.response);
@@ -74,7 +77,7 @@ export default function PostTVContent ({ currentUser, setCurrentUser }) {
       )}
         <div className="form-group">
 
-          <div>{movieAll.name}</div>
+          <div>{tvAll.name}</div>
 
           <label for="exampleforTitle">文章標題：</label>
           <input
