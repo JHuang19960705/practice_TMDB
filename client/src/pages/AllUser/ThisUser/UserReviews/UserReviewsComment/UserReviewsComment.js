@@ -5,9 +5,10 @@ import ContentService from "../../../../../services/content.service";
 export default function UserReviewsComment({ currentUser, setCurrentUser }) {
   const [contentData, setContentData] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const navigate = useNavigate();
   const { contentId } = useParams();
   const { userId } = useParams();
+  const navigate = useNavigate();
+  
   useEffect(() => {
     if (currentUser) {
       if (currentUser.user.role ==  "standard" || currentUser.user.role ==  "premium") {

@@ -1,5 +1,5 @@
 import React from 'react';
-import SlidePic from "./SlidePic";
+const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 export default function Slide ({ userRecommend }) {
 
@@ -8,9 +8,11 @@ export default function Slide ({ userRecommend }) {
       <div id="carousel-container">
         <ul id="carousel" className="animate js-slider-wrap">
           {
-            userRecommend &&
-            userRecommend.slide.map((TMDBId) => {         
-              return <SlidePic TMDBId={TMDBId} />
+            userRecommend && userRecommend.slide.tmdbImgBackdrop &&
+            userRecommend.slide.tmdbImgBackdrop.map((backdrop) => {         
+              return (<button className="slide js-slide">
+                       <img src={tmdbBaseURL + backdrop} />
+                     </button>)
             })
           }
         </ul>

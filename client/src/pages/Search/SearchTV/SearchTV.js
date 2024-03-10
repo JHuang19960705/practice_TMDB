@@ -53,8 +53,8 @@ export default function SearchTV({ currentUser, setCurrentUser }) {
               if (d.original_name && d.origin_country && d.backdrop_path) {    
                 return (
                   <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
-                    <div className="picture">
-                      <p>{d.title}</p>
+                    <div className="w-full">
+                      <p className="truncate">{d.original_name}</p>
                       <Link to={`${d.id}`} onClick={handleChange} data-movie-id={d.id} className="imageContainer">
                         <img src={ tmdbBaseURL + d.poster_path} />
                       </Link>
@@ -72,7 +72,7 @@ export default function SearchTV({ currentUser, setCurrentUser }) {
                     }
                     { currentUser && currentUser.user.role == "free" && (
                       <div className="member-button">
-                        <Link to={`/reviews/${data.id}`} className='reviews-writing' target="_blank">
+                        <Link to={`reviews/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
                           看影評
                         </Link>
                       </div>

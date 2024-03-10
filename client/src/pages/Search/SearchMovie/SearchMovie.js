@@ -41,54 +41,55 @@ export default function SearchMovie({ currentUser, setCurrentUser }) {
   }
 
   return (
-    <div className="flex-grow flex overflow-x-hidden">
-    {/* <!--   左內容   --> */}
-    <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
-      <Search2 search={() => {search(searchURL);}} setInput={setInput} />
-      <div className="space-y-4 mt-3">
-        {
-          data &&
-          data.map((d) => {        
-            return (
-              <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
-                <div className="picture">
-                  <p>{d.title}</p>
-                  <Link to={`${d.id}`} onClick={handleChange} data-movie-id={d.id} className="imageContainer">
-                    <img src={ tmdbBaseURL + d.poster_path} />
-                   </Link>
-                </div>
-                { currentUser && currentUser.user.role !== "free" && (
+    <div className="flex-grow flex overflow-y-hidden">
+      {/* <!--   左內容   --> */}
+      <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
+        <div className="text-xs text-gray-400 tracking-wider">Movie</div>
+        <Search2 search={() => {search(searchURL);}} setInput={setInput} />
+        <div className="space-y-4 mt-3">
+          {
+            data &&
+            data.map((d) => {        
+              return (
+                <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
+                  <div className="w-full">
+                    <p className="truncate">{d.title}</p>
+                    <Link to={`${d.id}`} onClick={handleChange} data-movie-id={d.id} className="imageContainer">
+                      <img src={ tmdbBaseURL + d.poster_path} />
+                    </Link>
+                  </div>
+                  { currentUser && currentUser.user.role !== "free" && (
+                      <div className="member-button">
+                        <Link to={`postMovieContent/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
+                          寫影評
+                        </Link>
+                        <Link to={`reviews/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
+                          看影評
+                        </Link>
+                      </div>
+                    )
+                  }
+                  { currentUser && currentUser.user.role == "free" && (
                     <div className="member-button">
-                      <Link to={`postMovieContent/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
-                        寫影評
-                      </Link>
                       <Link to={`reviews/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
                         看影評
                       </Link>
                     </div>
-                  )
-                }
-                { currentUser && currentUser.user.role == "free" && (
-                  <div className="member-button">
-                    <Link to={`/reviews/${data.id}`} className='reviews-writing' target="_blank">
-                      看影評
-                    </Link>
-                  </div>
-                  )
-                }
-              </button>
-            )
-          })
-        }
+                    )
+                  }
+                </button>
+              )
+            })
+          }
+        </div>
+        <div className="morePicture">
+          <button onClick={ morePicture }>MORE</button>
+        </div>
       </div>
-      <div className="morePicture">
-        <button onClick={ morePicture }>MORE</button>
+      {/* <!--    右內容    --> */}
+      <div className="h-full flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
+        <Outlet key={movie} />
       </div>
-    </div>
-    {/* <!--    右內容    --> */}
-    <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-      <Outlet key={movie} />
-    </div>
     </div>
   )
 }

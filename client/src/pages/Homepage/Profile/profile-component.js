@@ -17,41 +17,19 @@ const ProfileComponent = ({ currentUser, setCurrentUser }) => {
     nagivate("/profile/patchRole")
   }
   return (
-    <div style={{ padding: "3rem" }}>
+    <div>
       {!currentUser && <div>在獲取您的個人資料之前，您必須先登錄。</div>}
       {currentUser && (
-        <div className="card">
-          <h2>以下是您的個人檔案：</h2>
-          <table className="table">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>姓名：{currentUser.user.username}</strong>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>您的用戶ID: {currentUser.user._id}</strong>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>您註冊的電子信箱: {currentUser.user.email}</strong>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>身份: {currentUser.user.role}</strong>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="d-flex flex-row-reverse">
-            <button onClick={handleUserLogout} className="btn btn-secondary btn-lg p-2">登出</button>
-            <button onClick={handleUserPatch} className="btn btn-secondary btn-lg p-2">修改</button>
-            <button onClick={handleUserPlan} className="btn btn-secondary btn-lg p-2">方案</button>
-          </div>
+        <div className="flex-col items-start justify-around min-h-[132px] w-full space-y-4 overflow-hidden rounded-2xl bg-green-500 p-4 text-slate-950">
+          <div>姓名{currentUser.user.username}</div>
+          <div>信箱{currentUser.user.email}</div>
+          <div>身份{currentUser.user.role}</div>
         </div>
+          // {/* <div className="d-flex flex-row-reverse">
+          //   <button onClick={handleUserLogout} className="btn btn-secondary btn-lg p-2">登出</button>
+          //   <button onClick={handleUserPatch} className="btn btn-secondary btn-lg p-2">修改</button>
+          //   <button onClick={handleUserPlan} className="btn btn-secondary btn-lg p-2">方案</button>
+          // </div> */}
       )}
     </div>
   );

@@ -1,33 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import AuthService from '../../../../../services/auth.service';
-import SlidePic from '../../../../AllUser/ThisUser/UserRecommend/Slide/SlidePic';
+import React from 'react'
+const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
-export default function CurrentSlide({currentUser, setCurrentUser}) {
-  const [userRecommend, setUserRecommend] = useState();
-  const [isLoading, setLoading] = useState(true);
-  useEffect(() => {
-    AuthService.getUserRecommendById(currentUser.user._id)
-      .then((data) => {
-        setUserRecommend(data.data);
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [currentUser]);
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
+export default function CurrentSlide({currentUser}) {
+  
   return (
     <div id="carousel-wrap">
     <div id="carousel-container">
       <ul id="carousel" className="animate js-slider-wrap">
-        {
-          userRecommend &&
-          userRecommend.slide.map((TMDBId) => {         
-            return <SlidePic TMDBId={TMDBId} />
-          })
-        }
+        {currentUser && currentUser.user.slide.tmdbImgBackdrop &&
+          currentUser.user.slide.tmdbImgBackdrop.map((backdrop) => {         
+            return (
+              <button className="slide js-slide">
+                <img src={tmdbBaseURL + backdrop} />
+              </button>
+        )})}
       </ul>
       <div id="controls">
         <span id="prev" className="js-slider-prev"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/prev.png"/></span>

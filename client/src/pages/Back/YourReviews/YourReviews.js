@@ -19,7 +19,7 @@ export default function YourReviews({ currentUser }) {
         _id = currentUser.user._id;
         let data;
         if (currentUser.user.role === "standard" || currentUser.user.role === "premium") {
-          data = await ContentService.get(_id);
+          data = await ContentService.getContentByUserId(_id);
         } else if (currentUser.user.role === "free") {
           data = await ContentService.getEnrolledContents(_id);
         }
@@ -41,14 +41,13 @@ export default function YourReviews({ currentUser }) {
   }
 
   return (
-    <div className="flex-grow flex overflow-x-hidden">
+    <div className="flex-grow flex dark:bg-gray-900 overflow-y-auto">
       {/* <!--   左半查詢其他user   --> */}
       <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
         <div className="space-y-4 mt-3">
           {contentData && contentData.map((content) => {
             return (
               <Link
-                // key={clickContent} 
                 to={`${content._id}`} 
                 onClick={displayContent} 
                 data-content-id={content._id} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
@@ -63,13 +62,10 @@ export default function YourReviews({ currentUser }) {
             )
           })}
         </div>
-      </div>
-      {/* <!--   右半區塊   --> */}
-      <div className="flex-col w-full h-screen overflow-y-auto h-full">
-        {/* <!--   用戶內容    --> */}
-        <div className="flex-grow bg-white dark:bg-gray-900">
-          <Outlet key={clickContent} />
-        </div>
+      </div>     
+      {/* <!--   用戶內容    --> */}
+      <div className="h-full flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
+        <Outlet key={clickContent} />
       </div>
     </div>
   )

@@ -20,46 +20,6 @@
   justify-content: space-around;
 }
 
-nav {
-  background-color: rgb(228, 255, 226);
-}
-nav ul {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 2rem;
-}
-nav ul li {
-  padding: 0.5rem 1rem;
-}
-nav ul li a {
-  font-size: 1.25rem;
-}
-
-.search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem 0rem;
-}
-.search input,
-.search button {
-  font-size: 2rem;
-  padding: 0.25rem;
-  border: 3px solid rgb(186, 252, 181);
-}
-.search button {
-  background-color: rgb(186, 252, 181);
-}
-
-.footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.25rem;
-  background-color: rgb(228, 255, 226);
-  min-height: 10vh;
-}
-
 .pictures {
   display: flex;
   flex-wrap: wrap;

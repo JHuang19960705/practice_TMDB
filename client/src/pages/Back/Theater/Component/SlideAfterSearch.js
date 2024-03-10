@@ -1,47 +1,50 @@
-import React, { useState } from 'react'
-import { Outlet, Link } from "react-router-dom"
+import React from 'react'
+import {  Link } from "react-router-dom"
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
-export default function SlideAfterSearch({data, newOnTime, setNewOnTime}) {
-  const handleSlide = (e) => {
-    let TMDBId = e.currentTarget.dataset.tmdbId;
-    let TMDBImg = e.currentTarget.dataset.tmdbImg;
-    setNewOnTime([...newOnTime, { onTime: TMDBId, onTimeImg: TMDBImg }]);
-  }
+export default function SlideAfterSearch({data, handleNewSlide}) {
 
   return (
-    <tbody className="text-gray-600 dark:text-gray-100">
-      <tr>
-        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-          <div className="flex items-center">
-            {data.original_name}
+    <tbody class="text-gray-600 dark:text-gray-500">       
+      <tr class="hidden md:table-row">
+        <td class="sm:p-3 py-2 px-1 w-1/4 border-b border-gray-200 dark:border-gray-800">
+          <div class="flex items-center"><p className='w-[140px] truncate'>{data.original_name || data.title}</p></div>
+        </td>
+        <td class="sm:p-3 py-2 px-1 w-1/4 border-b border-gray-200 dark:border-gray-800">
+          <div class="flex items-center">
+            <a class="imageContainer">
+              <Link to={`/movie/${data.id}`} className="imageContainer" target="_blank">
+                <img className='w-20' src={ tmdbBaseURL + data.poster_path} />
+              </Link>
+            </a>
           </div>
         </td>
-        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-          <div className="flex items-center">
+        <td class="sm:p-3 py-2 px-1 w-1/4 border-b border-gray-200 dark:border-gray-800">
+          {data.first_air_date && data.first_air_date  ||  data.release_date}
+        </td>
+        <td class="sm:p-3 py-2 px-1 w-1/4 border-b border-gray-200 dark:border-gray-800">
+          <div class="flex items-center">
+            <button onClick={()=>{handleNewSlide(data.backdrop_path, data.poster_path)}} className="rounded-ln bg-blue-50 w-[100px] py-2 text-blue-500">選取slide</button>
+          </div>
+        </td>
+      </tr>
+  
+      <div class="mb-5 flex justify-around items-center border-b border-grey-dark pb-5 md:hidden">
+        <div class="w-1/3">
+          <div class="aspect-w-1 aspect-h-1 w-full">
             <Link to={`/movie/${data.id}`} className="imageContainer" target="_blank">
               <img className='w-20' src={ tmdbBaseURL + data.poster_path} />
             </Link>
           </div>
-        </td>
-        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 md:table-cell hidden">{data.origin_country}</td>
-        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800 text-green-500">
-          {
-            data.genre_ids && 
-            data.genre_ids.map(
-              (id)=>{return(<span className="mr-10">{id}</span>)}
-            )
-          }
-        </td>
-        <td className="sm:p-3 py-2 px-1 border-b border-gray-200 dark:border-gray-800">
-          <div className="flex items-center">
-            <div className="sm:flex hidden flex-col">
-              {data.first_air_date && (data.first_air_date)}
-            </div>
-            <button onClick={handleSlide} data-tmdb-id={data.id} data-tmdb-img={data.poster_path} className="btn btn-light btn-sm">選取slide</button>
+        </div>
+        <div class="pl-4">
+          <div class="w-[150px] mt-2 text-base font-bold text-secondary truncate ">{data.original_name || data.title}</div>
+          <div class="block font-hk text-secondary">{data.first_air_date && data.first_air_date  ||  data.release_date}</div>
+          <div>
+          <button onClick={()=>{handleNewSlide(data.backdrop_path, data.poster_path)}} className="rounded-ln bg-blue-50 w-[100px] py-2 text-blue-500">選取slide</button>
           </div>
-        </td>
-      </tr>
+        </div>
+      </div>
     </tbody>
   )
 }

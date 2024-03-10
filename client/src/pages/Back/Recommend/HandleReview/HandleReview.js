@@ -1,87 +1,112 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ContentService from "../../../../services/content.service";
 import AuthService from "../../../../services/auth.service";
+import Review from "./Review/Review";
+import ChangeReview from "./ChangeReview/ChangeReview";
+import ContentService from "../../../../services/content.service"
 
-export default function HandleReview({ reviewDisplay, currentUser, setCurrentUser }) {
-  let [message, setMessage] = useState("");
-  let [contentId, setContentId] = useState([]);
+export default function HandleReview({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
-  const [contentData, setContentData] = useState(null);
+  const [message, setMessage] = useState("");
+  const [recommendReviews, setRecommendReviews] = useState([]);
+  const [allReviews, setAllReviews] = useState([]);
+  const [newReview, setNewReview] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    if(currentUser){
+      getAllReviews()
+    }
+  }, [currentUser])
+
+  
+  
+  const getAllReviews = () => {
     let _id;
     if (currentUser) {
       _id = currentUser.user._id;
-      if (currentUser.user.role ==  "standard" || currentUser.user.role ==  "premium") {
-        ContentService.get(_id)
+        ContentService.getContentByUserId(_id)
           .then((data) => {
-            setContentData(data.data);
+            setAllReviews(data.data);
+            setRecommendReviews(data.data)
+            getRecommendReviews()
           })
           .catch((e) => {
             console.log(e);
           });
-      } else if (currentUser.user.role == "free") {
-        ContentService.getEnrolledContents(_id)
-          .then((data) => {
-            console.log(data);
-            setContentData(data.data);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      }
     }
-  }, []);
-
-  const handleReviews = (e) => {
-    let contentIdfront = e.currentTarget.dataset.contentId;
-    setContentId([...contentId, contentIdfront]);
   }
 
-  const handlePatchReviews = async() => {
-    console.log(contentId);
+  const getRecommendReviews = () => {
+    setRecommendReviews(prevReviews => prevReviews.filter(r => currentUser.user.contentId.includes(r._id)));
+  }
+
+  const handleChangeOpen = () => {
+    setIsOpen(true)
+  }
+
+  const handleChangeClose = () => {
+    setIsOpen(false)
+  }
+
+  const checkIfDouble = (newR) => {
+    if (recommendReviews[0]){
+      if(!recommendReviews.includes(newR)){
+        setRecommendReviews([...recommendReviews, newR]);
+        setIsOpen(false)
+      }else{
+        window.alert(`已經有${newR.title}囉~`)
+        setIsOpen(false)
+      }
+    }else{
+      setRecommendReviews([...recommendReviews, newR]);
+      setIsOpen(false)
+    }
+  }
+
+  const deleteReview = (id) => {
+    setRecommendReviews(recommendReviews.filter(r => r !== id))
+  }
+
+  const patchReview = async(upDatedRecommendReviewsId) => {
+    const newAllReviewsId = upDatedRecommendReviewsId;
     try{  
-      let response = await AuthService.patchReviews(currentUser.user._id, contentId)
-      window.alert("修改成功。您現在將被導向到電影大廳");
-      localStorage.setItem("user", JSON.stringify(response.data));
-      setCurrentUser(AuthService.getCurrentUser());
-      navigate("/crabtv");
+    let response = await AuthService.patchReviews(currentUser.user._id, newAllReviewsId)
+    window.alert("主題修改成功~");
+    localStorage.setItem("user", JSON.stringify(response.data));
+    setCurrentUser(AuthService.getCurrentUser());
+    navigate(0);
     } catch (e) {
       setMessage(e.response.data);
     };
+
   }
-  
+
   return (
-    <div style={{display:`${reviewDisplay}`}}>
-      <div className="d-flex justify-content-around">
-        <button onClick={handlePatchReviews} className="btn btn-primary">把影評放到前台</button>
-      </div>
-      {currentUser && contentData && contentData.length != 0 &&(
-        <div className="justify-content-center" style={{ display: "flex", flexWrap: "wrap" }}>
-          {contentData.map((content) => {
-            return (
-              <div className="card" style={{ width: "18rem", margin: "1rem" }}>
-                <div className="card-body">
-                  <div>
-                    <h5 className="card-title">文章題目:{content.title}</h5>
-                    <button onClick={handleReviews} data-content-id={content._id} className="btn btn-light btn-sm">選取reviews</button>
-                  </div>
-                  <textarea style={{ margin: "1rem 0rem", height:"100px"}} className="card-text">
-                    {content.content}
-                  </textarea>
-                  <p style={{ margin: "0.5rem 0rem" }}>
-                    回應人數: {content.commenters.length}
-                  </p>
-                  <p style={{ margin: "0.5rem 0rem" }}>
-                    TAG: {content.tags}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+    <div>
+      <div className="sticky left-0 top-0 z-10">
+        <div className="flex w-full flex-col items-center overflow-hidden rounded-b-3xl bg-white p-3 shadow">
+          {!recommendReviews[0] && <div className="text-center">你還沒選擇要推薦的影評唷~<br/>▼快來選▼</div>}
+          {recommendReviews[0] && <button onClick={() => { patchReview(recommendReviews) }} className="mb-5 border border-blue-500 px-3 text-blue-500">確定</button>}
+          <div className="flex flex-wrap justify-center">
+            {recommendReviews &&
+              recommendReviews.map((r) => {
+                return <button onClick={() => {deleteReview(r)}} className="mb-3 mr-3 rounded-md bg-gray-200 px-4 py-1 w-28 truncate">{r.title}</button>
+              })
+            }
+          </div>
         </div>
-      )}  
+      </div>
+      <section className="archive">
+        <div>
+          {allReviews && allReviews.map((r) => {
+            return <Review review={r} setNewReview={setNewReview} handleChangeOpen={handleChangeOpen}/>
+          })}
+        </div>  
+      </section>
+      {isOpen &&
+        <ChangeReview newReview={newReview} checkIfDouble={checkIfDouble} handleChangeClose={handleChangeClose} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      }
     </div>
   )
 }

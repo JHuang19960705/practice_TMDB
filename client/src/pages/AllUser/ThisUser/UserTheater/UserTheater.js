@@ -63,26 +63,26 @@ export default function UserTheater () {
                   <div className="gallery_inner">
                     <div className="items js-products-wrap" >
                       {isOpen1 && (
-                        userRecommend.theater &&
-                        userRecommend.theater.releases.map((id) => {
+                        userRecommend.theater.releases.tmdbImgPoster &&
+                        userRecommend.theater.releases.tmdbImgPoster.map((poster) => {
                           return (
-                            <TheaterItems data={id} cartItem={cartItem} setCartItem={setCartItem}/>
+                            <TheaterItems poster={poster} cartItem={cartItem} setCartItem={setCartItem}/>
                           )
                         })
                       )}
                       {isOpen2 && (
-                        userRecommend.theater &&
-                        userRecommend.theater.leaving.map((id) => {
+                        userRecommend.theater.leaving.tmdbImgPoster &&
+                        userRecommend.theater.leaving.tmdbImgPoster.map((poster) => {
                           return (
-                            <TheaterItems data={id} cartItem={cartItem} setCartItem={setCartItem}/>
+                            <TheaterItems poster={poster} cartItem={cartItem} setCartItem={setCartItem}/>
                           )
                         })
                       )}
                       {isOpen3 && (
-                        userRecommend.theater &&
-                        userRecommend.theater.upcoming.map((id) => {
+                        userRecommend.theater.upcoming.tmdbImgPoster &&
+                        userRecommend.theater.upcoming.tmdbImgPoster.map((poster) => {
                           return (
-                            <TheaterItems data={id} cartItem={cartItem} setCartItem={setCartItem}/>
+                            <TheaterItems poster={poster} cartItem={cartItem} setCartItem={setCartItem}/>
                           )
                         })
                       )}

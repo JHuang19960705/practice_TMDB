@@ -1,59 +1,61 @@
 import React, { useState, useEffect } from "react";
-import Cast from "../../../../components/Charactor/Cast";
-import Search from "../../../../components/Search2";
-import axios from "axios";
+import Cast from "./Cast/Cast";
 import "../../../../styles/celebrity-index.css";
-const API_KEY = process.env.REACT_APP_API_KEY;
+import SearchCast from "./SearchCast/SearchCast";
+import ChangeCast from "./ChangeCast/ChangeCast";
+
 
 export default function HandleCasts({currentUser, setCurrentUser}) {
   const [isLoading, setLoading] = useState(true);
+  const [castAll, setCastAll] = useState("");
+  const [newCast, setNewCast] = useState("");
+  const [oldCast, setOldCast] = useState("")
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  
   useEffect(() => {
     setLoading(false);
-    setCast(currentUser.user.cast)
-  },[])
+    setCastAll(currentUser.user.cast)
+  },[currentUser])
 
-  
-  //搜尋角色
-  let [input, setInput] = useState("");
-  let [data, setData] = useState(null);
-  let [cast, setCast] = useState("");
-  let [newCast, setNewCast] = useState("");
-  const searchURL = `https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=ja-JP&query=${input}&page=1`; 
-  const search2 = async(URL) => {
-    let result = await axios.get(URL);
-    setData(result.data.results);
+  const handleChangeOpen1 = () => {
+    setIsOpen1(true)
   }
-  const handleNewCast = (e) => {
-    setNewCast(e.target.value);
+
+  const handleChangeClose1 = () => {
+    setIsOpen1(false)
+  }
+
+  const handleChangeOpen2 = () => {
+    setIsOpen2(true)
+  }
+
+  const handleChangeClose2 = () => {
+    setIsOpen2(false)
   }
 
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }
+
   return (
     <div>
-      <Search search={() => {search2(searchURL);}} setInput={setInput} />
-      <div className="d-flex justify-content-center">
-        <span>結果</span>
-        <select className="rent-day" onClick={handleNewCast}>
-          <option>--請選擇--</option>
-          { data && data.map((d) => {
-              return (
-                <option value={d.id}>{d.name}</option>
-              )
-            })
-          }
-        </select>
-      </div>
-      <section className="archive js-celebrities-wrap" >
-        { <div>
-            <Cast castId={currentUser.user.cast.cast1} cast={cast} newCast={newCast} currentUser={currentUser} setCurrentUser={setCurrentUser} />
-            <Cast castId={currentUser.user.cast.cast2} cast={cast} newCast={newCast} currentUser={currentUser} setCurrentUser={setCurrentUser} />
-            <Cast castId={currentUser.user.cast.cast3} cast={cast} newCast={newCast} currentUser={currentUser} setCurrentUser={setCurrentUser} />
-            <Cast castId={currentUser.user.cast.cast4} cast={cast} newCast={newCast} currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <section className="archive">
+        { castAll && currentUser && 
+          <div>
+            <Cast key={currentUser.user.cast.cast1} castId={currentUser.user.cast.cast1} setOldCast={setOldCast} handleChangeOpen1={handleChangeOpen1} />
+            <Cast key={currentUser.user.cast.cast2} castId={currentUser.user.cast.cast2} setOldCast={setOldCast} handleChangeOpen1={handleChangeOpen1} />
+            <Cast key={currentUser.user.cast.cast3} castId={currentUser.user.cast.cast3} setOldCast={setOldCast} handleChangeOpen1={handleChangeOpen1} />
+            <Cast key={currentUser.user.cast.cast4} castId={currentUser.user.cast.cast4} setOldCast={setOldCast} handleChangeOpen1={handleChangeOpen1} />
           </div>  
         }
       </section>
+      { isOpen1 &&
+        <SearchCast setNewCast={setNewCast} handleChangeOpen2={handleChangeOpen2} handleChangeClose2={handleChangeClose2} handleChangeClose1={handleChangeClose1}/>
+      }
+      { isOpen2 &&
+        <ChangeCast key={oldCast} newCast={newCast} oldCast={oldCast} castAll={castAll} handleChangeClose1={handleChangeClose1} handleChangeClose2={handleChangeClose2} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      }
     </div>
   )
 }

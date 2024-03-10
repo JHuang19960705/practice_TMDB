@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models").user;
+const Content = require("../models").content;
 const jwt = require("jsonwebtoken");
 
 router.use((req, res, next) => {
@@ -183,7 +184,6 @@ router.patch("/patchSlide/:_id", async(req, res) => {
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
       let patchSlide = await User.findOneAndUpdate({ _id }, req.body, {
         new: true,
-        runValidators: true,
       });
       return res.send({
         message: "你的資料更新成功~",

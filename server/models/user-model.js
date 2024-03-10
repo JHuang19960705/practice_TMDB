@@ -30,17 +30,9 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  slide: {
-    type: [String],
-    default: [],
-  },
-  slideImg: {
-    type: [String],
-    default: [],
-  },
-  contentId: {
-    type: [String],
-    default: [],
+  slide: { 
+    tmdbImgBackdrop: {type: [String], default: []},
+    tmdbImgPoster: {type: [String], default: []}
   },
   cast: {
     cast1: {type: String, default: "1257220"},
@@ -48,18 +40,31 @@ const userSchema = new Schema({
     cast3: {type: String, default: "585211"},
     cast4: {type: String, default: "100766"},
   },
-  favoritePerson: {
-    type: String,
-    default: "87661",
+  contentId: {
+    type: [String],
+    default: [],
   },
   theme: {
     type: [String],
     default: ["35", "16", "9648", "10759", "80"],
   },
+  favoritePerson: {
+    type: String,
+    default: "87661",
+  },
   theater: {
-    releases: {type: [String], default:[]},
-    leaving: {type: [String], default:[]},
-    upcoming: {type: [String], default:[]},
+    releases: { 
+      tmdbImgBackdrop: {type: [String], default: []},
+      tmdbImgPoster: {type: [String], default: []}
+    },
+    leaving: { 
+      tmdbImgBackdrop: {type: [String], default: []},
+      tmdbImgPoster: {type: [String], default: []}
+    },
+    upcoming: { 
+      tmdbImgBackdrop: {type: [String], default: []},
+      tmdbImgPoster: {type: [String], default: []}
+    },
   }
 
 })

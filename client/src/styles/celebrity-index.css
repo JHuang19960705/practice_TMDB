@@ -1,5 +1,3 @@
-
-
 .f-sans {
   font-family: "Public Sans", sans-serif;
   font-weight: 400;
@@ -16,7 +14,7 @@
 
 .archive {
   position: relative;
-  padding: 100px 20px;
+  padding: 25px 20px;
 }
 
 .archive_kv{
@@ -25,7 +23,7 @@
 
 @media(min-width: 960px) {
   .archive {
-    padding: 15.4296875vw 27vw;
+    padding: 5vw 27vw;
   }
 }
 
@@ -218,10 +216,15 @@
 
 .archive_description {
   margin-top: 8px;
-  font-size: 12px;
-  line-height: 2.375;
+  font-size: 10px;
+  line-height: 1.5;
   letter-spacing: .025em;
   text-align: justify;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* 顯示的行數 */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }
 
 @media(min-width: 960px) {

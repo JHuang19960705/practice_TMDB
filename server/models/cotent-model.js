@@ -34,9 +34,7 @@ const contentSchema = new Schema ({
   },
   TMDBImg: {
     type: String,
-  }
-
-  
+  } 
 });
 
 module.exports = mongoose.model("Content", contentSchema);

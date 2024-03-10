@@ -1,58 +1,137 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../../../services/auth.service";
+import Theme from "./Theme/Theme";
+import ChangeTheme from "./ChangeTheme/ChangeTheme";
 
 export default function HandleTheme({currentUser, setCurrentUser}) {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-  const [newTheme, setNewTheme] = useState([]);
-  const changeTheme = (e) => {
-    if (newTheme[0]){
-      if(!newTheme.includes(e.currentTarget.dataset.genreId)){
-        setNewTheme([...newTheme, e.currentTarget.dataset.genreId]);
-      } 
+  const [theme, setTheme] = useState([]);
+  const [newThemeId, setNewThemeId] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  
+  useEffect(() => {
+    if(currentUser){
+      setTheme(currentUser.user.theme)
+    }
+  }, [currentUser])
+
+  const handleChangeOpen = () => {
+    setIsOpen(true)
+  }
+
+  const handleChangeClose = () => {
+    setIsOpen(false)
+  }
+
+  const checkIfDouble = (id) => {
+    if (theme[0]){
+      if(!theme.includes(id)){
+        setTheme([...theme, id]);
+        setIsOpen(false)
+      }else{
+        window.alert(`已經有${id}囉~`)
+        setIsOpen(false)
+      }
     }else{
-      setNewTheme([...newTheme, e.currentTarget.dataset.genreId]);
+      setTheme([...theme, id]);
+      setIsOpen(false)
     }
   }
-  const deleteTheme = (e) => {
-    setNewTheme(newTheme.filter(t => t !== e.currentTarget.dataset.genreId))
+
+  const deleteTheme = (id) => {
+    setTheme(theme.filter(t => t !== id))
   }
-  const patchTheme = async() => {
+
+  const patchTheme = async(upDatedtheme) => {
+    const newAllTheme = upDatedtheme;
     try{  
-    let response = await AuthService.patchTheme(currentUser.user._id, newTheme)
-    window.alert("主題修改成功。您現在將被導向到電影大廳");
+    let response = await AuthService.patchTheme(currentUser.user._id, newAllTheme)
+    window.alert("主題修改成功~");
     localStorage.setItem("user", JSON.stringify(response.data));
     setCurrentUser(AuthService.getCurrentUser());
-    navigate("/crabtv");
+    navigate(0);
     } catch (e) {
       setMessage(e.response.data);
     };
-
   }
+  
+  const genres = [
+    {
+      "id": "10759",
+      "name": "動作片"
+    },
+    {
+      "id": "16",
+      "name": "動畫片"
+    },
+    {
+      "id": "35",
+      "name": "喜劇片"
+    },
+    {
+      "id": "80",
+      "name": "犯罪片"
+    },
+    {
+      "id": "99",
+      "name": "紀錄片"
+    },
+    {
+      "id": "18",
+      "name": "戲劇片"
+    },
+    {
+      "id": "10751",
+      "name": "闔家片"
+    },
+    {
+      "id": "10762",
+      "name": "兒童片"
+    },
+    {
+      "id": "9648",
+      "name": "懸疑片"
+    },
+    {
+      "id": "10765",
+      "name": "科幻片"
+    }]
+
   return (
-    <div style={{display:"flex", justifyContent:"space-around", flexDirection:"column", height:"500px" }}>
-      <div>
-        <button onClick={changeTheme} data-genre-id="35" className="btn btn-success">喜劇片</button>
-        <button onClick={changeTheme} data-genre-id="10759" className="btn btn-success">動作片</button>
-        <button onClick={changeTheme} data-genre-id="16" className="btn btn-success">動畫片</button>
-        <button onClick={changeTheme} data-genre-id="80" className="btn btn-success">犯罪片</button>
-        <button onClick={changeTheme} data-genre-id="99" className="btn btn-success">紀錄片</button>
-        <button onClick={changeTheme} data-genre-id="18" className="btn btn-success">戲劇片</button>
-        <button onClick={changeTheme} data-genre-id="10751" className="btn btn-success">闔家片</button>
-        <button onClick={changeTheme} data-genre-id="10762" className="btn btn-success">兒童片</button>
-        <button onClick={changeTheme} data-genre-id="9648" className="btn btn-success">懸疑片</button>
-        <button onClick={changeTheme} data-genre-id="10765" className="btn btn-success">科幻片</button>
+    <div>
+      <div className="sticky left-0 top-0 z-10">
+        <div className="flex w-full flex-col items-center overflow-hidden rounded-b-3xl bg-white p-3 shadow">
+          {!theme[0] && <div className="text-center">你還沒選擇推薦的主題唷~<br/>▼快來選▼</div>}
+          {theme[0] && <button onClick={() => { patchTheme(theme) }} className="mb-5 border border-blue-500 px-3 text-blue-500">確定</button>}
+          <div className="flex flex-wrap justify-center">
+            {theme && genres &&
+              theme.map((t) => {
+                return (
+                  <div>
+                    {genres.map((g) => {
+                      if(g.id == t) {
+                        return <button onClick={() => {deleteTheme(g.id)}} className="mb-3 mr-3 rounded-md bg-gray-200 px-4 py-1">{g.name}</button>
+                      }
+                    })}
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
       </div>
-      <div>
-        <span>放到前台標籤=＞</span>
-        { newTheme && 
-          newTheme.map((nt) => {
-            return <button onClick={deleteTheme} className="btn btn-success" data-genre-id={nt}>{nt}</button>
-          }) 
-        }
-      </div>
-      <div><button onClick={patchTheme}>確認</button></div>
+      <section className="archive">
+        <div>
+          {genres && genres.map((g) => {
+            return <Theme genre={g} setNewThemeId={setNewThemeId} handleChangeOpen={handleChangeOpen}/>
+          })}
+        </div>  
+      </section>
+      {isOpen &&
+        <ChangeTheme newThemeId={newThemeId} checkIfDouble={checkIfDouble} handleChangeClose={handleChangeClose} currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      }
     </div>
   )
 }

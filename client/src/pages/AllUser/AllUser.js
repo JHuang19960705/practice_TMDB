@@ -19,6 +19,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
         console.log(e);
       });
   }, []);
+
   const handleChange = (e) => {
     setClickUser(e.currentTarget.dataset.userId)
   }
@@ -28,9 +29,9 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
   return (
     <div className="flex-grow overflow-hidden h-full flex flex-col">
       {/* <!--  上導覽   --> */}
-      <div className="h-16 lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10">
+      <div className="lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10">
         {/* <!--  自己的頭像   --> */}
-        <div className="bg-gray-100 h-10 sm:flex hidden w-full border-b border-gray-200 dark:border-gray-800 px-10 sticky top-0">
+        <div className="bg-gray-100 sm:flex hidden w-full border-b border-gray-200 dark:border-gray-800 px-10 sticky top-0">
           <UserNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
         </div>
       </div>
@@ -42,7 +43,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
           <div className="space-y-4 mt-3">
             {allUser && allUser.map((user)=>{
               return(
-                <Link to={`${user._id}/userReviews`} onClick={handleChange}  data-user-id={user._id} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
+                <Link to={`${user._id}/userReviews`} onClick={handleChange} data-user-id={user._id} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
                   <div className="flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
                     {user.username}
                   </div>

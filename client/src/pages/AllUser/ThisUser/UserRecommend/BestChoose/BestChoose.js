@@ -10,7 +10,7 @@ function BestChoose({userRecommend}) {
 
   useEffect(()=>{
     if(userRecommend){
-      const personTVURL = `https://api.themoviedb.org/3/person/${userRecommend.favoritePerson}/tv_credits?&api_key=${API_KEY}`;
+      const personTVURL = `https://api.themoviedb.org/3/person/${userRecommend.favoritePerson}/combined_credits?&api_key=${API_KEY}`;
       const personDetailURL = `https://api.themoviedb.org/3/person/${userRecommend.favoritePerson}?api_key=${API_KEY}`;
       searchAll(personTVURL, personDetailURL);
     }

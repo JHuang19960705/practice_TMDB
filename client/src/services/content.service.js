@@ -112,7 +112,7 @@ class ContentService {
   }
 
   // 以用戶id，找到發文
-  get(_id) {
+  getContentByUserId(_id) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;

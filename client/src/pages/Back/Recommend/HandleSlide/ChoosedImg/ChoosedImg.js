@@ -3,12 +3,12 @@ import React from 'react'
 export default function ChoosedImg({ns, deleteSlideImg}) {
   
   return (
-    <div className='w-20 ml-10 flex flex-col items-center'>
+    <div className='ml-10 flex w-[100px] flex-col items-center'>
       <img 
-        className="w-20 cursor-pointer transition-transform duration-300 transform hover:scale-110" 
-        src={`https://image.tmdb.org/t/p/original/${ns.slideImg}`}
+        className="rounded-md w-full transform cursor-pointer transition-transform duration-300 hover:scale-110" 
+        src={`https://image.tmdb.org/t/p/original${ns.slidePoster}`}
       />
-      <button onClick={deleteSlideImg} data-tmdb-id={ns.slide} data-tmdb-img={ns.slideImg} className='pt-1 hover:px-3 hover:bg-cyan-500 hover:rounded-md hover:shadow'>刪除</button>
+      <button onClick={() => {deleteSlideImg(ns)}} className='pt-1 hover:px-3 hover:bg-cyan-500 hover:rounded-md hover:shadow'>刪除</button>
     </div>
   )
 }

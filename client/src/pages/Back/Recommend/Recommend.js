@@ -3,7 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 
 export default function Recommend({ currentUser, setCurrentUser }) {
   return (
-    <div className="flex-grow flex overflow-x-hidden">
+    <div className="flex-grow flex dark:bg-gray-900 overflow-y-auto">
       {/* 左導覽 */}
       <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
         <div className="text-xs text-gray-400 tracking-wider">Recommend</div>

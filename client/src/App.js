@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import AuthService from "./services/auth.service";
-import "./styles/reset.css";
 import FirstEnroll from "./pages/First-Enroll/FirstEnroll";
 import RegisterComponent from "./pages/First-Enroll/Register/register-component";
 import LoginComponent from "./pages/First-Enroll/Login/login-component";
