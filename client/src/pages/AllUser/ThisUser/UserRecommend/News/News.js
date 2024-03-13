@@ -46,7 +46,6 @@ export default function News() {
           </button>
         </div>
       </div>
-
       <div className="news-controls">
         <span className="news-prev  js-news-prev"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/prev.png"/></span>
         <span className="news-next  js-news-next"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/next.png"/></span>

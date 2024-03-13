@@ -43,10 +43,10 @@ function BestChoose({userRecommend}) {
                 { 
                   personTV && 
                   personTV.map((TV) => {
-                    if (TV.backdrop_path) { 
+                    if (TV.poster_path) { 
                       return (
                         <button className="best-pic">
-                          {<img src={tmdbBaseURL + TV.backdrop_path} alt="" draggable="false"/>}
+                          {<img src={tmdbBaseURL + TV.poster_path} alt="" draggable="false"/>}
                         </button>
                       )
                   }})

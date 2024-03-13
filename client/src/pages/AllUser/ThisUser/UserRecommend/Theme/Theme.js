@@ -73,22 +73,20 @@ function Theme({userRecommend}) {
   
   return (
     <div class="theme-wrap">
+      <div class="theme-title">主題推薦</div>
       <div class="theme">
-        <div class="theme-left">
-            <div class="theme-title"><p>主題推薦</p></div>
-            <div class="theme-tags">
-                { userRecommend && userRecommend.theme.map((t) => {
-                    return genres.map((g) => {
-                      if(g.id === t){
-                        return (<button onClick={changeTheme} className="btn" data-genre-id={t}><p>{g.name}</p></button>)
-                      }
-                    })
-                  })
+        <div class="theme-up">
+          { userRecommend && userRecommend.theme.map((t) => {
+              return genres.map((g) => {
+                if(g.id === t){
+                  return (<button onClick={changeTheme} data-genre-id={t}><p>{g.name}</p></button>)
                 }
-            </div>
+              })
+            })
+          }
         </div>
-        <div class="theme-right">
-            <div class="theme-right-wrap">
+        <div class="theme-down">
+            <div class="theme-down-wrap">
                 <div class="theme-pic-wrap">
                   {
                     video &&

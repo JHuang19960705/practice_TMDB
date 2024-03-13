@@ -30,7 +30,7 @@ function ReviewsPic({ contentId }) {
             <img src={tmdbBaseURL + contentData.TMDBImg} alt="" className="js-review-click" datareviewid="${reviews[i].id}"/>
           </button>
           <button className="media-studies-article-title js-review-click" datareviewid="${reviews[i].id}">
-            <p>劇評｜{contentData.title}</p>
+            <p>影評｜{contentData.title}</p>
           </button>
           <p className="media-studies-article-text">
             {contentData.content}

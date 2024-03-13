@@ -23,11 +23,11 @@ export default function CharacterPic({ castId }) {
   }
   
   return (
-    <button className="js-character-pic" data-cast-id={character.id} target="_blank">
+    <div className="js-character-pic" data-cast-id={character.id} target="_blank">
       <div className="character-pic" >
         <img src={tmdbBaseURL + character.profile_path} alt={ character.also_known_as[0] } />
       </div>
       <div className="character-name">{ character.also_known_as[0] }</div>
-    </button>
+    </div>
   )
 }

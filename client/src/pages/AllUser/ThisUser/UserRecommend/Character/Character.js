@@ -7,12 +7,9 @@ export default function Character({userRecommend}) {
     <div className="character-wrap">
       {/* <!-- 標題 --> */}
       <div className="character-title">
-          <button target="_blank">
-            <div className="character-title-p">
-              <div>當紅角色 ／</div>
-              <div className="character-title-p-arrow">＞＞</div>
-            </div>
-          </button>
+        <div className="character-title-p">
+          <div>當紅演員 ／</div>
+        </div>
       </div>
       {/* <!-- 四個圈圈 --> */}
       <div className="character-container js-character-container-wrap">  
