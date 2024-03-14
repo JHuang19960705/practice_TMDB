@@ -27,17 +27,25 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
     return <div className="App">Loading...</div>;
   }
   return (
-    <div className="flex-grow overflow-hidden h-full flex flex-col">
+    <div className="flex h-full flex-grow flex-col overflow-hidden">
       {/* <!--  上導覽   --> */}
-      <div className="lg:flex w-full border-b border-gray-200 dark:border-gray-800 hidden px-10">
+      <div className="mb:px-10 flex w-full border-b border-gray-200 dark:border-gray-800">
+        {/* 漢堡 */}
+        <div class="flex items-center justify-center px-4 md:hidden">
+          <button class="flex h-10 w-10 flex-col items-center justify-center focus:outline-none">
+            <span class="block h-0.5 w-6 rounded-sm bg-gray-900 dark:bg-gray-200"></span>
+            <span class="mt-1 block h-0.5 w-6 rounded-sm bg-gray-900 dark:bg-gray-200"></span>
+            <span class="mt-1 block h-0.5 w-6 rounded-sm bg-gray-900 dark:bg-gray-200"></span>
+          </button>
+        </div>
         {/* <!--  自己的頭像   --> */}
-        <div className="bg-gray-100 sm:flex hidden w-full border-b border-gray-200 dark:border-gray-800 px-10 sticky top-0">
+        <div className="sticky top-0 flex w-full border-b border-gray-200 bg-gray-100 px-4 md:px-10 dark:border-gray-800 dark:bg-gray-900">
           <UserNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
         </div>
       </div>
-      <div className="flex-grow flex overflow-x-hidden">
+      <div className="flex flex-grow overflow-x-hidden md:relative">
         {/* <!--   左半查詢其他user   --> */}
-        <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
+        <div className="absolute top-0 h-full w-5/6 flex-shrink-0 -translate-x-[1000px] overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-72 md:-translate-x-0 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900">
           <div className="text-xs text-gray-400 tracking-wider">USERS</div>
           {/* 各個User */}
           <div className="space-y-4 mt-3">

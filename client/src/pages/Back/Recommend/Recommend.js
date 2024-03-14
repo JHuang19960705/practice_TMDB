@@ -1,11 +1,19 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 
 export default function Recommend({ currentUser, setCurrentUser }) {
+  const navigate = useNavigate()
   return (
-    <div className="flex-grow flex dark:bg-gray-900 overflow-y-auto">
+    <div className="flex flex-grow overflow-x-hidden md:relative">
       {/* 左導覽 */}
-      <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
+      <div className="mobile-nav absolute top-0 h-full w-5/6 flex-shrink-0 -translate-x-[1000px] overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-72 md:-translate-x-0 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900">
+        {/* 手機板上Nav */}
+        <div class="mb-4 flex h-12 w-full items-end justify-around md:hidden">
+          <div onClick={()=>{navigate("/back/yourReviews")}} class="flex flex-grow justify-center truncate dark:text-gray-100">Reviews</div>
+          <div onClick={()=>{navigate("/back/yourRecommend")}} class="flex flex-grow justify-center truncate border-b-2 border-gray-900 dark:border-gray-100 dark:text-gray-100">Recommend</div>
+          <div onClick={()=>{navigate("/back/yourTheater")}} class="flex flex-grow justify-center truncate dark:text-gray-100">Theater</div>
+        </div>
+        {/* 左Nav */}
         <div className="text-xs text-gray-400 tracking-wider">Recommend</div>
         <div className="space-y-4 mt-3">
           <Link to="handleSlide" className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow-lg relative ring-2 ring-blue-500 focus:outline-none">

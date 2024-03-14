@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link, useNavigate } from "react-router-dom"
 import ContentService from "../../../services/content.service";
 
 export default function YourReviews({ currentUser }) {
   const [isLoading, setLoading] = useState(true);
   const [contentData, setContentData] = useState(null);
   const [clickContent, setClickContent] = useState(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchData();
@@ -41,9 +42,16 @@ export default function YourReviews({ currentUser }) {
   }
 
   return (
-    <div className="flex-grow flex dark:bg-gray-900 overflow-y-auto">
+    <div className="flex flex-grow overflow-x-hidden md:relative">
       {/* <!--   左半查詢其他user   --> */}
-      <div className="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
+      <div className="mobile-nav absolute top-0 h-full w-5/6 flex-shrink-0 -translate-x-[1000px] overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-72 md:-translate-x-0 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900">
+        {/* 手機板上Nav */}
+        <div className="mb-4 flex h-12 w-full items-end justify-around md:hidden">
+          <div onClick={()=>{navigate("/back/yourReviews")}} className="flex flex-grow justify-center truncate border-b-2 border-gray-900 dark:border-gray-100 dark:text-gray-100">Reviews</div>
+          <div onClick={()=>{navigate("/back/yourRecommend")}} className="flex flex-grow justify-center truncate dark:text-gray-100">Recommend</div>
+          <div onClick={()=>{navigate("/back/yourTheater")}} className="flex flex-grow justify-center truncate dark:text-gray-100">Theater</div>
+        </div>
+        {/* 左Nav */}
         <div className="space-y-4 mt-3">
           {contentData && contentData.map((content) => {
             return (
@@ -63,7 +71,7 @@ export default function YourReviews({ currentUser }) {
           })}
         </div>
       </div>     
-      {/* <!--   用戶內容    --> */}
+      {/* <!--   右內容    --> */}
       <div className="h-full flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
         <Outlet key={clickContent} />
       </div>
