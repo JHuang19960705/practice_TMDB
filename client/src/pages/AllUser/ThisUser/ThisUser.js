@@ -6,7 +6,12 @@ export default function ThisUser({ currentUser, setCurrentUser }) {
   const [isLoading, setLoading] = useState(true);
   const [thisUser, setThisUser] = useState(null);
   const { userId } = useParams();
-  
+  const [selectedLink, setSelectedLink] = useState("Reviews");
+
+  const handleLinkClick = (linkName) => {
+    setSelectedLink(linkName);
+  };
+
   useEffect(() => {
     AuthService.getUserById(userId)
         .then((data) => {
@@ -25,7 +30,7 @@ export default function ThisUser({ currentUser, setCurrentUser }) {
     <div className="flex-grow bg-white dark:bg-gray-900">
       {/* <!--   用戶頭像    --> */}
       {thisUser && (
-        <div className="sm:px-7 sm:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800">
+        <div className="md:px-7 md:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800">
           <div className="flex w-full items-center">
             <div className="flex items-center text-3xl text-gray-900 dark:text-white">
               <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&amp;format=auto&amp;height=512&amp;version=1582611188&amp;width=512" className="w-12 mr-4 rounded-full" alt="profile"/>
@@ -45,10 +50,10 @@ export default function ThisUser({ currentUser, setCurrentUser }) {
               </button>
             </div>
           </div>
-          <div className="flex items-center space-x-3 sm:mt-7 mt-4">
-            <Link to="userReviews" className="px-3 dark:text-white dark:border-white pb-1.5 border-blue-500 text-blue-500 border-transparent">Reviews</Link>
-            <Link to="userRecommend" className="px-3 border-b-2 pb-1.5 text-gray-600 dark:text-gray-400">Recommend</Link>
-            <Link to="userTheater" className="px-3 border-b-2 pb-1.5 border-transparent text-gray-600 dark:text-gray-400 ">Theater</Link>
+          <div className="flex items-center justify-between md:justify-start space-x-3 md:mt-7 mt-4">
+            <Link to="userReviews" onClick={() => handleLinkClick("Reviews")} className={`px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Reviews" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Reviews</Link>
+            <Link to="userRecommend" onClick={() => handleLinkClick("Recommend")} className={`px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Recommend" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Recommend</Link>
+            <Link to="userTheater" onClick={() => handleLinkClick("Theater")} className={`px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Theater" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Theater</Link>
           </div>
         </div>
       )}

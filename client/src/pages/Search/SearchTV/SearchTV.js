@@ -6,14 +6,28 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function SearchTV({ currentUser, setCurrentUser }) {
-  let [tv, setTV] = useState(null);
-  let [input, setInput] = useState("");
-  let [data, setData] = useState(null);
-  let [page, setPage] =useState(1);
-  let [currentSearch, setCurrentSearch] = useState("");
+  const [tv, setTV] = useState(null);
+  const [input, setInput] = useState("");
+  const [data, setData] = useState(null);
+  const [page, setPage] =useState(1);
+  const [currentSearch, setCurrentSearch] = useState("");
   const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`絕命`}&page=1&include_adult=false`;
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
+  const [clickTitle, setClickTitle] = useState(null);
+  const [isHidden, setIsHidden] = useState("hidden");
+  const [isDisplay, setIsDisplay] = useState(null)
 
+  const handleClickTitle = (title) => {
+    setClickTitle(title);
+    setIsHidden(null);
+    setIsDisplay("hidden");
+  }
+
+  const handleNavDisplay = () => {
+    setIsDisplay(null);
+    setClickTitle(null);
+    setIsHidden("hidden");
+  }
   const search = async (URL) => {
     let result = await axios.get(URL);
     setData(result.data.results);
@@ -36,68 +50,71 @@ export default function SearchTV({ currentUser, setCurrentUser }) {
     setData(data.concat(result.data.results));
   };
 
-  const handleChange = (e) => {
-    setTV(e.currentTarget.dataset.movieId)
+  const handleChange = (id) => {
+    setTV(id);
   }
 
   return (
-    <div className="flex flex-grow overflow-x-hidden md:relative">
-      {/* <!--   左內容   --> */}
-      <div className="absolute top-0 h-full w-5/6 flex-shrink-0 -translate-x-[1000px] overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-72 md:-translate-x-0 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900">
-        {/* 手機板上Nav */}
-        <div class="mb-4 flex h-12 w-full items-end justify-around md:hidden">
-          <div class="flex flex-grow justify-center truncate border-b-2 border-gray-900 dark:border-gray-100 dark:text-gray-100">Reviews</div>
-          <div class="flex flex-grow justify-center truncate dark:text-gray-100">Recommend</div>
-          <div class="flex flex-grow justify-center truncate dark:text-gray-100">Theater</div>
+    <div className="flex flex-col flex-grow overflow-x-hidden">
+      {/* 手機板返回導覽 */}
+      <div className={`pt-2 flex w-full items-center justify-right md:hidden ${isHidden}`}>
+        <div className="cursor-pointer" onClick={handleNavDisplay}>
+          <svg class="w-6 mx-1 text-gray-700 transform dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
         </div>
-        {/* 左Nav */}
-        <div className="text-xs text-gray-400 tracking-wider">TV</div>
-        <Search2 search={() => {search(searchURL);}} setInput={setInput} />
-        <div className="space-y-4 mt-3">
-          {
-            data &&
-            data.map((d) => {    
-              if (d.original_name && d.origin_country && d.backdrop_path) {    
-                return (
-                  <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
-                    <div className="w-full">
-                      <p className="truncate">{d.original_name}</p>
-                      <Link to={`${d.id}`} onClick={handleChange} data-movie-id={d.id} className="imageContainer">
-                        <img src={ tmdbBaseURL + d.poster_path} />
-                      </Link>
-                    </div>
-                    { currentUser && currentUser.user.role !== "free" && (
+        <div>{clickTitle}</div>
+      </div>
+      <div className="flex flex-grow overflow-x-hidden md:relative">
+        {/* <!--   左導覽   --> */}
+        <div className={`${isDisplay} w-full h-sreen flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-72 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
+          <Search2 search={() => {search(searchURL);}} setInput={setInput} />
+          <div className="space-y-4 mt-3">
+            {
+              data &&
+              data.map((d) => {    
+                if (d.original_name && d.origin_country && d.backdrop_path) {    
+                  return (
+                    <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
+                      <div className="w-full">
+                        <p className="truncate">{d.original_name}</p>
+                        <Link to={`${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className="imageContainer">
+                          <img src={ tmdbBaseURL + d.poster_path} />
+                        </Link>
+                      </div>
+                      { currentUser && currentUser.user.role !== "free" && (
+                          <div className="member-button">
+                            <Link to={`postTVContent/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className='reviews-writing'>
+                              寫影評
+                            </Link>
+                            <Link to={`reviews/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className='reviews-writing'>
+                              看影評
+                            </Link>
+                          </div>
+                        )
+                      }
+                      { currentUser && currentUser.user.role == "free" && (
                         <div className="member-button">
-                          <Link to={`postTVContent/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
-                            寫影評
-                          </Link>
-                          <Link to={`reviews/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
+                          <Link to={`reviews/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className='reviews-writing'>
                             看影評
                           </Link>
                         </div>
-                      )
-                    }
-                    { currentUser && currentUser.user.role == "free" && (
-                      <div className="member-button">
-                        <Link to={`reviews/${d.id}`} onClick={handleChange} data-movie-id={d.id} className='reviews-writing'>
-                          看影評
-                        </Link>
-                      </div>
-                      )
-                    }
-                  </button>
-                )
-              }
-            })
-          }
+                        )
+                      }
+                    </button>
+                  )
+                }
+              })
+            }
+          </div>
+          <div className="morePicture">
+            <button onClick={ morePicture }>MORE</button>
+          </div>
         </div>
-        <div className="morePicture">
-          <button onClick={ morePicture }>MORE</button>
+        {/* <!--    右內容    --> */}
+        <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
+          <Outlet key={tv} />
         </div>
-      </div>
-      {/* <!--    右內容    --> */}
-      <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-        <Outlet key={tv} />
       </div>
     </div>
   )

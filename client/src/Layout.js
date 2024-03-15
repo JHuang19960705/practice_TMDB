@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet, Link } from "react-router-dom"
 
 export const Layout = ({currentUser}) => {
+  const [selectedLink, setSelectedLink] = useState("allUser");
+
+  const handleLinkClick = (linkName) => {
+    setSelectedLink(linkName);
+  };
+
   return (
     <div className="relative">
       <div className="h-screen overflow-hidden bg-gray-100 text-sm text-gray-600 md:flex dark:bg-gray-900 dark:text-white">
         {/* <!-- 左導覽 --> */}
-        <div className="absolute bottom-0 flex w-full flex-shrink-0 border-r border-gray-200 bg-white md:static md:w-20 md:flex-col dark:border-gray-800 dark:bg-gray-900">
+        <div className="absolute bottom-0 z-20 flex w-full flex-shrink-0 border-r border-gray-200 bg-white md:static md:w-20 md:flex-col dark:border-gray-800 dark:bg-gray-900">
           {/* 首頁 */}
           <Link to="/" className="hidden h-16 items-center justify-center text-blue-500 md:flex">
             <svg className="w-9" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 54 33">
@@ -16,8 +22,8 @@ export const Layout = ({currentUser}) => {
           {/* 子分頁 */}
           <div className="flex w-full items-center justify-around text-gray-400 md:mx-auto md:mt-4 md:flex-col md:space-y-4">
             {/* 大廳 */}
-            <button className="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center">
-              <Link to="/allUser">
+            <button onClick={() => handleLinkClick("allUser")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "allUser" ? 'bg-blue-100 text-blue-500 dark:text-gray-500' : 'hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white' }`}>
+              <Link to="allUser">
                 <svg viewBox="0 0 24 24" className="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                   <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -25,8 +31,8 @@ export const Layout = ({currentUser}) => {
               </Link>  
             </button>
             {/* 後台 */}
-            <button className="h-10 w-12 dark:bg-gray-700 dark:text-white rounded-md flex items-center justify-center">
-              <Link to="/back/yourReviews">
+            <button onClick={() => handleLinkClick("back")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "back" ? 'bg-blue-100 text-blue-500 dark:text-gray-500' : 'hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white' }`}>
+              <Link to="back/yourReviews">
                 <svg viewBox="0 0 24 24" className="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                   <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
@@ -34,8 +40,8 @@ export const Layout = ({currentUser}) => {
               </Link>  
             </button>
             {/* 搜尋 */}
-            <button className="h-10 w-12 dark:text-gray-500 rounded-md flex items-center justify-center bg-blue-100 text-blue-500">
-              <Link to="/search/movie">
+            <button onClick={() => handleLinkClick("search")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "search" ? 'bg-blue-100 text-blue-500 dark:text-gray-500' : 'hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white' }`}>
+              <Link to="search/movie">
                 <svg viewBox="0 0 24 24" className="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="3" y="3" width="7" height="7"></rect>
                   <rect x="14" y="3" width="7" height="7"></rect>

@@ -4,7 +4,7 @@ export default function UserNav({ currentUser, setCurrentUser }) {
 
   return (
     <div className="ml-auto flex items-center space-x-7">
-      <button className="h-8 px-3 rounded-md shadow text-white bg-blue-500">寫影評</button>
+      <button className="truncate h-8 px-3 rounded-md shadow text-white bg-blue-500">寫影評</button>
       <button className="flex items-center">
         <span className="relative flex-shrink-0">
           <img className="w-7 h-7 rounded-full" src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="profile" />
