@@ -1,14 +1,21 @@
-import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { Outlet, Link, useNavigate } from "react-router-dom"
 import UserNav from "../UserNav/UserNav";
 import "../../styles/back.css"
 
 export default function Back({ currentUser, setCurrentUser }) {
   const [selectedLink, setSelectedLink] = useState("yourReviews");
+  const navigate = useNavigate();
 
   const handleLinkClick = (linkName) => {
     setSelectedLink(linkName);
   };
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/firstEnroll");
+    }
+  })
 
   return (
     <div className="flex h-full flex-grow flex-col overflow-x-hidden">
@@ -23,8 +30,8 @@ export default function Back({ currentUser, setCurrentUser }) {
         {/* <!--    按鈕     --> */}
         <div className="hidden h-full pl-5 text-gray-600 md:flex dark:text-gray-400">
           <Link to="yourReviews" onClick={() => handleLinkClick("yourReviews")} className={`cursor-pointer h-full border-b-2 inline-flex mr-8 items-center ${selectedLink === "yourReviews" ? 'border-blue-500 text-blue-500 dark:text-white dark:border-white' : 'dark:text-gray-400 border-transparent'}`}>Reviews</Link>
-          <Link to="yourRecommend" onClick={() => handleLinkClick("yourRecommend")} className={`cursor-pointer h-full border-b-2 inline-flex mr-8 items-center ${selectedLink === "yourRecommend" ? 'border-blue-500 text-blue-500 dark:text-white dark:border-white' : 'dark:text-gray-400 border-transparent'}`}>Recommend</Link>
-          <Link to="yourTheater" onClick={() => handleLinkClick("yourTheater")} className={`cursor-pointer h-full border-b-2 border-transparent inline-flex mr-8 items-center ${selectedLink === "yourTheater" ? 'border-blue-500 text-blue-500 dark:text-white dark:border-white' : 'dark:text-gray-400 border-transparent'}`}>Theater</Link>
+          <Link to="yourRecommend/handleSlide" onClick={() => handleLinkClick("yourRecommend")} className={`cursor-pointer h-full border-b-2 inline-flex mr-8 items-center ${selectedLink === "yourRecommend" ? 'border-blue-500 text-blue-500 dark:text-white dark:border-white' : 'dark:text-gray-400 border-transparent'}`}>Recommend</Link>
+          <Link to="yourTheater/onTime" onClick={() => handleLinkClick("yourTheater")} className={`cursor-pointer h-full border-b-2 border-transparent inline-flex mr-8 items-center ${selectedLink === "yourTheater" ? 'border-blue-500 text-blue-500 dark:text-white dark:border-white' : 'dark:text-gray-400 border-transparent'}`}>Theater</Link>
         </div>
         {/* <!--    自己     --> */}
         <div className="sticky top-0 flex w-full border-b border-gray-200 bg-gray-100 px-4 md:px-10 dark:border-gray-800 dark:bg-gray-900">

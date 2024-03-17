@@ -39,7 +39,7 @@ function BestChoose({userRecommend}) {
             </div>
         </div>
         <div className="best-down">
-            <div className="best-pic-wrap js-best-pic-wrap">
+            <div className="best-pic-wrap">
                 { 
                   personTV && 
                   personTV.map((TV) => {

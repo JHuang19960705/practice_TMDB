@@ -96,4 +96,7 @@
   width: 120px;
   height: 20px;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

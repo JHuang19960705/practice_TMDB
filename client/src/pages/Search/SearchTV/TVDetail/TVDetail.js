@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Outlet, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Information from '../../../../components/Movie/Information';
 import Charater from '../../../../components/Movie/Charater';
-import Introduction from '../../../../components/Movie/Introduction';
 import "../../../../styles/movie-page.css";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -31,13 +30,9 @@ export default function TVDetail() {
   }
   
   return (
-    <div className="kondo-wrap js-kondo-wrap">
+    <div className="kondo-wrap">
       {TVAll && <Information videoAll={TVAll} />}
       {casts && casts.length > 4 && <Charater casts={casts}/>}
-      {/* <Marquee /> */}
-      {/* <Comment /> */}
-      {/* <Introduction  movieId={TVId} /> */}
-      <Link to={`/search/TV/reviews/${TMDBId}`} className='d-flex justify-content-center'><button className="btn btn-success">看影評</button></Link>
     </div>
 
   )

@@ -5,7 +5,7 @@ import Search2 from '../../../components/Search2';
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-export default function SearchMovie({ currentUser, setCurrentUser }) {
+export default function SearchMovie({ currentUser }) {
   const [movie, setMovie] = useState(null);
   const [input, setInput] = useState("");
   const [data, setData] = useState(null);
@@ -68,7 +68,7 @@ export default function SearchMovie({ currentUser, setCurrentUser }) {
       </div>
       <div className="flex flex-grow overflow-x-hidden md:relative">
         {/* <!--   左導覽   --> */}
-        <div className={`${isDisplay} w-full h-sreen flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-72 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
+        <div className={`${isDisplay} w-full h-sreen flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
           <Search2 search={() => {search(searchURL);}} setInput={setInput} />
           <div className="space-y-4 mt-3">
             {
@@ -77,25 +77,25 @@ export default function SearchMovie({ currentUser, setCurrentUser }) {
                 return (
                   <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
                     <div className="w-full">
-                      <p className="truncate">{d.title}</p>
-                      <Link to={`${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className="imageContainer">
+                      <p className="truncate pb-2">{d.title}</p>
+                      <Link to={`${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}}>
                         <img src={ tmdbBaseURL + d.poster_path} />
                       </Link>
                     </div>
                     { currentUser && currentUser.user.role !== "free" && (
-                        <div className="member-button">
-                          <Link to={`postMovieContent/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className='reviews-writing'>
+                        <div className="w-full flex justify-around text-base text-gray-400 pt-3">
+                          <Link to={`postMovieContent/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
                             寫影評
                           </Link>
-                          <Link to={`reviews/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className='reviews-writing'>
+                          <Link to={`reviews/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
                             看影評
                           </Link>
                         </div>
                       )
                     }
                     { currentUser && currentUser.user.role == "free" && (
-                      <div className="member-button">
-                        <Link to={`reviews/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className='reviews-writing'>
+                      <div className="w-full flex justify-around text-base text-gray-400 pt-3">
+                        <Link to={`reviews/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
                           看影評
                         </Link>
                       </div>
@@ -106,13 +106,14 @@ export default function SearchMovie({ currentUser, setCurrentUser }) {
               })
             }
           </div>
-          <div className="morePicture">
-            <button onClick={ morePicture }>MORE</button>
+          <div className="flex justify-center pt-5">
+            <button onClick={morePicture} className='h-8 px-3 rounded-md shadow text-white bg-blue-500'>MORE</button>
           </div>
         </div>
         {/* <!--    右內容    --> */}
         <div className="h-full flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-          <Outlet key={movie} />
+          {!movie && <div className="flex justify-center text-center md:text-2xl md:pt-32">選擇一部電影、寫影評、看影評</div>}
+          <Outlet key={movie}/>
         </div>
       </div>
     </div>

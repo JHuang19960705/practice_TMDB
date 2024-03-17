@@ -27,27 +27,27 @@ export default function Theme({genre, setNewThemeId, handleChangeOpen}) {
 
   return (
     <div>
-    {genre && video && 
-      <div class="archive_item mb-12">
-        <h2 class="archive_heading">{genre.name}</h2>
-        <div class="archive_index">
-          <div class="num f-serif"></div>
-          <div onClick={() => { handleChangeOpen(); setNewThemeId(genre.id)}} class="cursor-pointer heading rounded-md bg-green-500 px-3 py-1 text-white">選擇</div>
-        </div>
-        <div class="archive_content">
-          <div class="archive_col1">
-            <div class="js-celebrity-click">
-              <a target="_blank"><img class="archive_kv" src={tmdbBaseURL + video[0].poster_path} /></a>
-            </div>
+      {genre && video && 
+        <div class="archive_item mb-12">
+          <h2 class="archive_heading">{genre.name}</h2>
+          <div class="archive_index">
+            <div class="num"></div>
+            <div onClick={() => { handleChangeOpen(); setNewThemeId(genre.id)}} class="heading">選擇</div>
           </div>
-            <div class="archive_col2 js-celebrity-click">
-              {video.slice(1, 5).map((v) => {
-                return <img src={tmdbBaseURL + v.poster_path} />
-              })}
+          <div class="archive_content">
+            <div class="archive_col1">
+              <div>
+                <a><img class="archive_kv" src={tmdbBaseURL + video[0].poster_path} /></a>
+              </div>
             </div>
+              <div class="archive_col2">
+                {video.slice(1, 5).map((v) => {
+                  return <img src={tmdbBaseURL + v.poster_path} />
+                })}
+              </div>
+          </div>
         </div>
-      </div>
-    }
+      }
     </div>
   )
 }

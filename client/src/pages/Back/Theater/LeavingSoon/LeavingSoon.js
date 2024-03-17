@@ -15,6 +15,7 @@ export default function LeavingSoon({currentUser, setCurrentUser}) {
   const [newOnTime, setNewOnTime] = useState([]);
   const [data, setData] = useState(false);
   const [input, setInput] = useState("");
+  const [selectedLink, setSelectedLink] = useState("search");
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
   
   const handleNewSlide = (newOnTimeBackdrop, newOnTimePoster) => {
@@ -58,8 +59,7 @@ export default function LeavingSoon({currentUser, setCurrentUser}) {
     setData(result.data.results);
   }
 
-  const handleSortBy = async(e) => {
-    let genreId = e.currentTarget.dataset.genreId;
+  const handleSortBy = async(genreId) => {
     let genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genreId}`
     await search(genresURL);
   }
@@ -76,6 +76,10 @@ export default function LeavingSoon({currentUser, setCurrentUser}) {
     }
     setNewOnTime(updatedSlides);
 }, [currentUser]);
+
+const handleLinkClick = (linkName) => {
+  setSelectedLink(linkName);
+};
 
   return (
   <div className="px-8">
@@ -120,77 +124,77 @@ export default function LeavingSoon({currentUser, setCurrentUser}) {
           </div>
           {/* 按鈕 */}
           <ul>
-            <li onClick={() => setData(null)} className="slide-nav-item active">
+            <li onClick={() => {setData(null);handleLinkClick("search")}} className={`slide-nav-item ${selectedLink === "search" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span class="slide-nav-text">搜尋</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="35" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("35");handleLinkClick("喜劇片")}} className={`slide-nav-item ${selectedLink === "喜劇片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span class="slide-nav-text">喜劇片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="10759" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("10759");handleLinkClick("動作片")}} className={`slide-nav-item ${selectedLink === "動作片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span className="slide-nav-text">動作片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="16" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("16");handleLinkClick("動畫片")}} className={`slide-nav-item ${selectedLink === "動畫片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span className="slide-nav-text">動畫片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="80" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("80");handleLinkClick("犯罪片")}} className={`slide-nav-item ${selectedLink === "犯罪片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span className="slide-nav-text">犯罪片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="99" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("99");handleLinkClick("紀錄片")}} className={`slide-nav-item ${selectedLink === "紀錄片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span className="slide-nav-text">紀錄片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="18" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("18");handleLinkClick("戲劇片")}} className={`slide-nav-item ${selectedLink === "戲劇片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span class="slide-nav-text">戲劇片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="10751" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("10751");handleLinkClick("闔家片")}} className={`slide-nav-item ${selectedLink === "闔家片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span className="slide-nav-text">闔家片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="10762" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("10762");handleLinkClick("兒童片")}} className={`slide-nav-item ${selectedLink === "兒童片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span className="slide-nav-text">兒童片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="9648" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("9648");handleLinkClick("懸疑片")}} className={`slide-nav-item ${selectedLink === "懸疑片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
                 <span className="slide-nav-text">懸疑片</span>
               </a>
             </li>
-            <li onClick={(e) => {handleSortBy(e)}} data-genre-id="10765" className="slide-nav-item">
+            <li onClick={() => {handleSortBy("10765");handleLinkClick("科幻片")}} className={`slide-nav-item ${selectedLink === "科幻片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">

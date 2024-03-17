@@ -68,9 +68,9 @@ export default function YourReviews({ currentUser }) {
         <div className="w-1/2 truncate">{clickTitle}</div>
       </div>
       {/* 下內容 */}
-      <div className="flex flex-grow overflow-x-hidden md:relative">
+      <div className="flex flex-grow overflow-x-hidden">
         {/* <!--   左導覽  --> */}
-        <div className={`${isDisplay} w-full h-sreen flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-72 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
+        <div className={`${isDisplay} w-full h-sreen flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
           <div className="space-y-4 mt-3">
             {contentData && contentData.map((content) => {
               return (
@@ -78,12 +78,12 @@ export default function YourReviews({ currentUser }) {
                   to={`${content._id}`} 
                   onClick={() => {displayContent(content._id); handleClickTitle(content.title)}} 
                   className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
-                  <div className="flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
+                  <div className="truncate flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
                     {content.title}
                   </div>
                   <div className="flex items-center w-full">
                     <div className="text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-blue-100 text-blue-500 rounded-md">{content.tags}</div>
-                    <div className="ml-auto text-xs text-gray-500">{content.date.slice(0,10)}</div>
+                    <div className="ml-auto text-xs text-gray-500 truncate">{content.date.slice(0,10)}</div>
                   </div>
                 </Link>
               )
@@ -92,6 +92,7 @@ export default function YourReviews({ currentUser }) {
         </div>     
         {/* <!--   右內容    --> */}
         <div className="h-full flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
+          {!clickContent && <div className="flex justify-center text-center md:text-2xl md:pt-32">編輯你的影評</div>}
           <Outlet key={clickContent} />
         </div>
       </div>      

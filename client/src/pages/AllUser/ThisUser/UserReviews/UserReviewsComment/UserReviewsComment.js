@@ -1,269 +1,155 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ContentService from "../../../../../services/content.service";
+import "../../../../../styles/comment.css";
 
-export default function UserReviewsComment({ currentUser, setCurrentUser }) {
-  const [contentData, setContentData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
-  const { contentId } = useParams();
-  const { userId } = useParams();
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (currentUser) {
-      if (currentUser.user.role ==  "standard" || currentUser.user.role ==  "premium") {
-        ContentService.getContentByContentId(contentId)
-          .then((data) => {
-            setContentData(data.data[0]);
-            setLoading(false);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      } else if (currentUser.user.role == "free") {
-        navigate("*")
-      }
+export default function UserReviewsComment({ currentUser }) {
+    const [contentData, setContentData] = useState(null);
+    const [isLoading, setLoading] = useState(true);
+    const { contentId } = useParams();
+    const { userId } = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (currentUser) {
+            if (currentUser.user.role == "standard" || currentUser.user.role == "premium") {
+                ContentService.getContentByContentId(contentId)
+                    .then((data) => {
+                        setContentData(data.data[0]);
+                        setLoading(false);
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+            } else if (currentUser.user.role == "free") {
+                navigate("*")
+            }
+        }
+    }, []);
+
+    if (isLoading) {
+        return <div className="App">Loading...</div>;
     }
-  }, []);
 
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
-
-  return (
-    <div class="movie-comment-system">
-        <button onClick={()=>navigate(`/allUser/${userId}/userReviews`)} className="btn btn-light">返回</button>
-        <div class="movie-user">
-            {/* <!-- 左半邊 --> */}
-            <div class="movie-user-left">
-            {/* <!-- 影片的評論 --> */}
-            <div class="movie-user-thought">
-                {contentData && (
-                <div class="movie-user-thought-title">
-                    <p>『{contentData.TMDBId}』に</p>
-                    <p>投稿された感想・評価</p>
-                </div>
-                )}
-                <div class="movie-user-thought-title-trangle"></div>
-            </div>
-            {/* <!-- 評論人的頭像、心得標題 --> */}
-            <div class="movie-user-title">
-                <div class="movie-user-title-pic">
-                    <img src="/img/Behind/E1N886PVoAsnnde.jpg" alt=""/>
-                </div>
-                <div class="movie-user-title-line">
-                    <div class="movie-user-title-line-one"></div>
-                    <div class="movie-user-title-line-two"></div>
-                </div>
-                {contentData && (
-                    <div class="movie-user-title-word">
-                    <p>{contentData.title}</p>
-                    </div>
-                )}              
-            </div>
-            {/* <!-- 使用者名稱 --> */}
-            {contentData && (
-                <div class="movie-user-name">
-                    <p>{contentData.writer.username}</p>
-                </div>
-            )}            
-            {/* <!-- 星星評分 --> */}
-            <div class="movie-user-star">
-                <div class="movie-user-star-pic">
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                    <i class="fa-solid fa-star"></i>
-                </div>
-                <div class="movie-user-star-score">
-                    <p>4.5</p>
-                </div>
-
-            </div>
-            {/* <!-- 評論時間 --> */}
-            {contentData && (
-                <div class="movie-user-detail">
-                    <div class="movie-user-detail-device">
-                        <p>iPhoneアプリから投稿</p>
-                    </div>
-                    <div class="movie-user-detail-date">
-                        <p>{contentData.date.slice(0, 10)}</p>
-                    </div>
-                    <div class="movie-user-detail-time">
-                        <p>{contentData.date.slice(11, 16)}</p>
-                    </div>
-                </div>
-            )}
-            {/* <!-- 待輸入的評論 --> */}
-            <div class="movie-user-new-comment">
-                {/* <!-- 自己的頭像 --> */}
-                <div class="movie-user-new-comment-pic">
-                    <img src="/img/Behind/E1N886PVoAsnnde.jpg" alt=""/>
-                </div>
-                {/* <!-- 自己的評論輸入 --> */}
-                <div class="movie-user-new-comment-content">
-                    {/* <!-- 輸入 --> */}
-                    <input type="text" value=""/>
-                    {/* <!-- 表情、取消、留言 --> */}
-                    <div class="movie-user-new-comment-content-button">
-                        <div class="movie-user-new-comment-content-button-emoji">
-                            <i class="fa-regular fa-face-smile"></i>
+    return (
+        <div className="movie-comment-system">
+            <button onClick={() => navigate(`/allUser/${userId}/userReviews`)} className="absolute right-4 top-4 px-3 py-1 bg-gray-100 rounded-md">返回</button>
+            <div className="movie-user">
+                {/* <!-- 左半邊 --> */}
+                <div className="movie-user-left">
+                    <div className="movie-user-left-sticky">
+                        {/* <!-- XX影片的評論 --> */}
+                        <div className="movie-user-thought">
+                            {contentData && (
+                                <div className="movie-user-thought-title">
+                                    <p>『{contentData.TMDBId}』に</p>
+                                    <p>投稿された感想・評価</p>
+                                </div>
+                            )}
+                            <div className="movie-user-thought-title-trangle"></div>
                         </div>
-                        <div class="movie-user-new-comment-content-button-cm">
-                            <div class="movie-user-new-comment-content-button-cm-cancel">
-                                <button> 取消 </button>
+                        {/* <!-- 評論人的頭像、符號、標題 --> */}
+                        <div className="movie-user-title">
+                            {/* 頭像 */}
+                            <div className="movie-user-title-pic">
+                                <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" />
+                                {/* <!-- 使用者名稱 --> */}
+                                {contentData && (
+                                    <div className="movie-user-name">
+                                        {contentData.writer.username}
+                                    </div>
+                                )}
                             </div>
-                            <div class="movie-user-new-comment-content-button-cm-message">
-                                <button> 留言 </button>
+                            {/* 符號 */}
+                            <div className="movie-user-title-line">
+                                <div className="movie-user-title-line-one"></div>
+                                <div className="movie-user-title-line-two"></div>
                             </div>
+                            {/* 標題 */}
+                            {contentData && (
+                                <div className="movie-user-title-word">
+                                    <p>{contentData.title}</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
-            </div>
-            </div>   
-            {/* <!-- 右半邊 --> */}
-            <div class="movie-user-right">
-            <div class="movie-user-right-content">
-                {contentData && (
-                <p>{contentData.content}</p>
-                )}  
-            </div>
-            <div class="movie-user-right-more">
-                <p>続きを読む</p>
-            </div>
-            <div class="movie-user-right-interactive">
-                <div class="movie-user-right-interactive-like">
-                    <i class="fa-solid fa-thumbs-up"></i>
-                    <p class="movie-user-right-interactive-like-number">32</p>
-                </div>
-                <div class="movie-user-right-interactive-comment">
-                    <i class="fa-regular fa-message"></i>
-                    <p class="movie-user-right-interactive-comment-number">6</p>
-                </div>
-                <div class="movie-user-right-interactive-mark">
-                    <i class="fa-solid fa-bookmark"></i>
-                </div>
-                <div class="movie-user-right-interactive-share">
-                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                </div>
-                <div class="movie-user-right-interactive-ellipsis">
-                    <i class="fa-solid fa-ellipsis"></i>
-                </div>
-            </div>
-            {/* <!-- 他人的評論 --> */}
-            <div class="movie-user-right-other">
-                <div class="movie-user-right-other-comment">
-                <div class="movie-user-right-other-comment-pic">
-                    <img src="img/Behind/E3CN_2OUYBAXtjp.jpg" alt=""/>
-                </div>
-                <div class="movie-user-right-other-detail">
-                    <div class="movie-user-right-other-detail-user">
-                        <div class="movie-user-right-other-detail-user-name">
-                            <p>${}</p>
-                        </div>
-                        <div class="movie-user-right-other-detail-user-comment">
-                            <p></p>
-                        </div>
+                {/* <!-- 右半邊 --> */}
+                <div className="movie-user-right">
+                    {/* 影評內容、時間 */}
+                    <div className="movie-user-right-content">
+                        {/* 內容 */}
+                        {contentData && (
+                            <p>{contentData.content}</p>
+                        )}
+                        {/* <!-- 時間 --> */}
+                        {contentData && (
+                            <div className="movie-user-detail">
+                                <div className="movie-user-detail-date">
+                                    {contentData.date.slice(0, 10)}
+                                </div>
+                                <div className="movie-user-detail-time">
+                                    {contentData.date.slice(11, 16)}
+                                </div>
+                            </div>
+                        )}
                     </div>
-                    <div class="movie-user-right-other-detail-data">
-                        <div class="movie-user-right-other-detail-data-self">
-                            <div class="movie-user-right-other-detail-data-self-place">
-                                <p>B1</p>
+                    {/* <!-- 他人的評論 --> */}
+                    {/* <div className="movie-user-right-other">
+                        <div className="movie-user-right-other-comment">
+                            <div className="movie-user-right-other-comment-pic">
+                                <img src="img/Behind/E3CN_2OUYBAXtjp.jpg" alt="" />
                             </div>
-                            <div class="movie-user-right-other-detail-data-self-date">
-                                <p>2022年9月20日</p>
-                            </div>
-                            <div class="movie-user-right-other-detail-data-self-device">
-                                <p>PCから投稿</p>
+                            <div className="movie-user-right-other-detail">
+                                <div className="movie-user-right-other-detail-user">
+                                    <div className="movie-user-right-other-detail-user-name">
+                                        <p>${ }</p>
+                                    </div>
+                                    <div className="movie-user-right-other-detail-user-comment">
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div className="movie-user-right-other-detail-data">
+                                    <div className="movie-user-right-other-detail-data-self">
+                                        <div className="movie-user-right-other-detail-data-self-place">
+                                            <p>B1</p>
+                                        </div>
+                                        <div className="movie-user-right-other-detail-data-self-date">
+                                            <p>2022年9月20日</p>
+                                        </div>
+                                        <div className="movie-user-right-other-detail-data-self-device">
+                                            <p>PCから投稿</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="movie-user-right-other-detail-data-interactive">
-                            <div class="movie-user-right-other-detail-data-interactive-like">
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                            <div class="movie-user-right-other-detail-data-interactive-comment">
-                                <i class="fa-regular fa-message"></i>
+                    </div> */}
+                    {/* <!-- 待輸入的評論 --> */}
+                    <div className="movie-user-new-comment">
+                        {/* <!-- 自己的頭像 --> */}
+                        <div className="movie-user-new-comment-pic">
+                            <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" />
+                        </div>
+                        {/* <!-- 自己的評論輸入 --> */}
+                        <div className="movie-user-new-comment-content">
+                            {/* <!-- 輸入 --> */}
+                            <input type="text" placeholder="發表留言..." />
+                            {/* <!-- 取消、留言 --> */}
+                            <div className="movie-user-new-comment-content-button">
+                                <div className="movie-user-new-comment-content-button-cm">
+                                    <button className="movie-user-new-comment-content-button-cm-cancel">
+                                        取消
+                                    </button>
+                                    <button className="movie-user-new-comment-content-button-cm-message">
+                                        留言
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
-                <div class="movie-user-right-other-comment">
-                <div class="movie-user-right-other-comment-pic">
-                    <img src="img/Behind/E3CN_2OUYBAXtjp.jpg" alt=""/>
-                </div>
-                <div class="movie-user-right-other-detail">
-                    <div class="movie-user-right-other-detail-user">
-                        <div class="movie-user-right-other-detail-user-name">
-                            <p>${}</p>
-                        </div>
-                        <div class="movie-user-right-other-detail-user-comment">
-                            <p>感情移入できませんでした。</p>
-                        </div>
-                    </div>
-                    <div class="movie-user-right-other-detail-data">
-                        <div class="movie-user-right-other-detail-data-self">
-                            <div class="movie-user-right-other-detail-data-self-place">
-                                <p>B1</p>
-                            </div>
-                            <div class="movie-user-right-other-detail-data-self-date">
-                                <p>2022年9月20日</p>
-                            </div>
-                            <div class="movie-user-right-other-detail-data-self-device">
-                                <p>PCから投稿</p>
-                            </div>
-                        </div>
-                        <div class="movie-user-right-other-detail-data-interactive">
-                            <div class="movie-user-right-other-detail-data-interactive-like">
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                            <div class="movie-user-right-other-detail-data-interactive-comment">
-                                <i class="fa-regular fa-message"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="movie-user-right-other-comment">
-                <div class="movie-user-right-other-comment-pic">
-                    <img src="img/Behind/E3CN_2OUYBAXtjp.jpg" alt=""/>
-                </div>
-                <div class="movie-user-right-other-detail">
-                    <div class="movie-user-right-other-detail-user">
-                        <div class="movie-user-right-other-detail-user-name">
-                            <p>${}</p>
-                        </div>
-                        <div class="movie-user-right-other-detail-user-comment">
-                            <p>感情移入できませんでした。</p>
-                        </div>
-                    </div>
-                    <div class="movie-user-right-other-detail-data">
-                        <div class="movie-user-right-other-detail-data-self">
-                            <div class="movie-user-right-other-detail-dataSelf-place">
-                                <p>B1</p>
-                            </div>
-                            <div class="movie-user-right-other-detail-data-self-date">
-                                <p>2022年9月20日</p>
-                            </div>
-                            <div class="movie-user-right-other-detail-data-self-device">
-                                <p>PCから投稿</p>
-                            </div>
-                        </div>
-                        <div class="movie-user-right-other-detail-data-interactive">
-                            <div class="movie-user-right-other-detail-data-interactive-like">
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                            <div class="movie-user-right-other-detail-data-interactive-comment">
-                                <i class="fa-regular fa-message"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
             </div>
         </div>
-    </div>
-  )
+    )
 }

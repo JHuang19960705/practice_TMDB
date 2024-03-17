@@ -2,55 +2,51 @@ import React from 'react';
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 export default function Information({ videoAll }) {
-  return (
-    <div>
-      <div class="movie-pic">
-        <img src={videoAll.backdrop_path && (tmdbBaseURL + videoAll.backdrop_path)} />
-      </div>
-      <div class="movie-title">
-          <p>{ videoAll.original_name && (videoAll.original_name)}</p>
-      </div>
-      <div class="movie-time">
-          <p>毎週</p>
-          <p>土曜夜10:00</p> 
-          <p>ON AIR</p>
-      </div>
+    return (
+        <div>
+            <div className="movie-pic">
+                <img src={videoAll.backdrop_path && tmdbBaseURL + videoAll.backdrop_path} />
+            </div>
+            <div className="movie-title">
+                <p>{videoAll.original_name && videoAll.original_name}{videoAll.original_title && videoAll.original_title}</p>
+            </div>
+            <div className="movie-time">
+                <p>{videoAll.release_date && videoAll.release_date.slice(0, 4) || videoAll.first_air_date && videoAll.first_air_date.slice(0, 4)}年</p>
+                <p>{videoAll.release_date && videoAll.release_date.slice(5, 7) || videoAll.first_air_date && videoAll.first_air_date.slice(5, 7)}月{videoAll.release_date && videoAll.release_date.slice(8, 10)}{videoAll.first_air_date && videoAll.first_air_date.slice(8, 10)}日</p>
+                <p>ON AIR</p>
+            </div>
 
-        <div class="movie-detail">
-            <div class="movie-detail-wrap">
-                <div>
-                    <p>{videoAll.origin_country && (videoAll.origin_country)}</p>
+            <div className="movie-detail">
+                <div className="movie-detail-wrap">
+                    <div>
+                        <p>{videoAll.production_countries[0] && videoAll.production_countries[0].name || videoAll.origin_country[0] && videoAll.origin_country[0]}</p>
+                    </div>
+                    <div>
+                        <p>
+                            {videoAll.release_date && videoAll.release_date || videoAll.first_air_date && videoAll.first_air_date}
+                        </p>
+                    </div>
+                    <div>
+                        <p>評分　{videoAll.popularity && videoAll.popularity}</p>
+                    </div>
                 </div>
-                <div>
-                    <p>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </p>
+            </div>
+
+            <div className="movie-video-and-story">
+
+                <div className="movie-video">
+                    <a className="movie-video-play">
+                        <img src={videoAll.backdrop_path && (tmdbBaseURL + videoAll.backdrop_path)} />
+                    </a>
                 </div>
-                <div>
-                    <p>製作国</p>
+
+                <div className="movie-story">
+                    <div className="movie-story-wrap">
+                        <p>{videoAll.overview && (videoAll.overview)}</p>
+                    </div>
                 </div>
+
             </div>
         </div>
-
-        <div class="movie-video-and-story">
-
-            <div class="movie-video">
-                <a class="movie-video-play">
-                <img src={videoAll.backdrop_path && (tmdbBaseURL + videoAll.backdrop_path)} />
-                </a>
-            </div>
-
-            <div class="movie-story">
-                <div class="movie-story-wrap">
-                    <p>{videoAll.overview && (videoAll.overview)}</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-  )
+    )
 }

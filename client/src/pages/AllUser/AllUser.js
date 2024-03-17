@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AuthService from '../../services/auth.service';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import UserNav from '../UserNav/UserNav';
 import "../../styles/style.css";
 
@@ -11,6 +11,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
   const [clickTitle, setClickTitle] = useState(null);
   const [isHidden, setIsHidden] = useState("hidden");
   const [isDisplay, setIsDisplay] = useState(null)
+  const navigate = useNavigate();
 
   const handleClickTitle = (title) => {
     setClickTitle(title);
@@ -29,6 +30,11 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
   }
 
   useEffect(() => {
+
+    if (!currentUser) {
+      navigate("/firstEnroll");
+    }
+
     AuthService.getAllUser()
       .then((data) => {
         setAllUser(data.data);
@@ -37,6 +43,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
       .catch((e) => {
         console.log(e);
       });
+
   }, []);
 
   if (isLoading) {
@@ -59,7 +66,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
         </div>
         {/* <!--  自己   --> */}
         <div className="sticky top-0 flex w-full border-b border-gray-200 bg-gray-100 px-4 md:px-10 dark:border-gray-800 dark:bg-gray-900">
-          <UserNav currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+          <UserNav currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </div>
       </div>
       {/* 手機板上導覽 */}
@@ -78,31 +85,32 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
           <div>{clickTitle}</div>
         </div>
         {/* 下內容 */}
-        <div className="flex flex-grow overflow-x-hidden md:relative">
+        <div className="flex flex-grow overflow-x-hidden">
           {/* <!--   左導覽   --> */}
-          <div className={`${isDisplay} w-full h-sreen flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-72 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
+          <div className={`${isDisplay} w-full h-sreen flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
             {/* 各個User */}
             <div className="space-y-4 mt-3">
-              {allUser && allUser.map((user)=>{
-                return(
-                  <Link to={`${user._id}/userReviews`} onClick={() => {handleChange(user._id); handleClickTitle(user.username)}} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
-                    <div className="flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
+              {allUser && allUser.map((user) => {
+                return (
+                  <Link to={`${user._id}/userReviews`} onClick={() => { handleChange(user._id); handleClickTitle(user.username) }} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
+                    <div className="truncate flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
                       {user.username}
                     </div>
                     <div className="flex items-center w-full">
                       <div className="text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-blue-100 text-blue-500 rounded-md">
                         {user.role}
                       </div>
-                      <div className="ml-auto text-xs text-gray-500">{user.date.slice(0, 10)}</div>
+                      <div className="truncate ml-auto text-xs text-gray-500">{user.date.slice(0, 10)}</div>
                     </div>
                   </Link>
                 )
-              })}           
+              })}
             </div>
           </div>
           {/* 右內容 */}
           <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-            <Outlet key={clickUser}/>
+            {!clickUser && <div className="flex justify-center text-center md:text-2xl md:pt-32">點選一位用戶 <br/> 觀看他的影評、推薦片單、電影院</div>}
+            <Outlet key={clickUser} />
           </div>
         </div>
       </div>

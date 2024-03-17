@@ -6,7 +6,7 @@ export default function Slide ({ userRecommend }) {
   return (
     <div id="carousel-wrap">
       <div id="carousel-container">
-        <ul id="carousel" className="animate js-slider-wrap">
+        <ul id="carousel" className="animate">
           {
             userRecommend && userRecommend.slide.tmdbImgBackdrop &&
             userRecommend.slide.tmdbImgBackdrop.map((backdrop) => {         

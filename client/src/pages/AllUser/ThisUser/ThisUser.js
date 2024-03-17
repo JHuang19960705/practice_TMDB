@@ -26,6 +26,7 @@ export default function ThisUser({ currentUser, setCurrentUser }) {
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }
+  
   return (
     <div className="flex-grow bg-white dark:bg-gray-900">
       {/* <!--   用戶頭像    --> */}

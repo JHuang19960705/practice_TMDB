@@ -30,14 +30,14 @@ export default function Charater({ casts }) {
                         </div>
                     </div>
                 </div>
-                <div class="movie-character-right">
+                {/* <div class="movie-character-right">
                     <div class="movie-character-spotlight"></div>
                     <img class="movie-character-img" src="${product.cast[0].bodyImg}"/>
                     <div class="movie-character-arrow">
                       <span class="movie-character-prev js-movie-character-prev"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/prev.png"/></span>
                       <span class="movie-character-next js-movie-character-next"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/next.png"/></span>
                   </div>
-                </div>
+                </div> */}
             </div>
 
         </div>

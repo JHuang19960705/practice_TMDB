@@ -28,7 +28,7 @@ export default function SlideAfterSearch({data, handleNewSlide}) {
           </div>
         </td>
       </tr>
-      <div class="mb-5 flex justify-around items-center border-b border-grey-dark pb-5 md:hidden">
+      <div class="mb-5 flex justify-center md:justify-around items-center border-b border-grey-dark pb-5 md:hidden">
         <div class="w-1/3">
           <div class="aspect-w-1 aspect-h-1 w-full">
             <Link to={`/movie/${data.id}`} className="imageContainer" target="_blank">

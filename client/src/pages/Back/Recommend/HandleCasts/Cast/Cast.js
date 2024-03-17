@@ -8,15 +8,15 @@ export default function Cast({ castId, setOldCast, handleChangeOpen1 }) {
   const [cast, setCast] = useState([]);
   const [castVideoImg, setCastVideoImg] = useState([]);
 
-  useEffect(()=>{
-    if(castId){
+  useEffect(() => {
+    if (castId) {
       const castURL = `https://api.themoviedb.org/3/person/${castId}?api_key=${API_KEY}`;
       const castVidoeImgURL = `https://api.themoviedb.org/3/person/${castId}/combined_credits?&api_key=${API_KEY}`;
       searchAll(castURL, castVidoeImgURL);
     }
   }, [castId])
 
-  const searchAll = async(URL1, URL2) => {
+  const searchAll = async (URL1, URL2) => {
     let result1 = await axios.get(URL1);
     let result2 = await axios.get(URL2);
     setCast(result1.data);
@@ -30,29 +30,34 @@ export default function Cast({ castId, setOldCast, handleChangeOpen1 }) {
 
   return (
     <div>
-      {cast && 
-        <div class="archive_item">
-          <h2 class="archive_heading">CHARACHER</h2>
-          <div class="archive_index">
-            <div class="num f-serif"></div>
-            <div onClick={()=>{handleChangeOpen1(); setOldCast({ id: cast.id, name: cast.name })}} data-cast-id={cast.id} class="cursor-pointer heading rounded-md bg-green-500 px-3 py-1 text-white">修改</div>
+      {cast &&
+        <div className="archive_item">
+          <h2 className="archive_heading">CHARACHER</h2>
+          <div className="archive_index">
+            <div className="num"></div>
+            <div onClick={() => {
+              handleChangeOpen1();
+              setOldCast({ id: cast.id, name: cast.name })
+            }}
+              data-cast-id={cast.id}
+              className="heading">修改</div>
           </div>
-          <div class="archive_content">
-            <div class="archive_col1">
-              <div class="js-celebrity-click">
-                {cast.profile_path && <a target="_blank"><img class="archive_kv" src={tmdbBaseURL + cast.profile_path} /></a>}
+          <div className="archive_content">
+            <div className="archive_col1">
+              <div>
+                {cast.profile_path && <a><img src={tmdbBaseURL + cast.profile_path} /></a>}
               </div>
-              <h3 class="archive_title">
-                {cast.also_known_as &&<div class="jp">{cast.also_known_as[0]}</div>}
-                {cast.also_known_as && cast.also_known_as[2] && <div class="year f-serif">{cast.also_known_as[2]}</div>}
+              <h3 className="archive_title">
+                {cast.also_known_as && <div className="jp">{cast.also_known_as[0]}</div>}
+                {cast.also_known_as && cast.also_known_as[2] && <div className="year">{cast.also_known_as[2]}</div>}
               </h3>
-              {cast.biography && <p class="archive_description">{cast.biography}</p>}
+              {cast.biography && <p className="archive_description">{cast.biography}</p>}
             </div>
-              <div class="archive_col2 js-celebrity-click">
-                {castVideoImg && castVideoImg.slice(0, 4).map((img)=>{
-                  return (<img key={img.id} src={tmdbBaseURL + img.poster_path}/>)
-                })}
-              </div>
+            <div className="archive_col2">
+              {castVideoImg && castVideoImg.slice(0, 4).map((img) => {
+                return (<img key={img.id} src={tmdbBaseURL + img.poster_path} />)
+              })}
+            </div>
           </div>
         </div>
       }

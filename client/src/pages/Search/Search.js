@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
-import { Link, Outlet } from "react-router-dom"
+import React, { useEffect, useState } from 'react'
+import { Link, Outlet, useNavigate } from "react-router-dom"
 import UserNav from '../UserNav/UserNav';
 
 export default function Search({ currentUser, setCurrentUser }) {
   const [selectedLink, setSelectedLink] = useState("Movie");
+  const navigate = useNavigate();
 
   const handleLinkClick = (linkName) => {
     setSelectedLink(linkName);
   };
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/firstEnroll");
+    }
+  })
 
   return (
     <div className="flex h-full flex-grow flex-col overflow-hidden">

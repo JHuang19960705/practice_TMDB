@@ -1,25 +1,20 @@
 
 /* 無限slider */
 #carousel-wrap {
-  /* margin: 10px auto 10px; */
   overflow: hidden;
   box-sizing: border-box;
   position: relative;
-  /* display: none; */
 }
 
 #carousel-container {
   width: 100%;
-  margin: auto;
   display: flex;
-  justify-content: center;
 }
 
 #carousel {
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
 }
 
 .animate {
@@ -37,8 +32,6 @@
   width: 750px;
   list-style: none;
   margin: 20px 10px;
-  /* float: right; */
-  /* transform: translateX(-1125px); */
   opacity: 1;
 }
 
@@ -202,12 +195,11 @@
   
 }
 
-/* 影視評論 參考https://kenjiobayashi.com/ */
 .media-studies-wrap {
   width: 100%;
   padding: 20px;
   background: #000;
-  /* background-image: url("https://picsum.photos/2040/1000"); */
+  background-image: url("https://i.imgur.com/3O7GIz0.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -507,7 +499,6 @@
   width: 100%;
   display: flex;
   align-items: center;
-  /* background-color: #f3d93c; */
 }
 
 .best {
@@ -524,6 +515,7 @@
   font-size: 3rem;
   font-weight: 900;
   margin-bottom: 30px;
+  line-height: normal;
 }
 .best-subtitle {
   font-size: 2rem;
@@ -587,310 +579,21 @@
   .best-logline p {
     font-size: 12px;
   }
+  .best-down {
+    height: 300px;
+  }
+  .best-pic {
+    width: 250px;
+    margin-left: 0;
+  }
+  .best-pic:hover {
+    transform: translateY(-200px);
+  }
   .best-pic-wrap img {
-    height: 150px;
+    height: 300px;
   }
   .best-pic-wrap img:first-child {
     margin-left: 20px;
   }
 }
 
-/* 價格方案 */
-.plans-and-pricing-wrap {
-  width: 100%;
-  height: 100%;
-  background-color: #8dc47d;
-  /* display: none; */
-}
-
-.plans-and-pricing {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.plans-and-pricing-title {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.plans-and-pricing-title p {
-  font-size: 3rem;
-  font-weight: 900;
-}
-
-.plans-and-pricing-content {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.plans-and-pricing-content > div {
-  width: 30%;
-  height: 400px;
-  border: #0000ff 1px solid;
-  background-color: #c4c4c4;
-}
-
-.plans-and-pricing-content > div > div {
-  width: 100%;
-  height: 30%;
-  background-color: #efff85;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.plans-pricing-arrow {
-  position: absolute;
-  width: 100%;
-  top: calc(50% - 25px);
-  display: none;
-}
-
-.plans-pricing-prev {
-  float: left;
-  cursor: pointer;
-}
-
-.plans-pricing-next {
-  float: right;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 426px) {
-  .plans-and-pricing-title p {
-    font-size: 35px;
-    font-weight: 900;
-  }
-  .plans-and-pricing-content > div {
-    width: 80%;
-  }
-  .plans-and-pricing-plan1 {
-    display: block;
-  }
-  .plans-and-pricing-plan2 {
-    display: none;
-  }
-  .plans-and-pricing-plan3 {
-    display: none;
-  }
-  .plans-pricing-arrow {
-    display: block;
-  }
-}
-
-/* 常見問題清單 */
-.asked-questions-wrap {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.asked-questions {
-  width: 70%;
-}
-
-.asked-questions-title {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.asked-questions-title p {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 20px;
-}
-
-.asked-questions-list-wrap {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.asked-questions-list-wrap > div {
-  width: 700px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 10px 10px;
-}
-
-.asked-questions-list-wrap > div > div:first-child {
-  background-color: #ffaeae;
-  cursor: pointer;
-  font-size: 2rem;
-}
-
-.asked-questions-list-content {
-  width: 100%;
-  display: none;
-  background-color: #ffffff;
-}
-
-@media screen and (max-width: 769px) {
-  .asked-questions-title p {
-    font-size: 2rem;
-    font-weight: 800;
-    margin: 20px;
-  }
-
-  .asked-questions-list-wrap > div {
-    width: 400px;
-  }
-
-  .asked-questions-list-wrap > div > div:first-child {
-    font-size: 1.2rem;
-  }
-}
-
-@media screen and (max-width: 426px) {
-  .asked-questions {
-    top: 5%;
-    left: 15%;
-  }
-
-  .asked-questions-title p {
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin: 0px;
-  }
-
-  .asked-questions-list-wrap {
-    width: 100%;
-  }
-
-  .asked-questions-list-wrap > div {
-    width: 300px;
-  }
-
-  .asked-questions-list-wrap > div > div:first-child {
-    background-color: #ffaeae;
-    cursor: pointer;
-    font-size: 1.25rem;
-  }
-}
-
-/* 輸入資料 */
-
-.onboarding-wrap {
-  width: 100%;
-  height: 100%;
-  display: none;
-}
-
-.onboarding {
-  width: 70%;
-  bottom: 100%;
-  background-color: #e2c1ff;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.onboardingTitle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.onboardingNews {
-  display: flex;
-  flex-direction: row;
-}
-
-.onboarding-sign-up {
-  display: flex;
-  flex-direction: column;
-}
-
-.onboarding-sign-upTitle {
-}
-.onboarding-sign-upTitle p {
-  font-size: 1rem;
-}
-
-.onboarding-sign-upPic {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.onboarding-sign-upPic img {
-  width: 40px;
-}
-
-.onboarding-sign-upDetail {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-/* footer */
-
-.footer-container {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  border-top: #ccc solid 2px;
-  /* display: none; */
-}
-.footer-content {
-  margin: 50px 0px;
-}
-.footer-about {
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.footer-pic {
-  display: flex;
-  justify-content: space-between;
-}
-.footer-pic img {
-  width: 30px;
-  height: 30px;
-}
-
-.footer-check {
-  font-size: larger;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin: 50px 0px;
-}
-
-.footer-introduce {
-  text-align: left;
-  line-height: 1.7;
-  margin: 20px;
-  box-sizing: border-box;
-}
-
-.footer-copyright {
-  text-align: center;
-  padding: 15px 20px 15px;
-  font-size: small;
-  color: aliceblue;
-  background-color: #0000ff;
-  /* display: none; */
-}

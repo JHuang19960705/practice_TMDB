@@ -1,35 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 
 const ProfileComponent = ({ currentUser, setCurrentUser }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const nagivate = useNavigate();
+
   const handleUserLogout = () => {
     window.alert("登出成功。您現在將被重新導向到首頁。");
     setCurrentUser(null);
     AuthService.logout();
     nagivate("/");
   }
+
   const handleUserPatch = () => {
     nagivate("/profile/patchProfile")
   }
+
   const handleUserPlan = () => {
     nagivate("/profile/patchRole")
   }
+  
+  const openButton = () => {
+    isOpen && setIsOpen(false);
+    !isOpen && setIsOpen(true);
+  }
+
   return (
     <div>
       {!currentUser && <div>在獲取您的個人資料之前，您必須先登錄。</div>}
       {currentUser && (
-        <div className="flex-col items-start justify-around min-h-[132px] w-full space-y-4 overflow-hidden rounded-2xl bg-green-500 p-4 text-slate-950">
-          <div>姓名{currentUser.user.username}</div>
-          <div>信箱{currentUser.user.email}</div>
-          <div>身份{currentUser.user.role}</div>
+        <div onClick={() => {openButton()}} className={`relative text-xs md:text-sm cursor-pointer flex-col items-start justify-around md:min-h-[132px] space-y-2 md:space-y-4 overflow-hidden rounded-2xl bg-green-500 p-4 text-slate-950`}>
+          <div className="truncate">{currentUser.user.username}</div>
+          <div className="truncate">{currentUser.user.email}</div>
+          <div className="truncate">{currentUser.user.role}</div>
+          <div className={`${isOpen ? "bottom-0" : "-bottom-20" } absolute w-full ease-linear duration-300 left-0 bg-white flex justify-between`}>
+            <button onClick={handleUserLogout} className="w-full py-2 md:py-3 hover:scale-125 ease-linear duration-100">登出</button>
+            <button onClick={handleUserPatch} className="w-full py-2 md:py-3 hover:scale-125 ease-linear duration-100">修改</button>
+            <button onClick={handleUserPlan} className="w-full py-2 md:py-3 hover:scale-125 ease-linear duration-100">方案</button>
+          </div> 
         </div>
-          // {/* <div className="d-flex flex-row-reverse">
-          //   <button onClick={handleUserLogout} className="btn btn-secondary btn-lg p-2">登出</button>
-          //   <button onClick={handleUserPatch} className="btn btn-secondary btn-lg p-2">修改</button>
-          //   <button onClick={handleUserPlan} className="btn btn-secondary btn-lg p-2">方案</button>
-          // </div> */}
       )}
     </div>
   );
