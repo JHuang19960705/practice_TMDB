@@ -36,7 +36,7 @@
     width: 100%;
     position: relative;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .blog-writer {
@@ -90,7 +90,7 @@
 .writer-next p:first-child {
     font-size: 16px;
     font-weight: 900;
-    text-align: end;
+    text-align: flex-end;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -99,7 +99,7 @@
 .writer-next p:last-child {
     font-size: 16px;
     font-weight: 900;
-    text-align: end;
+    text-align: flex-end;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

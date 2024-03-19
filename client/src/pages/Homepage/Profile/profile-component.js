@@ -28,7 +28,6 @@ const ProfileComponent = ({ currentUser, setCurrentUser }) => {
 
   return (
     <div>
-      {!currentUser && <div>在獲取您的個人資料之前，您必須先登錄。</div>}
       {currentUser && (
         <div onClick={() => {openButton()}} className={`relative text-xs md:text-sm cursor-pointer flex-col items-start justify-around md:min-h-[132px] space-y-2 md:space-y-4 overflow-hidden rounded-2xl bg-green-500 p-4 text-slate-950`}>
           <div className="truncate">{currentUser.user.username}</div>

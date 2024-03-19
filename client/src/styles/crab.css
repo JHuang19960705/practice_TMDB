@@ -392,7 +392,6 @@
   width: 90%;
   box-sizing: border-box;
   margin: 80px auto 0;
-  /* display: none; */
 }
 
 .theme-title {
@@ -412,7 +411,7 @@
 .theme-up {
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .theme-up p {
@@ -542,7 +541,7 @@
 
 .best-pic-wrap {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   position: absolute;
   top: 0;
   padding-top: 200px;

@@ -196,7 +196,7 @@
 .movie-user-detail {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   color: #1e478a;
 }
 
@@ -326,7 +326,7 @@
 /* 待輸入的評論 */
 .movie-user-new-comment {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
 }
 
 /* 自己的頭像 */

@@ -1,97 +1,72 @@
 import React from 'react';
 import "../../styles/first-enroll.css";
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import AuthService from "../../services/auth.service";
 
-export default function FirstEnroll() {
+export default function FirstEnroll({setCurrentUser}) {
+  const navigate = useNavigate();
+
+  const handleLogin = async (email, password) => {
+    try {
+      let response = await AuthService.login(email, password);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      window.alert("登入成功。您現在將被重新導向到個人資料頁面。");
+      setCurrentUser(AuthService.getCurrentUser());
+      navigate("/");
+    } catch (e) {
+      console.log(e.response);
+    }
+  };
+  
   return (
-    <div>
-      <div className="flex justify-end items-center mb-1">
-        <span>已經是會員</span>
-        <Link to="login"  type="button" className="m-1 p-2 rounded-lg bg-yellow-200">登入</Link>
+    <div class="relative">
+      {/* 選擇 */}
+      <div>
+        <div className="flex justify-end items-center mb-1"><span>已經是會員</span><Link type="button" class="m-1 rounded-lg bg-blue-500 p-2 text-white" to="login">登入</Link></div>
+        <div class="flex justify-center"><p class="text-3xl">請選擇你的身份</p></div>
+        <div class="pricing-container">
+          <article class="pricing-card">
+            <h3>Free</h3>
+            <div>Essential features</div>
+            <div class="pricing-card__price--original"><s>$0.99</s></div>
+            <div class="pricing-card__price">$0.00</div>
+            <div class="period">/ month</div>
+            <ul>
+              <li>Basic search to movie, TV series.</li>
+              <li>Browse various film enthusiasts' movie reviews.</li>
+              <li>Provide feedback on the movie reviews you like.</li>
+            </ul>
+            <Link to="register/free" className="enroll">註冊free方案</Link><button onClick={() => {handleLogin("FreeUser@mail.com", "FreeUser");}} class="enroll">試用看看</button>
+          </article>
+          <article class="pricing-card">
+            <h3>Standard</h3>
+            <div>Advanced features</div>
+            <div class="pricing-card__price--original"><s>$15.00</s></div>
+            <div class="pricing-card__price">$4.99</div>
+            <div class="period">/ month</div>
+            <ul>
+              <li>All features of the Essential Plan.</li>
+              <li>Create your own curated list of recommended movies.</li>
+              <li>Write movie reviews to document your impressions and experiences.</li>
+            </ul>
+            <Link to="register/standard" className="enroll">註冊standard方案</Link><button onClick={() => {handleLogin("StandardUser@mail.com", "StandardUser");}} class="enroll">試用看看</button>
+          </article>
+          <article class="pricing-card pricing-card--primary">
+            <h3>Pro</h3>
+            <div>Premium features</div>
+            <div class="pricing-card__price--original"><s>$25.00</s></div>
+            <div class="pricing-card__price">$5.49</div>
+            <div class="period">/ month</div>
+            <ul>
+              <li>All features of the Advanced Plan.</li>
+              <li>Write movie reviews to document your impressions and experiences.</li>
+              <li>Launch a movie theater with your own unique taste.</li>
+            </ul>
+            <Link to="register/premium" className="enroll">註冊premium方案</Link><button onClick={() => {handleLogin("PremiumUser@mail.com", "PremiumUser");}} class="enroll">試用看看</button>
+          </article>
+        </div>
       </div>
-      <div className="flex justify-center">
-        <p className="text-3xl">請選擇你的身份</p>
-      </div>
-      <div className="pricing-container">
-        <article className="pricing-card">
-          <h3>Free</h3>
-          <div>
-            Essential features
-          </div>
-          <div className="pricing-card__price--original">
-            <s>$59.99</s>
-          </div>
-          <div className="pricing-card__price">
-            $54.99
-          </div>
-          <div className="period">
-            / month
-          </div>
-          <ul>
-            <li>Basic access to content and resources.</li>
-            <li>Email support with a 48-hour response time.</li>
-            <li>Access to community forums for peer-to-peer support.</li>
-            <li>Monthly newsletter with updates and tips.</li>
-            <li>Limited access to standard tools and features.</li>
-          </ul>
-          <Link to="register/free" className="enroll">
-            註冊free方案
-          </Link>
-          <Link to="login/free" >試用看看</Link>
-        </article>
-        <article className="pricing-card">
-          <h3>Standard</h3>
-          <div>
-            Advanced features
-          </div>
-          <div className="pricing-card__price--original">
-            <s>$112.00</s>
-          </div>
-          <div className="pricing-card__price">
-            $89.99
-          </div>
-          <div className="period">
-            / month
-          </div>
-          <ul>
-            <li>All features of the Essential Plan.</li>
-            <li>Priority email support with a 24-hour response time.</li>
-            <li>Access to exclusive webinars and online events.</li>
-            <li>Enhanced tools and features, including analytics.</li>
-            <li>Customizable content experience based on user preferences. asfsfaafsfsafsafsafsaafsfsafsa</li>
-          </ul>
-          <Link to="register/standard" className="enroll">
-            註冊standard方案
-          </Link>
-          <Link to="login/standard" >試用看看</Link>
-        </article>      
-        <article className="pricing-card pricing-card--primary">
-          <h3>Pro</h3>
-          <div>
-            Premium features
-          </div>
-          <div className="pricing-card__price--original">
-            <s>$125.00</s>
-          </div>
-          <div className="pricing-card__price">
-            $94.99
-          </div>
-          <div className="period">
-            / month
-          </div>
-          <ul>
-            <li>All features of the Advanced Plan.</li>
-            <li>Dedicated account manager for personalized assistance.</li>
-            <li>Early access to new features and beta programs.</li>
-            <li>Advanced analytics and detailed reports.</li>
-            <li>High-priority customer service with instant chat support.</li>
-          </ul>
-          <Link to="register/premium" className="enroll">
-            註冊premium方案
-          </Link>
-          <Link to="login/premium">試用看看</Link>
-        </article>
-      </div>
+      {/* 登入or註冊 */}
       <Outlet />
     </div>
   )

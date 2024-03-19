@@ -4,7 +4,6 @@ import AuthService from "./services/auth.service";
 import FirstEnroll from "./pages/First-Enroll/FirstEnroll";
 import RegisterComponent from "./pages/First-Enroll/Register/register-component";
 import LoginComponent from "./pages/First-Enroll/Login/login-component";
-import VisitorRole from "./pages/First-Enroll/VisitorRole/VisitorRole"
 import Layout from "./Layout";
 import Homepage from "./pages/Homepage/Homepage";
 import PatchProfile from "./pages/Homepage/PatchProfile/PatchProfile";
@@ -46,7 +45,6 @@ function App() {
       <Routes>
         <Route path="firstEnroll" element={<FirstEnroll currentUser={currentUser} setCurrentUser={setCurrentUser}/>}>
           <Route path="register/:clickRole" element={<RegisterComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
-          <Route path="login/:clickRole" element={<VisitorRole currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
           <Route path="login" element={<LoginComponent currentUser={currentUser} setCurrentUser={setCurrentUser}/>}></Route>
         </Route>
         <Route path="/" element={<Layout currentUser={currentUser} setCurrentUser={setCurrentUser} />}>
