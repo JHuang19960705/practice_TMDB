@@ -128,14 +128,14 @@ const handleLinkClick = (linkName) => {
               <b></b>
               <b></b>
               <a href="#">
-                <span class="slide-nav-text">搜尋</span>
+                <span className="slide-nav-text">搜尋</span>
               </a>
             </li>
             <li onClick={() => {handleSortBy("35");handleLinkClick("喜劇片")}} className={`slide-nav-item ${selectedLink === "喜劇片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
-                <span class="slide-nav-text">喜劇片</span>
+                <span className="slide-nav-text">喜劇片</span>
               </a>
             </li>
             <li onClick={() => {handleSortBy("10759");handleLinkClick("動作片")}} className={`slide-nav-item ${selectedLink === "動作片" ? "active" : ""}`}>

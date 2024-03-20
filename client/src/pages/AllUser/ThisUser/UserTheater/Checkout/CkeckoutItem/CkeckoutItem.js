@@ -4,26 +4,26 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 export default function CkeckoutItem({ cartItem }) {
 
   return (
-    <div class="product-container js-product-container-${product.id}">
-      <div class="delivery-date">
+    <div className="product-container js-product-container-${product.id}">
+      <div className="delivery-date">
         Delivery date: Tuesday, June 21
       </div>
-      <div class="product-image-container">
+      <div className="product-image-container">
         <img src={tmdbBaseURL + cartItem.poster_path} />
       </div>
       
-      <div class="product-name">{cartItem.original_name}</div>
+      <div className="product-name">{cartItem.original_name}</div>
       
-      <div class="product-price">{cartItem.vote_count}</div>
+      <div className="product-price">{cartItem.vote_count}</div>
       
-      <div class="product-quantity">
+      <div className="product-quantity">
       <span>
-          Quantity: <span class="quantity-label">{ cartItem.quantity }</span>
+          Quantity: <span className="quantity-label">{ cartItem.quantity }</span>
       </span>
-      <span class="update-quantity-link link-primary">
+      <span className="update-quantity-link link-primary">
           Update
       </span>
-      <span class="delete-quantity-link link-primary js-delete-quantity-link" data-product-id={cartItem.id} >
+      <span className="delete-quantity-link link-primary js-delete-quantity-link" data-product-id={cartItem.id} >
           Delete
       </span>
       </div>

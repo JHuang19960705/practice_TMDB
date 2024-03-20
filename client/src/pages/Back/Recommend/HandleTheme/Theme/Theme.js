@@ -28,19 +28,19 @@ export default function Theme({genre, setNewThemeId, handleChangeOpen}) {
   return (
     <div>
       {genre && video && 
-        <div class="archive_item mb-12">
-          <h2 class="archive_heading">{genre.name}</h2>
-          <div class="archive_index">
-            <div class="num"></div>
-            <div onClick={() => { handleChangeOpen(); setNewThemeId(genre.id)}} class="heading">選擇</div>
+        <div className="archive_item mb-12">
+          <h2 className="archive_heading">{genre.name}</h2>
+          <div className="archive_index">
+            <div className="num"></div>
+            <div onClick={() => { handleChangeOpen(); setNewThemeId(genre.id)}} className="heading">選擇</div>
           </div>
-          <div class="archive_content">
-            <div class="archive_col1">
+          <div className="archive_content">
+            <div className="archive_col1">
               <div>
-                <a><img class="archive_kv" src={tmdbBaseURL + video[0].poster_path} /></a>
+                <a><img className="archive_kv" src={tmdbBaseURL + video[0].poster_path} /></a>
               </div>
             </div>
-              <div class="archive_col2">
+              <div className="archive_col2">
                 {video.slice(1, 5).map((v) => {
                   return <img src={tmdbBaseURL + v.poster_path} />
                 })}

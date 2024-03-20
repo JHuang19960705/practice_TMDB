@@ -89,7 +89,7 @@ const handleLinkClick = (linkName) => {
     </div>
     {/* 編輯區 */}
     <div className="mb-8">
-      <div class="mb-2 text-sm font-medium">待上傳區</div>
+      <div className="mb-2 text-sm font-medium">待上傳區</div>
       <div className="mb-4">
         <div className="flex h-[200px] w-full items-center justify-between overflow-x-auto rounded-xl border-2 border-dashed border-blue-200">
           <div className="flex">
@@ -99,8 +99,8 @@ const handleLinkClick = (linkName) => {
           </div>
         </div>
       </div>
-      <div class="mb-2 flex justify-center px-4">
-          <div onClick={handleTheater} class="cursor-pointer flex w-52 items-center justify-center rounded-3xl bg-blue-50 px-1 py-2 text-blue-500">
+      <div className="mb-2 flex justify-center px-4">
+          <div onClick={handleTheater} className="cursor-pointer flex w-52 items-center justify-center rounded-3xl bg-blue-50 px-1 py-2 text-blue-500">
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform cursor-pointer text-blue-500 transition duration-300 hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 19V5M5 12l7-7 7 7"></path>
@@ -117,7 +117,7 @@ const handleLinkClick = (linkName) => {
         <div className="slide-main-menu">
           {/* logo */}
           <div className="mt-7 mb-8 text-center flex justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-950" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-blue-950" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke-width="2" />
               <path d="M8 21h8M12 17v4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -128,14 +128,14 @@ const handleLinkClick = (linkName) => {
               <b></b>
               <b></b>
               <a href="#">
-                <span class="slide-nav-text">搜尋</span>
+                <span className="slide-nav-text">搜尋</span>
               </a>
             </li>
             <li onClick={() => {handleSortBy("35");handleLinkClick("喜劇片")}} className={`slide-nav-item ${selectedLink === "喜劇片" ? "active" : ""}`}>
               <b></b>
               <b></b>
               <a href="#">
-                <span class="slide-nav-text">喜劇片</span>
+                <span className="slide-nav-text">喜劇片</span>
               </a>
             </li>
             <li onClick={() => {handleSortBy("10759");handleLinkClick("動作片")}} className={`slide-nav-item ${selectedLink === "動作片" ? "active" : ""}`}>
@@ -170,7 +170,7 @@ const handleLinkClick = (linkName) => {
               <b></b>
               <b></b>
               <a href="#">
-                <span class="slide-nav-text">戲劇片</span>
+                <span className="slide-nav-text">戲劇片</span>
               </a>
             </li>
             <li onClick={() => {handleSortBy("10751");handleLinkClick("闔家片")}} className={`slide-nav-item ${selectedLink === "闔家片" ? "active" : ""}`}>
@@ -210,12 +210,12 @@ const handleLinkClick = (linkName) => {
           </div>
           <button className="p-3 w-full flex flex-col rounded-md dark:bg-gray-800 relative focus:outline-none">
             <table className="w-full text-left">
-              <thead class="sticky top-0 bg-white z-10">
-                <tr class="text-gray-400 hidden md:table-row">
-                  <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">片名</th>
-                  <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">海報</th>
-                  <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">上映</th>
-                  <th class="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800"></th>
+              <thead className="sticky top-0 bg-white z-10">
+                <tr className="text-gray-400 hidden md:table-row">
+                  <th className="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">片名</th>
+                  <th className="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">海報</th>
+                  <th className="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800">上映</th>
+                  <th className="font-normal px-3 pt-0 pb-3 border-b border-gray-200 dark:border-gray-800"></th>
                 </tr>
               </thead>
               { data && data.map((d) => { 

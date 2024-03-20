@@ -19,50 +19,50 @@ export default function FirstEnroll({setCurrentUser}) {
   };
   
   return (
-    <div class="relative">
+    <div className="relative">
       {/* 選擇 */}
       <div>
-        <div className="flex justify-end items-center mb-1"><span>已經是會員</span><Link type="button" class="m-1 rounded-lg bg-blue-500 p-2 text-white" to="login">登入</Link></div>
-        <div class="flex justify-center"><p class="text-3xl">請選擇你的身份</p></div>
-        <div class="pricing-container">
-          <article class="pricing-card">
+        <div className="flex justify-end items-center mb-1"><span>已經是會員</span><Link type="button" className="m-1 rounded-lg bg-blue-500 p-2 text-white" to="login">登入</Link></div>
+        <div className="flex justify-center"><p className="text-3xl">請選擇你的身份</p></div>
+        <div className="pricing-container">
+          <article className="pricing-card">
             <h3>Free</h3>
             <div>Essential features</div>
-            <div class="pricing-card__price--original"><s>$0.99</s></div>
-            <div class="pricing-card__price">$0.00</div>
-            <div class="period">/ month</div>
+            <div className="pricing-card__price--original"><s>$0.99</s></div>
+            <div className="pricing-card__price">$0.00</div>
+            <div className="period">/ month</div>
             <ul>
               <li>Basic search to movie, TV series.</li>
               <li>Browse various film enthusiasts' movie reviews.</li>
               <li>Provide feedback on the movie reviews you like.</li>
             </ul>
-            <Link to="register/free" className="enroll">註冊free方案</Link><button onClick={() => {handleLogin("FreeUser@mail.com", "FreeUser");}} class="enroll">試用看看</button>
+            <Link to="register/free" className="enroll">註冊free方案</Link><button onClick={() => {handleLogin("FreeUser@mail.com", "FreeUser");}} className="enroll">試用看看</button>
           </article>
-          <article class="pricing-card">
+          <article className="pricing-card">
             <h3>Standard</h3>
             <div>Advanced features</div>
-            <div class="pricing-card__price--original"><s>$15.00</s></div>
-            <div class="pricing-card__price">$4.99</div>
-            <div class="period">/ month</div>
+            <div className="pricing-card__price--original"><s>$15.00</s></div>
+            <div className="pricing-card__price">$4.99</div>
+            <div className="period">/ month</div>
             <ul>
               <li>All features of the Essential Plan.</li>
               <li>Create your own curated list of recommended movies.</li>
               <li>Write movie reviews to document your impressions and experiences.</li>
             </ul>
-            <Link to="register/standard" className="enroll">註冊standard方案</Link><button onClick={() => {handleLogin("StandardUser@mail.com", "StandardUser");}} class="enroll">試用看看</button>
+            <Link to="register/standard" className="enroll">註冊standard方案</Link><button onClick={() => {handleLogin("StandardUser@mail.com", "StandardUser");}} className="enroll">試用看看</button>
           </article>
-          <article class="pricing-card pricing-card--primary">
+          <article className="pricing-card pricing-card--primary">
             <h3>Pro</h3>
             <div>Premium features</div>
-            <div class="pricing-card__price--original"><s>$25.00</s></div>
-            <div class="pricing-card__price">$5.49</div>
-            <div class="period">/ month</div>
+            <div className="pricing-card__price--original"><s>$25.00</s></div>
+            <div className="pricing-card__price">$5.49</div>
+            <div className="period">/ month</div>
             <ul>
               <li>All features of the Advanced Plan.</li>
               <li>Write movie reviews to document your impressions and experiences.</li>
               <li>Launch a movie theater with your own unique taste.</li>
             </ul>
-            <Link to="register/premium" className="enroll">註冊premium方案</Link><button onClick={() => {handleLogin("PremiumUser@mail.com", "PremiumUser");}} class="enroll">試用看看</button>
+            <Link to="register/premium" className="enroll">註冊premium方案</Link><button onClick={() => {handleLogin("PremiumUser@mail.com", "PremiumUser");}} className="enroll">試用看看</button>
           </article>
         </div>
       </div>

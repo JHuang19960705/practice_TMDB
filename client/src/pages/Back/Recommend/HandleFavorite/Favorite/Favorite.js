@@ -31,24 +31,24 @@ export default function Favorite({ favoriteId, setOldFavorite, handleChangeOpen1
   return (
     <div>
       {favorite &&
-        <div class="archive_item">
-          <h2 class="archive_heading">CHARACHER</h2>
-          <div class="archive_index">
-            <div class="num"></div>
-            <div onClick={() => { handleChangeOpen1(); setOldFavorite({ id: favorite.id, name: favorite.name }) }} data-favorite-id={favorite.id} class="heading">修改</div>
+        <div className="archive_item">
+          <h2 className="archive_heading">CHARACHER</h2>
+          <div className="archive_index">
+            <div className="num"></div>
+            <div onClick={() => { handleChangeOpen1(); setOldFavorite({ id: favorite.id, name: favorite.name }) }} data-favorite-id={favorite.id} className="heading">修改</div>
           </div>
-          <div class="archive_content">
-            <div class="archive_col1">
+          <div className="archive_content">
+            <div className="archive_col1">
               <div>
-                {favorite.profile_path && <a><img class="archive_kv" src={tmdbBaseURL + favorite.profile_path} /></a>}
+                {favorite.profile_path && <a><img className="archive_kv" src={tmdbBaseURL + favorite.profile_path} /></a>}
               </div>
-              <h3 class="archive_title">
-                {favorite.also_known_as && <div class="jp">{favorite.also_known_as[0]}</div>}
-                {favorite.also_known_as && favorite.also_known_as[2] && <div class="year">{favorite.also_known_as[2]}</div>}
+              <h3 className="archive_title">
+                {favorite.also_known_as && <div className="jp">{favorite.also_known_as[0]}</div>}
+                {favorite.also_known_as && favorite.also_known_as[2] && <div className="year">{favorite.also_known_as[2]}</div>}
               </h3>
-              {favorite.biography && <p class="archive_description">{favorite.biography}</p>}
+              {favorite.biography && <p className="archive_description">{favorite.biography}</p>}
             </div>
-            <div class="archive_col2">
+            <div className="archive_col2">
               {favoriteVideoImg && favoriteVideoImg.slice(0, 4).map((img) => {
                 return (<img key={img.id} src={tmdbBaseURL + img.poster_path} />)
               })}

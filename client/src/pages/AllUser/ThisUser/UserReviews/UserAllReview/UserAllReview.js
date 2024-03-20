@@ -8,21 +8,21 @@ export default function UserAllReview({ review }) {
   return (
     <div>
       {review &&
-        <div class="archive_item">
-          <div class="archive_heading">{review.tags[0]}</div>
-          <div class="archive_index">
-            <div class="num"></div>
-            <Link to={`${review._id}`} class="heading">瀏覽</Link>
+        <div className="archive_item">
+          <div className="archive_heading">{review.tags[0]}</div>
+          <div className="archive_index">
+            <div className="num"></div>
+            <Link to={`${review._id}`} className="heading">瀏覽</Link>
           </div>
-          <div class="archive_content">
-            <div class="archive_content_wrap">
+          <div className="archive_content">
+            <div className="archive_content_wrap">
               <div>
-                <a><img class="archive_kv" src={tmdbBaseURL + review.TMDBImg} /></a>
+                <a><img className="archive_kv" src={tmdbBaseURL + review.TMDBImg} /></a>
               </div>
-              <h3 class="archive_title">
-                <div class="jp">{review.title}</div>
+              <h3 className="archive_title">
+                <div className="jp">{review.title}</div>
               </h3>
-              <p class="archive_description">{review.content}</p>
+              <p className="archive_description">{review.content}</p>
             </div>
           </div>
         </div>

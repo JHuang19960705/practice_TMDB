@@ -19,13 +19,13 @@ export default function ChangeFavorite({newFavorite, oldFavorite, handleChangeCl
   }
 
   return (
-    <div class="bg-white box-border p-5 rounded-xl shadow-md absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/5 z-10 flex flex-col">
+    <div className="bg-white box-border p-5 rounded-xl shadow-md absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/5 z-10 flex flex-col">
       <div>
-        {newFavorite && oldFavorite && <div class="text-left">把{oldFavorite.name}換成{newFavorite.name}</div>}
+        {newFavorite && oldFavorite && <div className="text-left">把{oldFavorite.name}換成{newFavorite.name}</div>}
       </div>
-      <div class="flex justify-end mt-6 w-full">
-        <button onClick={handleChangeClose2} class="w-1/3 bg-gray-100 text-gray-800 hover:bg-gray-200 py-2 px-4 rounded">取消</button>
-        <button onClick={() => {ChangeServerFavorite(newFavorite.id)}} class="w-1/3 bg-green-500 text-white px-3 py-1 rounded-md">確定</button>
+      <div className="flex justify-end mt-6 w-full">
+        <button onClick={handleChangeClose2} className="w-1/3 bg-gray-100 text-gray-800 hover:bg-gray-200 py-2 px-4 rounded">取消</button>
+        <button onClick={() => {ChangeServerFavorite(newFavorite.id)}} className="w-1/3 bg-green-500 text-white px-3 py-1 rounded-md">確定</button>
       </div>
     </div>
   )

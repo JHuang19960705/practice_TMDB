@@ -4,7 +4,7 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 function ThemePic({ genresVideo }) {
 
   return (
-    <div class="theme-pic js-theme-pic">
+    <div className="theme-pic js-theme-pic">
       {genresVideo && genresVideo.poster_path && 
         <img src={tmdbBaseURL + genresVideo.poster_path} />
       }

@@ -72,10 +72,10 @@ function Theme({userRecommend}) {
 
   
   return (
-    <div class="theme-wrap">
-      <div class="theme-title">主題推薦</div>
-      <div class="theme">
-        <div class="theme-up">
+    <div className="theme-wrap">
+      <div className="theme-title">主題推薦</div>
+      <div className="theme">
+        <div className="theme-up">
           { userRecommend && userRecommend.theme.map((t) => {
               return genres.map((g) => {
                 if(g.id === t){
@@ -85,9 +85,9 @@ function Theme({userRecommend}) {
             })
           }
         </div>
-        <div class="theme-down">
-            <div class="theme-down-wrap">
-                <div class="theme-pic-wrap">
+        <div className="theme-down">
+            <div className="theme-down-wrap">
+                <div className="theme-pic-wrap">
                   {
                     video &&
                     video.map((v) => {  

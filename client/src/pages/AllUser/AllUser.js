@@ -78,7 +78,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
         {/* 手機板返回導覽 */}
         <div className={`pt-2 flex w-full items-center justify-right md:hidden ${isHidden}`}>
           <div className="cursor-pointer" onClick={handleNavDisplay}>
-            <svg class="w-6 mx-1 text-gray-700 transform dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-6 mx-1 text-gray-700 transform dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
           </div>
@@ -109,7 +109,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
           </div>
           {/* 右內容 */}
           <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-            {!clickUser && <div className="flex justify-center text-center md:text-2xl md:pt-32">點選一位用戶 <br/> 觀看他的影評、推薦片單、電影院</div>}
+            {!clickUser && <div className="flex justify-center text-center md:text-2xl md:pt-32">點選一位用戶 <br /> 觀看他的影評、推薦片單、電影院</div>}
             <Outlet key={clickUser} />
           </div>
         </div>

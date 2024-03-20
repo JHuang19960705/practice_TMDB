@@ -60,7 +60,7 @@ export default function SearchMovie({ currentUser }) {
       {/* 手機板返回導覽 */}
       <div className={`pt-2 flex w-full items-center justify-right md:hidden ${isHidden}`}>
         <div className="cursor-pointer" onClick={handleNavDisplay}>
-          <svg class="w-6 mx-1 text-gray-700 transform dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-6 mx-1 text-gray-700 transform dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
           </svg>
         </div>
