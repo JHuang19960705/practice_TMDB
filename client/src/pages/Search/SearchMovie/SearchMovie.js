@@ -56,7 +56,7 @@ export default function SearchMovie({ currentUser }) {
   }
 
   return (
-    <div className="flex flex-col flex-grow overflow-x-hidden">
+    <div className="flex flex-col flex-grow overflow-x-hidden mb-10 md:mb-0">
       {/* 手機板返回導覽 */}
       <div className={`pt-2 flex w-full items-center justify-right md:hidden ${isHidden}`}>
         <div className="cursor-pointer" onClick={handleNavDisplay}>

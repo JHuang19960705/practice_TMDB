@@ -23,7 +23,7 @@ export default function UserRecommend () {
   }, []);
 
   return (
-    <div className='border-r-2 border-l-2 border-solid border-gray-200'>
+    <div>
       <Slide userRecommend={userRecommend} />
       <Character userRecommend={userRecommend}/>
       <Reviews userRecommend={userRecommend}/>
