@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 
 const LoginComponent = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
-  let [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -26,6 +26,12 @@ const LoginComponent = ({ currentUser, setCurrentUser }) => {
       setMessage(e.response.data);
     }
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+  },[])
 
   return (
     <div className="absolute left-1/2 top-1/2 z-10 w-3/5 min-w-52 -translate-x-1/2 -translate-y-1/2 rounded-lg border border-blue-400 bg-blue-100 p-5 shadow-xl">

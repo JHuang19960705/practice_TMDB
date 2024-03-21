@@ -5,11 +5,11 @@ import AuthService from "../../../services/auth.service";
 export default function RegisterComponent({ currentUser, setCurrentUser }) {
   const { clickRole } = useParams();
   const navigate = useNavigate();
-  let [username, setUsername] = useState("");
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
-  let [role, setRole] = useState("");
-  let [message, setMessage] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -39,13 +39,18 @@ export default function RegisterComponent({ currentUser, setCurrentUser }) {
   };
 
   useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    };
+
     if (clickRole === "free") {
       setRole("free")
     } else if (clickRole === "standard") {
       setRole("standard")
     } else if (clickRole === "premium") {
       setRole("premium")
-    }
+    };
+    
   }, [clickRole])
 
   return (

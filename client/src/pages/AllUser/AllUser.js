@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import AuthService from '../../services/auth.service';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import UserNav from '../UserNav/UserNav';
-import "../../styles/style.css";
 
 const AllUser = ({ currentUser, setCurrentUser }) => {
   const [isLoading, setLoading] = useState(true);
@@ -87,7 +86,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
         {/* 下內容 */}
         <div className="flex flex-grow overflow-x-hidden">
           {/* <!--   左導覽   --> */}
-          <div className={`${isDisplay} w-full h-sreen flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
+          <div className={`${isDisplay} w-full flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
             {/* 各個User */}
             <div className="space-y-4 mt-3">
               {allUser && allUser.map((user) => {

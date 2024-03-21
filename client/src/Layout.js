@@ -10,7 +10,7 @@ export const Layout = ({ currentUser }) => {
 
   return (
     <div className="relative">
-      <div className="h-[calc(100dvh)] overflow-hidden bg-gray-100 text-sm text-gray-600 md:flex dark:bg-gray-900 dark:text-white">
+      <div className="h-screen overflow-hidden bg-gray-100 text-sm text-gray-600 md:flex dark:bg-gray-900 dark:text-white">
         {/* <!-- 左導覽 --> */}
         <div className="absolute bottom-0 z-20 flex w-full flex-shrink-0 border-r border-gray-200 bg-white md:static md:w-20 md:flex-col dark:border-gray-800 dark:bg-gray-900">
           {/* 首頁 */}

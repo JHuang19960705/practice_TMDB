@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ProfileComponent from './Profile/profile-component';
 
@@ -13,7 +13,7 @@ export default function Homepage({ currentUser, setCurrentUser }) {
   })
 
   return (
-    <div className="z-30 fixed overflow-y-auto flex flex-col md:flex-row h-full w-screen bg-gradient-to-r from-indigo-900 to-blue-700">
+    <div className="h-full z-30 fixed overflow-y-auto flex flex-col md:flex-row w-screen bg-gradient-to-r from-indigo-900 to-blue-700">
       {/* 左邊 */}
       <div className="w-full h-full md:w-1/4">
         <div className="h-full flex flex-col py-5 md:py-5 px-5">

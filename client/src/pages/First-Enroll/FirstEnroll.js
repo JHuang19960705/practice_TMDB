@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "../../styles/first-enroll.css";
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import AuthService from "../../services/auth.service";
 
-export default function FirstEnroll({setCurrentUser}) {
+export default function FirstEnroll({currentUser, setCurrentUser}) {
   const navigate = useNavigate();
 
   const handleLogin = async (email, password) => {
@@ -17,6 +17,12 @@ export default function FirstEnroll({setCurrentUser}) {
       console.log(e.response);
     }
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/");
+    }
+  },[])
   
   return (
     <div className="relative">
@@ -36,7 +42,7 @@ export default function FirstEnroll({setCurrentUser}) {
               <li>Browse various film enthusiasts' movie reviews.</li>
               <li>Provide feedback on the movie reviews you like.</li>
             </ul>
-            <Link to="register/free" className="enroll">註冊free方案</Link><button onClick={() => {handleLogin("FreeUser@mail.com", "FreeUser");}} className="enroll">試用看看</button>
+            <Link to="register/free" className="enroll">註冊free方案</Link><button onClick={() => {handleLogin("FreeUser@mail.com", "FreeUser");}} className="try">試用看看</button>
           </article>
           <article className="pricing-card">
             <h3>Standard</h3>
@@ -49,7 +55,7 @@ export default function FirstEnroll({setCurrentUser}) {
               <li>Create your own curated list of recommended movies.</li>
               <li>Write movie reviews to document your impressions and experiences.</li>
             </ul>
-            <Link to="register/standard" className="enroll">註冊standard方案</Link><button onClick={() => {handleLogin("StandardUser@mail.com", "StandardUser");}} className="enroll">試用看看</button>
+            <Link to="register/standard" className="enroll">註冊standard方案</Link><button onClick={() => {handleLogin("StandardUser@mail.com", "StandardUser");}} className="try">試用看看</button>
           </article>
           <article className="pricing-card pricing-card--primary">
             <h3>Pro</h3>
@@ -62,7 +68,7 @@ export default function FirstEnroll({setCurrentUser}) {
               <li>Write movie reviews to document your impressions and experiences.</li>
               <li>Launch a movie theater with your own unique taste.</li>
             </ul>
-            <Link to="register/premium" className="enroll">註冊premium方案</Link><button onClick={() => {handleLogin("PremiumUser@mail.com", "PremiumUser");}} className="enroll">試用看看</button>
+            <Link to="register/premium" className="enroll">註冊premium方案</Link><button onClick={() => {handleLogin("PremiumUser@mail.com", "PremiumUser");}} className="try">試用看看</button>
           </article>
         </div>
       </div>

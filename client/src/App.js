@@ -39,7 +39,7 @@ import PostMovieContent from "./pages/Search/SearchMovie/PostMovieContent/PostMo
 import Reviews from "./pages/Search/Reviews/Reviews";
 
 function App() {
-  let [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
+  const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
   return(
     <Router>
       <Routes>

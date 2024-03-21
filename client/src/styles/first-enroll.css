@@ -1,4 +1,3 @@
-
 .pricing-container {
   display: flex;
   width: 100%;
@@ -10,7 +9,6 @@
 
 .pricing-card {
   align-items: center;
-  background: var(--card-bg);
   border-radius: 0.5rem;
   color: var(--text-gray);
   display: flex;
@@ -32,9 +30,11 @@
 }
 
 @media (max-width: 426px) {
-  .pricing-card {
-    display: none;
+  .pricing-container {
+    flex-direction: column-reverse;
+    gap: 0 2rem;
   }
+
   .pricing-card:last-child {
     display: block;
     min-width: 320px;
@@ -45,7 +45,6 @@
 }
 
 .pricing-card__price {
-  color: var(--text-white);
   flex-wrap: wrap;
   font-size: 2rem;
   font-weight: 700;
@@ -63,7 +62,6 @@
 }
 
 .pricing-card__price--original {
-  color: var(--text-gray);
   font-size: 1.5rem;
   font-weight: 500;
   margin-top: 2rem;
@@ -76,34 +74,52 @@
 }
 
 .pricing-card > .enroll,
-.pricing-card > h3 {
-  color: var(--text-white);
+.pricing-card > h3,
+.pricing-card > .try {
   font-weight: 700;
 }
 
-.pricing-card > .enroll {
+.pricing-card > .enroll,
+.pricing-card > .try {
   align-items: center;
-  background: var(--primary-blue);
-  border: 1px solid var(--primary-blue);
-  border-radius: 0.5rem;
+  border-radius: 2rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   letter-spacing: 0.75px;
   margin-top: auto;
-  min-height: 3rem;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
   width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+}
+
+.pricing-card > .enroll {
+  background-color: #a1a5b3;
+  color: #ffffff;
 }
 
 .pricing-card > .enroll:hover {
-  background: var(--primary-blue-dark);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.pricing-card > .try {
+  background-color: #303136;
+  color: #ffffff;
+}
+
+.pricing-card > .try:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.7), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .pricing-card__banner {
   align-items: center;
-  background: var(--primary-blue);
   border-radius: 0.5rem 0.5rem 0 0;
   display: flex;
   font-weight: 700;
