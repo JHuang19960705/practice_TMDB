@@ -34,7 +34,7 @@ const LoginComponent = ({ currentUser, setCurrentUser }) => {
   },[])
 
   return (
-    <div className="absolute left-1/2 top-1/2 z-10 w-3/5 min-w-52 -translate-x-1/2 -translate-y-1/2 rounded-lg border border-blue-400 bg-blue-100 p-5 shadow-xl">
+    <div className="fixed left-1/2 top-44 z-10 w-3/5 min-w-52 -translate-x-1/2 rounded-lg border border-blue-400 bg-blue-100 p-5 shadow-xl">
       <div onClick={() => { navigate("/firstEnroll") }} className="absolute right-1 top-1 h-5 w-5 cursor-pointer bg-white">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
           <path fill="none" d="M0 0h24v24H0z" />
