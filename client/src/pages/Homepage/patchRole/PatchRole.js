@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 
-export default function PatchRole({currentUser, setCurrentUser}) {
+export default function PatchRole({ currentUser, setCurrentUser }) {
   let [message, setMessage] = useState("");
   const navigate = useNavigate();
   const handlePlanChanging = async (e) => {
-    try{  
+    try {
       let newRole = e.target.dataset.role;
       let response = await AuthService.patchRole(currentUser.user._id, newRole)
       window.alert("身分修改成功。您現在將被導向到個人資料頁面");
@@ -18,8 +18,8 @@ export default function PatchRole({currentUser, setCurrentUser}) {
     };
   }
   return (
-    <div className="flex h-full flex-grow flex-col overflow-x-hidden">
-      <div className="mb-1 flex items-center justify-end"><button onClick={()=>{navigate("/")}} type="button" className="m-1 rounded-lg bg-blue-500 p-2 text-white" >返回</button></div>
+    <div className="flex h-full flex-grow flex-col justify-between overflow-x-hidden">
+      <div className="mb-1 flex items-center justify-end"><button onClick={() => { navigate("/") }} type="button" className="m-1 rounded-lg bg-blue-500 p-2 text-white" >返回</button></div>
       <div className="flex justify-center"><p className="text-3xl">請選擇你的身份</p></div>
       <div className="pricing-container">
         <article className="pricing-card">

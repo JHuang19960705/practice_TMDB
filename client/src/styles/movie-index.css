@@ -11,11 +11,18 @@
     background-color: #fff;
 }
 
+@media (prefers-color-scheme: dark) {
+
+    .pageWrap {
+        background-color: #111827;
+    }
+}
+
 .sideScrollPage {
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .sideScrollPage_content {
@@ -46,11 +53,11 @@
 }
 
 @media(max-width:769px) {
+
     .cancel-btn {
         left: .5rem;
         font-size: 12px;
     }
-
 }
 
 /* 產品 */
@@ -79,6 +86,7 @@
 }
 
 @media(min-width:640px) {
+
     .item {
         width: 150px;
         top: calc(50% - 35vh);
@@ -86,6 +94,7 @@
 }
 
 @media(min-width:1040px) {
+
     .item {
         width: 190px;
         top: calc(50% - 35vh);
@@ -97,6 +106,7 @@
 }
 
 @media(min-width:640px) {
+
     .item:nth-child(2n) {
         transform: translate3d(0, -10vh, 0);
     }
@@ -107,6 +117,7 @@
 }
 
 @media(min-width:640px) {
+
     .item:nth-child(4n) {
         transform: translate3d(0, 10vh, 0);
     }
@@ -117,12 +128,11 @@
 }
 
 @media(min-width:640px) {
+
     .item:not(:first-child) {
         margin-left: 40vh;
     }
 }
-
-
 
 .item_image {
     position: relative;
@@ -140,77 +150,20 @@
     height: 100%
 }
 
-/* 名稱 */
-.item_title {
-    margin: 10px 0;
-    font-size: 14px;
-    overflow: hidden;
-}
-
-.item_title p {
-    cursor: pointer;
-}
-
-.item_title p:hover {
-    border-bottom: solid rgb(100, 100, 100) .5px;
-
-}
-
-
-
-@media(min-width:640px) {
-    .item_title {
-        font-size: 16px;
-    }
-}
-
-
-
-.product-rating-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-/* 數量 */
-.product-quantity-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 20px;
-    margin-bottom: 10px;
-}
-
-.rent-day {
-    cursor: pointer;
-}
-
 /* 加入購物車 */
+.product-rent {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
 .add-to-cart-button {
-    padding: 7px 20px;
+    width: 70%;
+    padding: 1px 0px;
     border-radius: 50px;
     border: #9e9e9e 1px solid;
     cursor: pointer;
     font-size: 10px;
-}
-
-.product-rent {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.audio-comment {
-    display: flex;
-    justify-content: center;
-    color: rgb(206, 206, 206);
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.audio-comment:hover {
-    color: black;
-    border-bottom: solid black 0.25px;
 }
 
 
@@ -221,12 +174,13 @@
     vertical-align: top;
     justify-content: flex-start;
     align-items: center;
-    width: 95vw;
+    width: 80vw;
     height: 100%;
     padding-left: 20vw
 }
 
 @media(min-width:640px) {
+
     .navigation {
         width: 40.3333333333vw;
         padding-left: 16.6666666667vw
@@ -286,6 +240,12 @@
     transition-timing-function: cubic-bezier(.4, .1, .2, 1)
 }
 
+@media (prefers-color-scheme: dark) {
+    .navigation_link:before {
+        background-color: #ffffff;
+    }
+}
+
 .navigation_index {
     width: 30px;
     font-size: 18px;
@@ -311,10 +271,16 @@
 .scrollProgress {
     position: fixed;
     right: 3.3333333333vw;
-    bottom: 5vh;
+    bottom: 12vh;
     width: 240px;
     height: 22px;
     pointer-events: none
+}
+
+@media(min-width:768px) {
+    .scrollProgress {
+        bottom: 5vh;
+    }
 }
 
 .scrollProgress.is-home {
@@ -339,6 +305,13 @@
 .scrollProgress_current {
     background-color: #1a1a1a;
     transform-origin: left center
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .scrollProgress_current {
+        background-color: #fff;
+    }
 }
 
 .scrollProgress_attention {
@@ -366,10 +339,25 @@
     top: -8px;
     font-variation-settings: "wght" 200;
     font-size: 28px;
-    animation-name: arrow-attention;
-    animation-duration: 2.4s;
-    animation-iteration-count: infinite;
-    animation-play-state: running
+    animation: moveRightAndFadeOut 2s linear infinite;
+    /* 調整動畫持續時間 */
+}
+
+@keyframes moveRightAndFadeOut {
+    0% {
+        transform: translateX(-100%);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(200%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(200%);
+        opacity: 0;
+    }
 }
 
 /* 購物車 */

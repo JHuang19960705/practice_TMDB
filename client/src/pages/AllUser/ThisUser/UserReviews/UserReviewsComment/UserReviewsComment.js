@@ -33,7 +33,7 @@ export default function UserReviewsComment({ currentUser }) {
 
     return (
         <div className="movie-comment-system">
-            <button onClick={() => navigate(`/allUser/${userId}/userReviews`)} className="absolute right-4 top-4 px-3 py-1 bg-gray-100 rounded-md">返回</button>
+            <button onClick={() => navigate(`/allUser/${userId}/userReviews`)} className="absolute right-4 top-4 px-3 py-1 bg-gray-100 rounded-md dark:text-black">返回</button>
             <div className="movie-user">
                 {/* <!-- 左半邊 --> */}
                 <div className="movie-user-left">

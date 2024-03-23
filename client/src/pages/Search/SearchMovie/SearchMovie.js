@@ -9,7 +9,7 @@ export default function SearchMovie({ currentUser }) {
   const [movie, setMovie] = useState(null);
   const [input, setInput] = useState("");
   const [data, setData] = useState(null);
-  const [page, setPage] =useState(1);
+  const [page, setPage] = useState(1);
   const [currentSearch, setCurrentSearch] = useState("");
   const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`黑暗騎士`}&page=1&include_adult=false`;
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
@@ -35,17 +35,17 @@ export default function SearchMovie({ currentUser }) {
     setCurrentSearch(input);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     search(initialURL);
   }, [])
 
-  const morePicture = async() => {
+  const morePicture = async () => {
     let newURL;
     setPage(page + 1);
-    if( currentSearch === ""){
-      newURL = `https://api.themoviedb.org/3/movie/popular?language=ja-JP&page=${ page + 1 }&api_key=${API_KEY}`;
+    if (currentSearch === "") {
+      newURL = `https://api.themoviedb.org/3/movie/popular?language=ja-JP&page=${page + 1}&api_key=${API_KEY}`;
     } else {
-      newURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=${ page + 1 }&include_adult=false`
+      newURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=${page + 1}&include_adult=false`
     }
     let result = await axios.get(newURL);
     setData(data.concat(result.data.results));
@@ -69,37 +69,37 @@ export default function SearchMovie({ currentUser }) {
       <div className="flex flex-grow overflow-x-hidden md:relative">
         {/* <!--   左導覽   --> */}
         <div className={`${isDisplay} w-full flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
-          <Search2 search={() => {search(searchURL);}} setInput={setInput} />
+          <Search2 search={() => { search(searchURL); }} setInput={setInput} />
           <div className="space-y-4 mt-3">
             {
               data &&
-              data.map((d) => {        
+              data.map((d) => {
                 return (
                   <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
                     <div className="w-full">
                       <p className="truncate pb-2">{d.title}</p>
-                      <Link to={`${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}}>
-                        <img src={ tmdbBaseURL + d.poster_path} />
+                      <Link to={`${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.title) }}>
+                        <img src={tmdbBaseURL + d.poster_path} />
                       </Link>
                     </div>
-                    { currentUser && currentUser.user.role !== "free" && (
-                        <div className="w-full flex justify-around text-base text-gray-400 pt-3">
-                          <Link to={`postMovieContent/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
-                            寫影評
-                          </Link>
-                          <Link to={`reviews/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
-                            看影評
-                          </Link>
-                        </div>
-                      )
-                    }
-                    { currentUser && currentUser.user.role == "free" && (
+                    {currentUser && currentUser.user.role !== "free" && (
                       <div className="w-full flex justify-around text-base text-gray-400 pt-3">
-                        <Link to={`reviews/${d.id}`} onClick={() => {handleChange(d.id); handleClickTitle(d.title)}} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
+                        <Link to={`postMovieContent/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
+                          寫影評
+                        </Link>
+                        <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                           看影評
                         </Link>
                       </div>
-                      )
+                    )
+                    }
+                    {currentUser && currentUser.user.role == "free" && (
+                      <div className="w-full flex justify-around text-base text-gray-400 pt-3">
+                        <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
+                          看影評
+                        </Link>
+                      </div>
+                    )
                     }
                   </button>
                 )
@@ -113,7 +113,7 @@ export default function SearchMovie({ currentUser }) {
         {/* <!--    右內容    --> */}
         <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
           {!movie && <div className="flex justify-center text-center md:text-2xl md:pt-32">選擇一部電影、寫影評、看影評</div>}
-          <Outlet key={movie}/>
+          <Outlet key={movie} />
         </div>
       </div>
     </div>

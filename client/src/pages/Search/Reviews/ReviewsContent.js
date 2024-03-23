@@ -4,7 +4,7 @@ import ContentService from "../../../services/content.service";
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-export default function ReviewsContent({currentUser}) {
+export default function ReviewsContent({ currentUser }) {
   const { TMDBId } = useParams();
   const [contentData, setContentData] = useState(null);
   const [isLoading, setLoading] = useState(true);
@@ -48,7 +48,7 @@ export default function ReviewsContent({currentUser}) {
     <div className="blog">
       {!contentData[contentData.length - 1] && <div className="flex items-center mt-20 md:mt-10 justify-center text-base md:text-2xl">這篇還沒有影評唷～</div>}
       {contentData && contentData[contentData.length - 1] && (
-        <div className="blog-title">     
+        <div className="blog-title">
           <div>
             <div className="blog-title-text">
               <p>{contentData[last].title}</p>
@@ -77,14 +77,14 @@ export default function ReviewsContent({currentUser}) {
                 )}
               </div>
             </div>
-            
-            {contentData && contentData.slice(0, -1).map ((cw) => {
+
+            {contentData && contentData.slice(0, -1).map((cw) => {
               return (
                 <div className="writer-next">
                   <p>{cw.writer.username}</p>
                   <p>の感想・評価</p>
                 </div>
-              )               
+              )
             })}
 
 
@@ -96,7 +96,7 @@ export default function ReviewsContent({currentUser}) {
                   <img src={tmdbBaseURL + contentData[last].TMDBImg} alt="" />
                 </div>
                 <div className="blog-articale-paragraph">
-                  {contentData[last].content} 
+                  {contentData[last].content}
                 </div>
               </div>
             )}

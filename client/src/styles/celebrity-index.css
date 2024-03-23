@@ -27,11 +27,16 @@
   font-size: 12px;
   padding-bottom: 1.5em;
   letter-spacing: .8em;
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 @media(min-width: 960px) {
   .archive_heading {
     font-size: .625vw;
+    width: calc(50% - 10px);
   }
 }
 
@@ -79,6 +84,12 @@
 @media not all and (min-width: 960px) {
   .archive_index .num::after {
     display: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .archive_index .num::after {
+    background-color: #f3f4f6;
   }
 }
 
@@ -152,6 +163,10 @@
   border-bottom: 1px solid currentColor;
   font-size: 24px;
   letter-spacing: .025em;
+  word-break: break-all;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 @media not all and (min-width: 960px) {
@@ -190,6 +205,7 @@
   -webkit-line-clamp: 4; /* 顯示的行數 */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
+  word-break: break-all;
 }
 
 @media(min-width: 960px) {

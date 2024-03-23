@@ -32,21 +32,23 @@ export default function Information({ videoAll }) {
                 </div>
             </div>
 
-            <div className="movie-video-and-story">
+            {videoAll.overview && videoAll.backdrop_path &&
+                <div className="movie-video-and-story">
 
-                <div className="movie-video">
-                    <a className="movie-video-play">
-                        <img src={videoAll.backdrop_path && (tmdbBaseURL + videoAll.backdrop_path)} />
-                    </a>
-                </div>
-
-                <div className="movie-story">
-                    <div className="movie-story-wrap">
-                        <p>{videoAll.overview && (videoAll.overview)}</p>
+                    <div className="movie-video">
+                        <a className="movie-video-play">
+                            <img src={videoAll.backdrop_path && (tmdbBaseURL + videoAll.backdrop_path)} />
+                        </a>
                     </div>
-                </div>
 
-            </div>
+                    <div className="movie-story">
+                        <div className="movie-story-wrap">
+                            <p>{videoAll.overview}</p>
+                        </div>
+                    </div>
+
+                </div>
+            }
         </div>
     )
 }

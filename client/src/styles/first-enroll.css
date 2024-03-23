@@ -9,12 +9,12 @@
 
 .pricing-card {
   align-items: center;
-  border-radius: 0.5rem;
-  color: var(--text-gray);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   max-width: 25rem;
   padding: 2rem;
+  box-sizing: border-box;
   position: relative;
   transition: all 0.5s ease-in-out;
   width: 100%;
@@ -39,6 +39,7 @@
     display: block;
     min-width: 320px;
   }
+
   .pricing-card div {
     text-align: center;
   }
@@ -50,37 +51,26 @@
   font-weight: 700;
 }
 
-.pricing-card__banner {
-  color: #fff;
-  height: 1rem;
-  position: absolute;
-  top: -2.5rem;
-}
-
-.pricing-card__banner + .pricing-card {
-  border-radius: 0 0 0.5rem 0.5rem;
-}
-
 .pricing-card__price--original {
   font-size: 1.5rem;
   font-weight: 500;
   margin-top: 2rem;
 }
 
-.pricing-card > h3 {
+.pricing-card>h3 {
   font-size: 2rem;
   margin: 0;
   text-align: center;
 }
 
-.pricing-card > .enroll,
-.pricing-card > h3,
-.pricing-card > .try {
+.pricing-card>.enroll,
+.pricing-card>h3,
+.pricing-card>.try {
   font-weight: 700;
 }
 
-.pricing-card > .enroll,
-.pricing-card > .try {
+.pricing-card>.enroll,
+.pricing-card>.try {
   align-items: center;
   border-radius: 2rem;
   cursor: pointer;
@@ -98,22 +88,22 @@
   padding: 0.5rem 1rem;
 }
 
-.pricing-card > .enroll {
+.pricing-card>.enroll {
   background-color: #a1a5b3;
   color: #ffffff;
 }
 
-.pricing-card > .enroll:hover {
+.pricing-card>.enroll:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-.pricing-card > .try {
+.pricing-card>.try {
   background-color: #303136;
   color: #ffffff;
 }
 
-.pricing-card > .try:hover {
+.pricing-card>.try:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.7), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
@@ -129,7 +119,7 @@
   width: 100%;
 }
 
-.pricing-card > ul {
+.pricing-card>ul {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -138,7 +128,7 @@
   width: 100%;
 }
 
-.pricing-card > ul > li {
+.pricing-card>ul>li {
   font-size: 0.875rem;
   font-weight: 500;
   list-style-type: none;
@@ -148,7 +138,7 @@
   white-space: nowrap;
 }
 
-.pricing-card > ul > li:before {
+.pricing-card>ul>li:before {
   background-repeat: no-repeat;
   content: "";
   height: 2rem;

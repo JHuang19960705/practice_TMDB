@@ -38,7 +38,7 @@ export default function YourReviews({ currentUser }) {
 
   const displayContent = (id) => {
     setClickContent(id)
-  } 
+  }
 
   const handleClickTitle = (title) => {
     setClickTitle(title);
@@ -75,27 +75,27 @@ export default function YourReviews({ currentUser }) {
             {contentData && contentData.map((content) => {
               return (
                 <Link
-                  to={`${content._id}`} 
-                  onClick={() => {displayContent(content._id); handleClickTitle(content.title)}} 
+                  to={`${content._id}`}
+                  onClick={() => { displayContent(content._id); handleClickTitle(content.title) }}
                   className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
-                  <div className="truncate flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
+                  <div className="truncate flex md:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 md:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
                     {content.title}
                   </div>
                   <div className="flex items-center w-full">
                     <div className="text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-blue-100 text-blue-500 rounded-md">{content.tags}</div>
-                    <div className="ml-auto text-xs text-gray-500 truncate">{content.date.slice(0,10)}</div>
+                    <div className="ml-auto text-xs text-gray-500 truncate">{content.date.slice(0, 10)}</div>
                   </div>
                 </Link>
               )
             })}
           </div>
-        </div>     
+        </div>
         {/* <!--   右內容    --> */}
         <div className="h-full flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
           {!clickContent && <div className="flex justify-center text-center md:text-2xl md:pt-32">編輯你的影評</div>}
           <Outlet key={clickContent} />
         </div>
-      </div>      
+      </div>
     </div>
 
   )

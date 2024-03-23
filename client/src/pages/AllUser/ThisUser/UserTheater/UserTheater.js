@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import "../../../../styles/movie-index.css";
 import Navigation from "./Component/Navigation"
 import TheaterItems from './Component/TheaterItems';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import AuthService from '../../../../services/auth.service';
+import "../../../../styles/movie-index.css";
 
 export default function UserTheater() {
   const { userId } = useParams()
@@ -16,7 +16,7 @@ export default function UserTheater() {
   const navigate = useNavigate();
 
   const goBackHandler = () => {
-    navigate(-1);
+    navigate(`/allUser/${userId}/userReviews`);
   };
 
   useEffect(() => {
@@ -55,6 +55,24 @@ export default function UserTheater() {
     }
   };
 
+
+  const scrollableContent = document.querySelector(".sideScrollPage");
+
+  if (scrollableContent) {
+    scrollableContent.addEventListener('wheel', (event) => {
+      // 檢查滾動方向
+      const scrollDirection = Math.sign(event.deltaY); // -1: 向上滾動, 1: 向下滾動
+
+      // 設置水平滾動的量
+      const scrollAmount = 20; // 可調整滾動速度
+      scrollableContent.scrollLeft += scrollAmount * scrollDirection;
+
+      // 防止滾動事件的默認行為
+      event.preventDefault();
+    });
+  }
+
+
   return (
     <div>
       <main className="pageWrap">
@@ -66,7 +84,7 @@ export default function UserTheater() {
               <Navigation toggleOpen={toggleOpen} />
               {/* <!-- 產品 --> */}
               <div className="gallery_inner">
-                <div className="items js-products-wrap" >
+                <div className="items" >
                   {isOpen1 && (
                     userRecommend.theater.releases.tmdbImgPoster &&
                     userRecommend.theater.releases.tmdbImgPoster.map((poster) => {
@@ -98,7 +116,7 @@ export default function UserTheater() {
           {/* <!-- 右下角箭頭 --> */}
           <div className="scrollProgress">
             <div className="scrollProgress_attention">
-              <div className="scrollProgress_text"></div>
+              <div className="scrollProgress_text">Scroll or Drag Sideways</div>
               <div className="scrollProgress_arrow">→</div>
             </div>
             <div className="scrollProgress_current"></div>

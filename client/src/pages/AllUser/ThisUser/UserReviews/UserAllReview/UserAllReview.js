@@ -20,7 +20,7 @@ export default function UserAllReview({ review }) {
                 <a><img className="archive_kv" src={tmdbBaseURL + review.TMDBImg} /></a>
               </div>
               <h3 className="archive_title">
-                <div className="jp">{review.title}</div>
+                <div>{review.title}</div>
               </h3>
               <p className="archive_description">{review.content}</p>
             </div>

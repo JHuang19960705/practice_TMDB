@@ -30,7 +30,7 @@ export default function MovieDetail() {
   }
   
   return (
-    <div className="kondo-wrap js-kondo-wrap">
+    <div className="kondo-wrap">
       {movieAll && <Information videoAll={movieAll} />}
       {casts && casts.length > 4 && <Charater casts={casts}/>}
     </div>

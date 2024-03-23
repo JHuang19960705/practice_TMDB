@@ -19,8 +19,14 @@
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  .movie-comment-system {
+    background-color: #1f2937;
+  }
+}
+
 .movie-user {
-  padding: 50px;
+  padding: 70px 50px 50px;
   display: flex;
   justify-content: space-between;
 }
@@ -29,7 +35,7 @@
   .movie-user {
     flex-direction: column;
     align-items: center;
-    padding: 50px 20px;
+    padding: 70px 20px;
   }
 }
 
@@ -55,7 +61,6 @@
 
 /* 評論 */
 .movie-user-thought {
-  /* background-color: #7e7e7e; */
   display: flex;
 }
 
@@ -75,6 +80,9 @@
   font-size: 1.2rem;
   font-weight: bolder;
   color: #172e54;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 426px) {
@@ -154,6 +162,19 @@
   transform: translateX(-50%);
   font-size: 0.7rem;
   color: #1e478a;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (prefers-color-scheme: dark) {
+  .movie-user-title-word p {
+    color: #ffffff;
+  }
+
+  .movie-user-name {
+    color: #ffffff;
+  }
 }
 
 /* 右半邊 */
@@ -182,14 +203,7 @@
 .movie-user-right-content p {
   color: #172e54;
   margin-bottom: 6px;
-}
-
-.movie-user-right-content p:first-child {
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 10; */
+  word-break: break-all;
 }
 
 /* 影評撰寫時間 */

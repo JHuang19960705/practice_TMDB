@@ -52,9 +52,9 @@ export default function ThisUser({ currentUser, setCurrentUser }) {
             </div>
           </div>
           <div className="flex items-center justify-between md:justify-start space-x-3 md:mt-7 mt-4">
-            <Link to="userReviews" onClick={() => handleLinkClick("Reviews")} className={`px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Reviews" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Reviews</Link>
-            <Link to="userRecommend" onClick={() => handleLinkClick("Recommend")} className={`px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Recommend" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Recommend</Link>
-            <Link to="userTheater" onClick={() => handleLinkClick("Theater")} className={`px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Theater" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Theater</Link>
+            <Link to="userReviews" onClick={() => handleLinkClick("Reviews")} className={`truncate md:px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Reviews" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Reviews</Link>
+            <Link to="userRecommend" onClick={() => handleLinkClick("Recommend")} className={`truncate md:px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Recommend" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Recommend</Link>
+            <Link to="userTheater" onClick={() => handleLinkClick("Theater")} className={`truncate md:px-3 pb-1.5 border-b-2 cursor-pointer ${selectedLink === "Theater" ? 'border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100' : 'dark:text-gray-400 border-transparent'}`}>Theater</Link>
           </div>
         </div>
       )}

@@ -28,6 +28,7 @@ export default function SearchTV({ currentUser }) {
     setClickTitle(null);
     setIsHidden("hidden");
   }
+
   const search = async (URL) => {
     let result = await axios.get(URL);
     setData(result.data.results);
@@ -84,10 +85,10 @@ export default function SearchTV({ currentUser }) {
                       </div>
                       {currentUser && currentUser.user.role !== "free" && (
                         <div className="w-full flex justify-around text-base text-gray-400 pt-3">
-                          <Link to={`postTVContent/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
+                          <Link to={`postTVContent/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                             寫影評
                           </Link>
-                          <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
+                          <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                             看影評
                           </Link>
                         </div>
@@ -95,7 +96,7 @@ export default function SearchTV({ currentUser }) {
                       }
                       {currentUser && currentUser.user.role == "free" && (
                         <div className="w-full flex justify-around text-base text-gray-400 pt-3">
-                          <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800">
+                          <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                             看影評
                           </Link>
                         </div>
