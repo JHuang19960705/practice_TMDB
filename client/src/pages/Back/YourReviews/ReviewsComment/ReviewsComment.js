@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ContentService from "../../../../services/content.service";
-import "../../../../styles/comment.css";
 
-export default function YourReviewsComment({ currentUser, setCurrentUser }) {
-  const [contentData, setContentData] = useState(null);
+export default function YourReviewsComment({ currentUser }) {
+  const [reviewData, setReviewData] = useState(null);
   const [isLoading, setLoading] = useState(true);
-  const { contentId } = useParams();
+  const { reviewId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (currentUser) {
       if (currentUser.user.role ==  "standard" || currentUser.user.role ==  "premium") {
-        ContentService.getContentByContentId(contentId)
+        ContentService.getReviewByReviewId(reviewId)
           .then((data) => {
-            setContentData(data.data[0]);
+            setReviewData(data.data[0]);
             setLoading(false);
           })
           .catch((e) => {
@@ -32,16 +31,16 @@ export default function YourReviewsComment({ currentUser, setCurrentUser }) {
 
   return (
     <div className="movie-comment-system">
-        <button onClick={()=>navigate(`/back/yourReviews/${contentId}`)} className="absolute right-4 top-4 px-3 py-1 bg-gray-100 rounded-md dark:text-black">返回</button>
+        <button onClick={()=>navigate(`/back/yourReviews/${reviewId}`)} className="absolute right-4 top-4 px-3 py-1 bg-gray-100 rounded-md dark:text-black">返回</button>
         <div className="movie-user">
                 {/* <!-- 左半邊 --> */}
                 <div className="movie-user-left">
                     <div className="movie-user-left-sticky">
                         {/* <!-- XX影片的評論 --> */}
                         <div className="movie-user-thought">
-                            {contentData && (
+                            {reviewData && (
                                 <div className="movie-user-thought-title">
-                                    <p>『{contentData.TMDBId}』に</p>
+                                    <p>『{reviewData.TMDBId}』に</p>
                                     <p>投稿された感想・評価</p>
                                 </div>
                             )}
@@ -53,9 +52,9 @@ export default function YourReviewsComment({ currentUser, setCurrentUser }) {
                             <div className="movie-user-title-pic">
                                 <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" />
                                 {/* <!-- 使用者名稱 --> */}
-                                {contentData && (
+                                {reviewData && (
                                     <div className="movie-user-name">
-                                        {contentData.writer.username}
+                                        {reviewData.writer.username}
                                     </div>
                                 )}
                             </div>
@@ -65,9 +64,9 @@ export default function YourReviewsComment({ currentUser, setCurrentUser }) {
                                 <div className="movie-user-title-line-two"></div>
                             </div>
                             {/* 標題 */}
-                            {contentData && (
+                            {reviewData && (
                                 <div className="movie-user-title-word">
-                                    <p>{contentData.title}</p>
+                                    <p>{reviewData.title}</p>
                                 </div>
                             )}
                         </div>
@@ -78,17 +77,17 @@ export default function YourReviewsComment({ currentUser, setCurrentUser }) {
                     {/* 影評內容、時間 */}
                     <div className="movie-user-right-content">
                         {/* 內容 */}
-                        {contentData && (
-                            <p>{contentData.content}</p>
+                        {reviewData && (
+                            <p>{reviewData.content}</p>
                         )}
                         {/* <!-- 時間 --> */}
-                        {contentData && (
+                        {reviewData && (
                             <div className="movie-user-detail">
                                 <div className="movie-user-detail-date">
-                                    {contentData.date.slice(0, 10)}
+                                    {reviewData.date.slice(0, 10)}
                                 </div>
                                 <div className="movie-user-detail-time">
-                                    {contentData.date.slice(11, 16)}
+                                    {reviewData.date.slice(11, 16)}
                                 </div>
                             </div>
                         )}
@@ -150,5 +149,5 @@ export default function YourReviewsComment({ currentUser, setCurrentUser }) {
                 </div>
             </div>
     </div>
-  )
+  );
 }

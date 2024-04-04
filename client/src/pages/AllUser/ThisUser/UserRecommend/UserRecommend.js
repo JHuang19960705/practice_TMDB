@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Slide from './Slide/Slide';
-import Character from './Character/Character';
-import Reviews from './Reviews/Reviews';
-import BestChoose from './BestChoose/BestChoose';
-import Theme from './Theme/Theme';
-import AuthService from '../../../../services/auth.service';
-import "../../../../styles/crab.css";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Slide from "./Slide/Slide";
+import Character from "./Character/Character";
+import Reviews from "./Reviews/Reviews";
+import BestChoose from "./BestChoose/BestChoose";
+import Theme from "./Theme/Theme";
+import AuthService from "../../../../services/auth.service";
 
-export default function UserRecommend () {
-  const {userId} = useParams()
+export default function UserRecommend() {
+  const { userId } = useParams(); // 從路由中獲取用戶 ID
   const [userRecommend, setUserRecommend] = useState();
 
+  // 從後端獲取該用戶的推薦的資料
   useEffect(() => {
     AuthService.getUserRecommendById(userId)
       .then((data) => {
@@ -24,11 +24,15 @@ export default function UserRecommend () {
 
   return (
     <div>
-      <Slide userRecommend={userRecommend} />
-      <Character userRecommend={userRecommend}/>
-      <Reviews userRecommend={userRecommend}/>
-      <Theme userRecommend={userRecommend}/>
-      <BestChoose userRecommend={userRecommend}/>
+      {userRecommend && (
+        <>
+          <Slide userRecommend={userRecommend} />
+          <Character userRecommend={userRecommend} />
+          <Reviews userRecommend={userRecommend} />
+          <Theme userRecommend={userRecommend} />
+          <BestChoose userRecommend={userRecommend} />
+        </>
+      )}
     </div>
-  )
+  );
 }

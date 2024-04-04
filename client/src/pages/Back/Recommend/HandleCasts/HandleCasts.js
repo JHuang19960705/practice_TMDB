@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Cast from "./Cast/Cast";
-import "../../../../styles/celebrity-index.css";
 import SearchCast from "./SearchCast/SearchCast";
 import ChangeCast from "./ChangeCast/ChangeCast";
-
 
 export default function HandleCasts({currentUser, setCurrentUser}) {
   const [isLoading, setLoading] = useState(true);

@@ -180,7 +180,6 @@
 /* 右半邊 */
 .movie-user-right {
   width: 60%;
-  /* background-image: linear-gradient(to right bottom, #609afa, #1d64d8); */
   background-color: #bfd7fe;
   border-radius: 20px;
   border: 1px solid #2570eb;
@@ -221,6 +220,7 @@
 .movie-user-detail-time {
   margin-left: 10px;
 }
+
 .movie-user-detail-time {
   font-size: 0.7rem;
 }
@@ -259,6 +259,7 @@
   display: flex;
   align-items: flex-end;
 }
+
 .movie-user-right-other-detail-user-name p {
   font-size: 0.8rem;
   font-weight: bold;
@@ -324,13 +325,16 @@
     white-space: nowrap;
     align-items: center;
   }
+
   .movie-user-right-other-detail-data-self {
     width: 150px;
     overflow: hidden;
   }
+
   .movie-user-right-other-detail-data-self p {
     white-space: nowrap;
   }
+
   .movie-user-right-other-detail-user-comment p {
     width: 100px;
   }

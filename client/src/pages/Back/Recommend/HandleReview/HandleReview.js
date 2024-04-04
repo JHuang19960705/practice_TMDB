@@ -7,7 +7,6 @@ import ContentService from "../../../../services/content.service"
 
 export default function HandleReview({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
   const [recommendReviews, setRecommendReviews] = useState([]);
   const [allReviews, setAllReviews] = useState([]);
   const [newReview, setNewReview] = useState([]);
@@ -19,13 +18,12 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
     }
   }, [currentUser])
 
-
-
+  // 取得所有影評
   const getAllReviews = () => {
     let _id;
     if (currentUser) {
       _id = currentUser.user._id;
-      ContentService.getContentByUserId(_id)
+      ContentService.getReviewByUserId(_id)
         .then((data) => {
           setAllReviews(data.data);
           setRecommendReviews(data.data)
@@ -37,18 +35,22 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
     }
   }
 
+  // 篩選推薦影評
   const getRecommendReviews = () => {
     setRecommendReviews(prevReviews => prevReviews.filter(r => currentUser.user.contentId.includes(r._id)));
   }
 
+  // 開啟變更影評視窗
   const handleChangeOpen = () => {
     setIsOpen(true)
   }
 
+  // 關閉變更影評視窗
   const handleChangeClose = () => {
     setIsOpen(false)
   }
 
+  // 檢查是否為重複影評並加入推薦列表
   const checkIfDouble = (newR) => {
     if (recommendReviews[0]) {
       if (!recommendReviews.includes(newR)) {
@@ -64,10 +66,12 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
     }
   }
 
+  // 刪除所選影評
   const deleteReview = (id) => {
     setRecommendReviews(recommendReviews.filter(r => r !== id))
   }
 
+  // 修改影評
   const patchReview = async (upDatedRecommendReviewsId) => {
     const newAllReviewsId = upDatedRecommendReviewsId;
     try {
@@ -77,13 +81,14 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
       setCurrentUser(AuthService.getCurrentUser());
       navigate(0);
     } catch (e) {
-      setMessage(e.response.data);
+      console.error(e);
     };
 
   }
 
   return (
     <div>
+      {/* 上傳影評區 */}
       <div className="sticky left-0 top-0 z-10">
         <div className="dark:bg-gray-800 flex w-full flex-col items-center rounded-b-3xl bg-white p-3 shadow">
           {!recommendReviews[0] && <div className="text-center">你還沒選擇要推薦的影評唷~<br />▼快來選▼</div>}
@@ -104,6 +109,7 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
           </div>
         </div>
       </div>
+      {/* 所有影評 */}
       <section className="archive">
         <div>
           {allReviews && allReviews.map((r) => {
@@ -111,6 +117,7 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
           })}
         </div>
       </section>
+      {/* 變更影評視窗 */}
       {isOpen &&
         <ChangeReview newReview={newReview} checkIfDouble={checkIfDouble} handleChangeClose={handleChangeClose} currentUser={currentUser} setCurrentUser={setCurrentUser} />
       }

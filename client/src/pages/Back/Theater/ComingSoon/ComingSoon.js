@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthService from '../../../../services/auth.service';
+import AuthService from "../../../../services/auth.service";
 import axios from "axios";
-import CurrentTheater from './CurrentTheater/CurrentTheater';
-import ChoosedImg from '../Component/ChooseImg';
-import Search2 from '../../../../components/Search2';
-import SlideAfterSearch from '../Component/SlideAfterSearch';
-import "../../../../styles/handleSlide.css"
+import CurrentTheater from "./CurrentTheater/CurrentTheater";
+import ChoosedImg from "../Component/ChooseImg";
+import Search from "../../../../components/Search";
+import SlideAfterSearch from "../Component/SlideAfterSearch";
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function ComingSoon({ currentUser, setCurrentUser }) {
@@ -18,6 +18,19 @@ export default function ComingSoon({ currentUser, setCurrentUser }) {
   const [selectedLink, setSelectedLink] = useState("search");
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
 
+  useEffect(() => {
+    const updatedSlides = [];
+    if (currentUser.user.theater.upcoming.tmdbImgBackdrop) {
+      for (let i = 0; i < currentUser.user.theater.upcoming.tmdbImgBackdrop.length; i++) {
+        updatedSlides.push({
+          slideBackdrop: currentUser.user.theater.upcoming.tmdbImgBackdrop[i],
+          slidePoster: currentUser.user.theater.upcoming.tmdbImgPoster[i]
+        });
+      }
+    }
+    setNewOnTime(updatedSlides);
+  }, [currentUser]);
+
   const handleNewSlide = (newOnTimeBackdrop, newOnTimePoster) => {
     const existingSlide = newOnTime.find(slide => slide.slideBackdrop === newOnTimeBackdrop && slide.slidePoster === newOnTimePoster);
     if (existingSlide) {
@@ -25,7 +38,7 @@ export default function ComingSoon({ currentUser, setCurrentUser }) {
     } else {
       setNewOnTime([...newOnTime, { slideBackdrop: newOnTimeBackdrop, slidePoster: newOnTimePoster }]);
     }
-  }
+  };
 
   const handleTheater = async () => {
     try {
@@ -45,37 +58,24 @@ export default function ComingSoon({ currentUser, setCurrentUser }) {
     } catch (e) {
       setMessage(e.response.data);
     };
-  }
+  };
 
   const deleteSlideImg = (choosedDeleteImg) => {
     setNewOnTime(newOnTime.filter((not) => {
       return not.slideBackdrop !== choosedDeleteImg.slideBackdrop;
     }))
 
-  }
+  };
 
   const search = async (URL) => {
     let result = await axios.get(URL);
     setData(result.data.results);
-  }
+  };
 
   const handleSortBy = async (genreId) => {
     let genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genreId}`
     await search(genresURL);
-  }
-
-  useEffect(() => {
-    const updatedSlides = [];
-    if (currentUser.user.theater.upcoming.tmdbImgBackdrop) {
-      for (let i = 0; i < currentUser.user.theater.upcoming.tmdbImgBackdrop.length; i++) {
-        updatedSlides.push({
-          slideBackdrop: currentUser.user.theater.upcoming.tmdbImgBackdrop[i],
-          slidePoster: currentUser.user.theater.upcoming.tmdbImgPoster[i]
-        });
-      }
-    }
-    setNewOnTime(updatedSlides);
-  }, [currentUser]);
+  };
 
   const handleLinkClick = (linkName) => {
     setSelectedLink(linkName);
@@ -206,7 +206,7 @@ export default function ComingSoon({ currentUser, setCurrentUser }) {
           {/* 右邊 */}
           <div className="dark:bg-gray-800">
             <div className="relative mt-2 px-3">
-              <Search2 search={() => { search(searchURL) }} setInput={setInput} />
+              <Search search={() => { search(searchURL) }} setInput={setInput} />
             </div>
             <div className="p-3 w-full flex flex-col rounded-md relative focus:outline-none">
               <table className="w-full text-left">
@@ -247,5 +247,5 @@ export default function ComingSoon({ currentUser, setCurrentUser }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

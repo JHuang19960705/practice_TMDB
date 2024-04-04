@@ -69,8 +69,6 @@ const userSchema = new Schema({
 
 })
 
-
-// 
 userSchema.methods.isFree = function () {
   return this.role == "free";
 };

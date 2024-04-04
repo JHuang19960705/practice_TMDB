@@ -7,26 +7,32 @@ class AuthService {
   login(email, password ) {
     return axios.post(API_URL + "/login", { email, password });
   }
+  
   // 登出
   logout() {
     localStorage.removeItem("user");
   }
+
   // 註冊
   register(username, email, password, role ) {
     return axios.post(API_URL + "/register", { username, email, password, role });
   }
+
   // 拿到所有會員
   getAllUser() {
     return axios.get(API_URL + "/");
   }
+
   // 透過Id拿到該會員
   getUserById(_id) {
     return axios.get(API_URL + "/getUserById/" + _id);
   }
+
   // 透過Id拿到該會員recommend資料
   getUserRecommendById(_id) {
     return axios.get(API_URL + "/getUserRecommendById/" + _id);
   }
+
   // 改個資
   patchProfile( _id, username, email ) {
     let token;
@@ -45,6 +51,7 @@ class AuthService {
       }
     );
   }
+
   // 改身分
   patchRole(_id, role ) {
     let token;
@@ -63,6 +70,7 @@ class AuthService {
       }
     );    
   }
+
   // 改slide
   patchSlide(_id, slide ) {
     let token;
@@ -81,6 +89,7 @@ class AuthService {
       }
     );    
   }
+
   // 改評論
   patchReviews(_id, contentId ) {
     let token;
@@ -99,6 +108,7 @@ class AuthService {
       }
     );    
   }
+
   // 改卡司
   patchCast(_id, cast ) {
     let token;
@@ -117,6 +127,7 @@ class AuthService {
       }
     );    
   }
+
   // 改人物
   patchFavoritePerson(_id, favoritePerson ) {
     let token;
@@ -135,6 +146,7 @@ class AuthService {
       }
     );    
   }
+
   // 改主題
   patchTheme(_id, theme ) {
     let token;
@@ -153,6 +165,7 @@ class AuthService {
       }
     );    
   } 
+
   // 放電影院
   // 更新 releases 屬性
   patchTheaterReleases(_id, releases) {

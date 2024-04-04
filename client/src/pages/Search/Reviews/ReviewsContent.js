@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import ContentService from "../../../services/content.service";
+
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
-const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function ReviewsContent({ currentUser }) {
-  const { TMDBId } = useParams();
-  const [contentData, setContentData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const { TMDBId } = useParams(); // 從URL中獲取TMDBId
+  const [contentData, setContentData] = useState(null); // 影評資料
+  const [isLoading, setLoading] = useState(true); // 加載狀態
 
   useEffect(() => {
     let _id;
@@ -15,20 +15,21 @@ export default function ReviewsContent({ currentUser }) {
     if (currentUser) {
       _id = TMDBId;
 
-      if (currentUser.user.role == "standard" || currentUser.user.role == "premium") {
+      // 根據用戶角色發送不同的請求
+      if (currentUser.user.role === "standard" || currentUser.user.role === "premium") {
         ContentService.getReviewsByTMDBId(_id)
           .then((data) => {
-            setContentData(data.data);
-            setLoading(false);
+            setContentData(data.data); // 設定影評資料
+            setLoading(false); 
           })
           .catch((e) => {
             console.log(e);
           });
-      } else if (currentUser.user.role == "free") {
+      } else if (currentUser.user.role === "free") {
         ContentService.getReviewsByTMDBId(_id)
           .then((data) => {
-            setContentData(data.data);
-            setLoading(false);
+            setContentData(data.data); // 設定影評資料
+            setLoading(false); 
           })
           .catch((e) => {
             console.log(e);
@@ -42,11 +43,13 @@ export default function ReviewsContent({ currentUser }) {
     return <div className="App">Loading...</div>;
   }
 
-  const last = contentData.length - 1
+  const last = contentData.length - 1;
 
   return (
     <div className="blog">
+      {/* 如果沒有影評資料，顯示提示 */}
       {!contentData[contentData.length - 1] && <div className="flex items-center mt-20 md:mt-10 justify-center text-base md:text-2xl">這篇還沒有影評唷～</div>}
+      {/* 如果有影評資料，顯示最後一篇影評 */}
       {contentData && contentData[contentData.length - 1] && (
         <div className="blog-title">
           <div>
@@ -59,10 +62,10 @@ export default function ReviewsContent({ currentUser }) {
           </div>
         </div>
       )}
+      {/* 如果有影評資料，顯示作者資訊和標籤 */}
       {contentData && contentData[contentData.length - 1] && (
         <div className="blog-content">
           <div className="blog-writer">
-
             <div className="writer-now">
               <div className="writer-wrap">
                 <div className="writer-pic">
@@ -77,7 +80,7 @@ export default function ReviewsContent({ currentUser }) {
                 )}
               </div>
             </div>
-
+            {/* 如果有影評資料，顯示前面的作者資訊 */}
             {contentData && contentData.slice(0, -1).map((cw) => {
               return (
                 <div className="writer-next">
@@ -86,11 +89,10 @@ export default function ReviewsContent({ currentUser }) {
                 </div>
               )
             })}
-
-
           </div>
-          <div className="blog-article">
-            {contentData[last] && (
+          {/* 如果有影評資料，顯示影評內容 */}
+          {contentData[last] && (
+            <div className="blog-article">
               <div className="blog-article-content">
                 <div className="blog-articale-pic">
                   <img src={tmdbBaseURL + contentData[last].TMDBImg} alt="" />
@@ -99,8 +101,8 @@ export default function ReviewsContent({ currentUser }) {
                   {contentData[last].content}
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </div>

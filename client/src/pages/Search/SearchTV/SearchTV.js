@@ -1,44 +1,50 @@
-import React, { useState, useEffect } from 'react'
-import { Outlet, Link } from "react-router-dom"
-import axios from 'axios';
-import Search2 from '../../../components/Search2';
+import React, { useState, useEffect } from "react";
+import { Outlet, Link } from "react-router-dom";
+import axios from "axios";
+import Search from "../../../components/Search";
+
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function SearchTV({ currentUser }) {
-  const [tv, setTV] = useState(null);
-  const [input, setInput] = useState("");
-  const [data, setData] = useState(null);
-  const [page, setPage] = useState(1);
-  const [currentSearch, setCurrentSearch] = useState("");
-  const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`絕命`}&page=1&include_adult=false`;
-  const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
-  const [clickTitle, setClickTitle] = useState(null);
-  const [isHidden, setIsHidden] = useState("hidden");
-  const [isDisplay, setIsDisplay] = useState(null)
-
+  const [tv, setTV] = useState(null); // 儲存用戶點擊的影集ID
+  const [input, setInput] = useState(""); // 儲存用戶輸入的搜尋關鍵字
+  const [data, setData] = useState(null); // 儲存搜尋結果的影集資料
+  const [page, setPage] = useState(1); // 儲存當前頁碼
+  const [currentSearch, setCurrentSearch] = useState(""); // 儲存當前搜尋關鍵字
+  const [clickTitle, setClickTitle] = useState(null); // 儲存用戶點擊的影集標題
+  const [isHidden, setIsHidden] = useState("hidden"); // 控制手機板導覽的顯示與隱藏
+  const [isDisplay, setIsDisplay] = useState(null); // 控制手機板導覽的顯示與隱藏
+  const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`絕命`}&page=1&include_adult=false`; // 初始搜尋URL，預設搜尋關鍵字為"絕命"
+  const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`; // 搜尋URL，根據用戶輸入的關鍵字動態生成
+  
+  // 點擊影集標題時的處理函數
   const handleClickTitle = (title) => {
     setClickTitle(title);
     setIsHidden(null);
     setIsDisplay("hidden");
   }
-
+  
+  // 控制手機板導覽顯示與隱藏的處理函數
   const handleNavDisplay = () => {
     setIsDisplay(null);
     setClickTitle(null);
     setIsHidden("hidden");
   }
 
+  // 搜尋影集的函數，向TMDB API發送請求並更新搜尋結果資料
   const search = async (URL) => {
     let result = await axios.get(URL);
     setData(result.data.results);
     setCurrentSearch(input);
   };
 
+  // 初始加載時進行一次搜尋
   useEffect(() => {
     search(initialURL);
   }, [])
 
+  // 點擊“更多”按鈕時加載更多搜尋結果的函數
   const morePicture = async () => {
     let newURL;
     setPage(page + 1);
@@ -51,6 +57,7 @@ export default function SearchTV({ currentUser }) {
     setData(data.concat(result.data.results));
   };
 
+  // 點擊影集時更新選擇的影集ID
   const handleChange = (id) => {
     setTV(id);
   }
@@ -69,7 +76,7 @@ export default function SearchTV({ currentUser }) {
       <div className="flex flex-grow overflow-x-hidden md:relative">
         {/* <!--   左導覽   --> */}
         <div className={`${isDisplay} w-full flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
-          <Search2 search={() => { search(searchURL); }} setInput={setInput} />
+          <Search search={() => { search(searchURL); }} setInput={setInput} />
           <div className="space-y-4 mt-3">
             {
               data &&
@@ -109,7 +116,7 @@ export default function SearchTV({ currentUser }) {
             }
           </div>
           <div className="flex justify-center pt-5">
-            <button onClick={morePicture} className='h-8 px-3 rounded-md shadow text-white bg-blue-500'>MORE</button>
+            <button onClick={morePicture} className="h-8 px-3 rounded-md shadow text-white bg-blue-500">MORE</button>
           </div>
         </div>
         {/* <!--    右內容    --> */}

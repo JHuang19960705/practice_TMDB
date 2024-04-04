@@ -1,26 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ProfileComponent from './Profile/profile-component';
+import ProfileComponent from "./Profile/profile";
 
 export default function Homepage({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
 
+  // 檢查是否有用戶，若無則導航至首次註冊頁面
   useEffect(() => {
     if (!currentUser) {
       navigate("/firstEnroll");
     }
-  })
+  }, [currentUser, navigate]);
 
   return (
     <div className="h-full z-30 fixed overflow-y-auto flex flex-col md:flex-row w-screen bg-gradient-to-r from-indigo-900 to-blue-700">
-      {/* 左邊 */}
+      {/* 左邊側邊欄 */}
       <div className="w-full h-full md:w-1/4">
         <div className="h-full flex flex-col py-5 md:py-5 px-5">
-          {/* LOGO */}
+          {/* LOGO和選單 */}
           <div>
             <div onClick={() => { navigate("/allUser") }}>
               <svg xmlns="http://www.w3.org/2000/svg" className="cursor-pointer w-9 text-white" viewBox="0 0 24 24" fill="#FFFFFF">
-                <path stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 5V19M21 5V19M3 7.20608V16.7939C3 17.7996 3 18.3024 3.19886 18.5352C3.37141 18.7373 3.63025 18.8445 3.89512 18.8236C4.20038 18.7996 4.55593 18.4441 5.26704 17.733L10.061 12.939C10.3897 12.6103 10.554 12.446 10.6156 12.2565C10.6697 12.0898 10.6697 11.9102 10.6156 11.7435C10.554 11.554 10.3897 11.3897 10.061 11.061L5.26704 6.26704C4.55593 5.55593 4.20038 5.20038 3.89512 5.17636C3.63025 5.15551 3.37141 5.26273 3.19886 5.46476C3 5.69759 3 6.20042 3 7.20608Z" />
+                <path stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 5V19M21 5V19M3 7.20608V16.7939C3 17.7996 3 18.3024 3.19886 18.5352C3.37141 18.7373 3.63025 18.8445 3.89512 18.8236C4.20038 18.7996 4.55593 18.4441 5.26704 17.733L10.061 12.939C10.3897 12.6103 10.554 12.446 10.6156 12.2565C10.6697 12.0898 10.6697 11.9102 10.6156 11.7435C10.554 11.554 10.3897 11.3897 10.061 11.061L5.26704 6.26704C4.55593 5.55593 4.20038 5.20038 3.89512 5.17636C3.63025 5.15551 3.37141 5.26273 3.19886 5.46476C3 5.69759 3 6.20042 3 7.20608Z" />
               </svg>
             </div>
             <div className="hidden">漢堡</div>
@@ -35,7 +36,7 @@ export default function Homepage({ currentUser, setCurrentUser }) {
               <p className="page-subtitle mt-1 text-xs leading-48 text-green-500">Users can Write Reviews, Craft Showcase, and Experience Theater</p>
             </div>
           </div>
-          {/* Nav */}
+          {/* 導航 */}
           <div className="mb-8 md:mt-12 flex-grow overflow-y-auto">
             <nav>
               <ul className="list-none flex flex-col md:space-y-6">
@@ -45,7 +46,7 @@ export default function Homepage({ currentUser, setCurrentUser }) {
               </ul>
             </nav>
           </div>
-          {/* Information */}
+          {/* 用戶信息 */}
           <div>
             {currentUser && (
               <ProfileComponent currentUser={currentUser} setCurrentUser={setCurrentUser} />
@@ -53,7 +54,7 @@ export default function Homepage({ currentUser, setCurrentUser }) {
           </div>
         </div>
       </div>
-      {/* 右邊 */}
+      {/* 右邊內容區域 */}
       <div className="hidden pt-10vh md:flex flex-col justify-end gap-40 w-full md:w-3/4">
         <div className="flex-col items-start text-white box-border md:pb-6 p-6">
           <h1 className="text-4xl leading-88 md:text-6xl">
@@ -64,5 +65,5 @@ export default function Homepage({ currentUser, setCurrentUser }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import AuthService from '../../../../../services/auth.service';
+import React, { useState } from "react"
+import AuthService from "../../../../../services/auth.service";
 
 export default function ChangeFavorite({newFavorite, oldFavorite, handleChangeClose2, favorite, currentUser, setCurrentUser, handleChangeClose1}) {
   const [message, setMessage] = useState("");
   
+  // 將選擇的角色修改為新的角色
   const ChangeServerFavorite = async(choosedFavorite) => {
     favorite = choosedFavorite;
     try{  
@@ -11,10 +12,12 @@ export default function ChangeFavorite({newFavorite, oldFavorite, handleChangeCl
       window.alert("修改成功~");
       localStorage.setItem("user", JSON.stringify(response.data));
       setCurrentUser(AuthService.getCurrentUser());
+      // 關閉彈窗
       handleChangeClose2();
       handleChangeClose1();
-    } catch (e) {
-      setMessage(e.response.data);
+    } catch (error) {
+      console.error("An error occurred while fetching data:", error);
+      setMessage(error.response.data);
     };
   }
 
@@ -27,6 +30,7 @@ export default function ChangeFavorite({newFavorite, oldFavorite, handleChangeCl
         <button onClick={handleChangeClose2} className="bg-gray-100 text-gray-800 hover:bg-gray-200 px-2 py-1 rounded-md">取消</button>
         <button onClick={() => {ChangeServerFavorite(newFavorite.id)}} className="ml-2 bg-blue-500 text-white px-2 py-1 rounded-md">確定</button>
       </div>
+      {message && <div className="text-red-500">{message}</div>}
     </div>
   )
 }

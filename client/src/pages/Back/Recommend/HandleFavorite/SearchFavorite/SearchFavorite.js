@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import axios from "axios";
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
@@ -8,10 +9,14 @@ export default function SearchFavorite({ setNewFavorite, handleChangeClose1, han
   const [input, setInput] = useState("");
   const searchURL = `https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&language=ja-JP&query=${input}&page=1`;
 
-  //搜尋角色
+  // 搜索角色
   const search = async (URL) => {
-    let result = await axios.get(URL);
-    setData(result.data.results);
+    try {
+      const result = await axios.get(URL);
+      setData(result.data.results);
+    } catch (error) {
+      console.error("An error occurred while fetching data:", error);
+    }
   }
 
   const inputHandler = (e) => {
@@ -26,7 +31,7 @@ export default function SearchFavorite({ setNewFavorite, handleChangeClose1, han
       <div className="relative mt-3">
         <input onChange={inputHandler} type="text" className="pl-8 h-9 bg-transparent border border-gray-300 dark:border-gray-700 dark:text-white w-full rounded-md text-sm" placeholder="Search" />
         <button onClick={() => search(searchURL)}>
-          <svg viewBox="0 0 24 24" className="w-4 absolute text-gray-400 top-4 transform translate-x-0.5 -translate-y-1/2 left-2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" className="w-4 absolute text-gray-400 top-4 transform translate-x-0.5 -translate-y-1/2 left-2" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
@@ -47,14 +52,14 @@ export default function SearchFavorite({ setNewFavorite, handleChangeClose1, han
               data && data.map((d) => {
                 if (d.name && d.profile_path && d.known_for_department) {
                   return (
-                    <tr className="hidden md:table-row">
+                    <tr className="hidden md:table-row" key={d.id}>
                       <td className="sm:p-3 py-2 px-1 w-1/4 border-b border-gray-200 dark:border-gray-800">
                         <div className="flex items-center truncate">{d.name}</div>
                       </td>
                       <td className="sm:p-3 py-2 px-1 w-1/4 border-b border-gray-200 dark:border-gray-800">
                         <div className="flex items-center">
                           <a className="imageContainer">
-                            <img className="w-20" src={tmdbBaseURL + d.profile_path} />
+                            <img className="w-20" src={tmdbBaseURL + d.profile_path} alt={d.name} />
                           </a>
                         </div>
                       </td>
@@ -71,12 +76,13 @@ export default function SearchFavorite({ setNewFavorite, handleChangeClose1, han
                     </tr>
                   )
                 }
+                return null;
               })}
             {
               data && data.map((d) => {
                 if (d.name && d.profile_path && d.known_for_department) {
                   return (
-                    <div className="mb-5 flex justify-around items-center border-b pb-5 md:hidden">
+                    <div className="mb-5 flex justify-around items-center border-b pb-5 md:hidden" key={d.id}>
                       <div className="w-1/3">
                         <div className="aspect-w-1 aspect-h-1 w-full">
                           <img src={tmdbBaseURL + d.profile_path} alt={d.name} className="bg-white text-gray-700 hover:bg-gray-100 py-1 px-2 rounded-sm text-sm object-cover" />
@@ -94,6 +100,7 @@ export default function SearchFavorite({ setNewFavorite, handleChangeClose1, han
                     </div>
                   )
                 }
+                return null;
               })}
           </tbody>
         </table>

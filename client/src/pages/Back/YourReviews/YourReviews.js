@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import ContentService from "../../../services/content.service";
 
 export default function YourReviews({ currentUser }) {
@@ -8,8 +8,8 @@ export default function YourReviews({ currentUser }) {
   const [clickContent, setClickContent] = useState(null);
   const [clickTitle, setClickTitle] = useState(null);
   const [isHidden, setIsHidden] = useState("hidden");
-  const [isDisplay, setIsDisplay] = useState(null)
-
+  const [isDisplay, setIsDisplay] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -23,9 +23,9 @@ export default function YourReviews({ currentUser }) {
         _id = currentUser.user._id;
         let data;
         if (currentUser.user.role === "standard" || currentUser.user.role === "premium") {
-          data = await ContentService.getContentByUserId(_id);
+          data = await ContentService.getReviewByUserId(_id);
         } else if (currentUser.user.role === "free") {
-          data = await ContentService.getEnrolledContents(_id);
+          navigate("/");
         }
         setContentData(data.data);
       }
@@ -38,23 +38,23 @@ export default function YourReviews({ currentUser }) {
 
   const displayContent = (id) => {
     setClickContent(id)
-  }
+  };
 
   const handleClickTitle = (title) => {
     setClickTitle(title);
     setIsHidden(null);
     setIsDisplay("hidden");
-  }
+  };
 
   const handleNavDisplay = () => {
     setIsDisplay(null);
     setClickTitle(null);
     setIsHidden("hidden");
-  }
+  };
 
   if (isLoading) {
     return <div className="App">Loading...</div>;
-  }
+  };
 
   return (
     <div className="flex flex-col flex-grow overflow-x-hidden mb-10 md:mb-0">
@@ -97,6 +97,5 @@ export default function YourReviews({ currentUser }) {
         </div>
       </div>
     </div>
-
-  )
+  );
 }

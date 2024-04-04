@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import Search2 from "../../../../components/Search2";
 import SlideAfterSearch from "./SlideAfterSearch";
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function SearchPic({ newOnTime, setNewOnTime }) {
@@ -107,5 +108,5 @@ export default function SearchPic({ newOnTime, setNewOnTime }) {
         </div>
       </button>
     </div>
-  )
+  );
 }

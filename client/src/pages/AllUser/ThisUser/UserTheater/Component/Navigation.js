@@ -3,38 +3,33 @@ import React, { useState } from "react";
 export default function Navigation({ toggleOpen }) {
   const [selectedLink, setSelectedLink] = useState("現正熱播");
 
-  const handleLinkClick = (linkName) => {
-    setSelectedLink(linkName);
+  // 點擊按鈕事件處理
+  const handleLinkClick = (linkName, tabNumber) => {
+    setSelectedLink(linkName); // 設置選擇的連結
+    toggleOpen(tabNumber); // 切換分類展開狀態
   };
-  
+
+  // 按鈕資料
+  const buttons = [
+    { id: 1, name: "現正熱播" },
+    { id: 2, name: "準備下檔電影" },
+    { id: 3, name: "下個月上映電影" }
+  ];
+
   return (
-    <div className="navigation navigation-start" >
-      <ul className="navigation_list" >
-          <li className="navigation_item"  >
-              <button onClick={() => {toggleOpen(1); handleLinkClick("現正熱播")}} className={`navigation_link ${selectedLink === "現正熱播" ? "link-exact-active" : "" }`} >
-                  <div className="navigation_index" >1</div>
-                  <div className="navigation_content" >
-                      <div className="_main" >現正熱播</div>
-                  </div>
-              </button>
-          </li>
-          <li className="navigation_item"  >
-            <button onClick={() => {toggleOpen(2); handleLinkClick("準備下檔電影")}} className={`navigation_link ${selectedLink === "準備下檔電影" ? "link-exact-active" : "" }`}  >
-              <div className="navigation_index" >2</div>
-              <div className="navigation_content" >
-                <div className="_main" >準備下檔電影</div>
+    <div className="navigation navigation-start">
+      <ul className="navigation_list">
+        {buttons.map((button) => (
+          <li className="navigation_item" key={button.id}>
+            <button onClick={() => handleLinkClick(button.name, button.id)} className={`navigation_link ${selectedLink === button.name ? "link-exact-active" : ""}`}>
+              <div className="navigation_index">{button.id}</div>
+              <div className="navigation_content">
+                <div className="_main">{button.name}</div>
               </div>
             </button>
           </li>
-          <li className="navigation_item" >
-            <button onClick={() => {toggleOpen(3); handleLinkClick("下個月上映電影")}} className={`navigation_link ${selectedLink === "下個月上映電影" ? "link-exact-active" : "" }`} >
-              <div className="navigation_index" >3</div>
-              <div className="navigation_content"  >
-                <div className="_main"  >下個月上映電影</div>
-              </div>
-            </button>
-          </li>
+        ))}
       </ul>
     </div>
-  )
+  );
 }

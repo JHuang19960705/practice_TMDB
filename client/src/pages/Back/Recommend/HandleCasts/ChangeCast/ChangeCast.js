@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
-import AuthService from '../../../../../services/auth.service';
+import React, { useState } from "react"
+import AuthService from "../../../../../services/auth.service";
 
 export default function ChangeCast({newCast, oldCast, handleChangeClose2, castAll, currentUser, setCurrentUser, handleChangeClose1}) {
-  const [message, setMessage] = useState("");
-
   const handleChangeCast = (oldCast, newCast) => {
     if (castAll.cast1 == oldCast){
       castAll.cast1 = newCast;
@@ -29,7 +27,7 @@ export default function ChangeCast({newCast, oldCast, handleChangeClose2, castAl
       handleChangeClose2();
       handleChangeClose1();
     } catch (e) {
-      setMessage(e.response.data);
+      console.error("Error fetching cast:", e);
     };
   }
 

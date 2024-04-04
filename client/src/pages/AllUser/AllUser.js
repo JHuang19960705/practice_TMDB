@@ -1,53 +1,50 @@
-import React, { useState, useEffect } from 'react'
-import AuthService from '../../services/auth.service';
-import { Outlet, Link, useNavigate } from 'react-router-dom';
-import UserNav from '../UserNav/UserNav';
+import React, { useState, useEffect } from "react";
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import AuthService from "../../services/auth.service";
+import UserNav from "../../components/UserNav";
 
-const AllUser = ({ currentUser, setCurrentUser }) => {
-  const [isLoading, setLoading] = useState(true);
-  const [allUser, setAllUser] = useState(null);
+export default function AllUser({ currentUser, setCurrentUser }) {
+  const [allUser, setAllUser] = useState(null); // 定義所有用戶資料的狀態
   const [clickUser, setClickUser] = useState(null);
   const [clickTitle, setClickTitle] = useState(null);
   const [isHidden, setIsHidden] = useState("hidden");
-  const [isDisplay, setIsDisplay] = useState(null)
+  const [isDisplay, setIsDisplay] = useState(null);
   const navigate = useNavigate();
 
-  const handleClickTitle = (title) => {
-    setClickTitle(title);
-    setIsHidden(null);
-    setIsDisplay("hidden");
-  }
-
-  const handleNavDisplay = () => {
-    setIsDisplay(null);
-    setClickTitle(null);
-    setIsHidden("hidden");
-  }
-
-  const handleChange = (id) => {
-    setClickUser(id)
-  }
-
   useEffect(() => {
-
+    // 如果沒有當前用戶，導向首次登錄頁面
     if (!currentUser) {
       navigate("/firstEnroll");
     }
 
+    // 從後端獲取所有用戶資訊
     AuthService.getAllUser()
       .then((data) => {
         setAllUser(data.data);
-        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
       });
-
   }, []);
 
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
+  // 當點擊用戶名稱時的處理函數
+  const handleClickTitle = (title) => {
+    setClickTitle(title);
+    setIsHidden(null);
+    setIsDisplay("hidden");
+  };
+
+  // 控制導航顯示的函數
+  const handleNavDisplay = () => {
+    setIsDisplay(null);
+    setClickTitle(null);
+    setIsHidden("hidden");
+  };
+
+  // 當選擇用戶時的處理函數
+  const handleChange = (id) => {
+    setClickUser(id);
+  };
 
   return (
     <div className="flex h-full flex-grow flex-col overflow-hidden mb-10 md:mb-0">
@@ -56,7 +53,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
         {/* LOGO */}
         <Link to="/" className="pl-5 flex items-center justify-center text-blue-500 md:hidden dark:text-blue-700">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-9" viewBox="0 0 24 24" fill="currentColor">
-            <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 5V19M21 5V19M3 7.20608V16.7939C3 17.7996 3 18.3024 3.19886 18.5352C3.37141 18.7373 3.63025 18.8445 3.89512 18.8236C4.20038 18.7996 4.55593 18.4441 5.26704 17.733L10.061 12.939C10.3897 12.6103 10.554 12.446 10.6156 12.2565C10.6697 12.0898 10.6697 11.9102 10.6156 11.7435C10.554 11.554 10.3897 11.3897 10.061 11.061L5.26704 6.26704C4.55593 5.55593 4.20038 5.20038 3.89512 5.17636C3.63025 5.15551 3.37141 5.26273 3.19886 5.46476C3 5.69759 3 6.20042 3 7.20608Z" />
+            <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M15 5V19M21 5V19M3 7.20608V16.7939C3 17.7996 3 18.3024 3.19886 18.5352C3.37141 18.7373 3.63025 18.8445 3.89512 18.8236C4.20038 18.7996 4.55593 18.4441 5.26704 17.733L10.061 12.939C10.3897 12.6103 10.554 12.446 10.6156 12.2565C10.6697 12.0898 10.6697 11.9102 10.6156 11.7435C10.554 11.554 10.3897 11.3897 10.061 11.061L5.26704 6.26704C4.55593 5.55593 4.20038 5.20038 3.89512 5.17636C3.63025 5.15551 3.37141 5.26273 3.19886 5.46476C3 5.69759 3 6.20042 3 7.20608Z" />
           </svg>
         </Link>
         {/* <!--    按鈕     --> */}
@@ -79,7 +76,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
           <div className={`pt-2 flex w-full items-center justify-right md:hidden ${isHidden}`}>
             <div className="cursor-pointer" onClick={handleNavDisplay}>
               <svg className="w-6 mx-1 text-gray-700 transform dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
               </svg>
             </div>
             <div>{clickTitle}</div>
@@ -103,7 +100,7 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
                         <div className="truncate ml-auto text-xs text-gray-500">{user.date.slice(0, 10)}</div>
                       </div>
                     </Link>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -116,12 +113,5 @@ const AllUser = ({ currentUser, setCurrentUser }) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default AllUser;
-
-
-
-
-

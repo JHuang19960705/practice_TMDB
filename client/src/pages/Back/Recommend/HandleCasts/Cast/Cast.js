@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
@@ -9,20 +10,27 @@ export default function Cast({ castId, setOldCast, handleChangeOpen1 }) {
   const [castVideoImg, setCastVideoImg] = useState([]);
 
   useEffect(() => {
-    if (castId) {
-      const castURL = `https://api.themoviedb.org/3/person/${castId}?api_key=${API_KEY}`;
-      const castVidoeImgURL = `https://api.themoviedb.org/3/person/${castId}/combined_credits?&api_key=${API_KEY}`;
-      searchAll(castURL, castVidoeImgURL);
-    }
-  }, [castId])
+    const fetchData = async () => {
+      try {
+        if (castId) {
+          const castURL = `https://api.themoviedb.org/3/person/${castId}?api_key=${API_KEY}`;
+          const castVidoeImgURL = `https://api.themoviedb.org/3/person/${castId}/combined_credits?&api_key=${API_KEY}`;
+          const [castResponse, castVideoImgResponse] = await Promise.all([
+            axios.get(castURL),
+            axios.get(castVidoeImgURL)
+          ]);
+          setCast(castResponse.data);
+          setCastVideoImg(castVideoImgResponse.data.cast);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching cast data:", error);
+        setLoading(false);
+      }
+    };
 
-  const searchAll = async (URL1, URL2) => {
-    let result1 = await axios.get(URL1);
-    let result2 = await axios.get(URL2);
-    setCast(result1.data);
-    setCastVideoImg(result2.data.cast);
-    setLoading(false);
-  }
+    fetchData();
+  }, [castId]);
 
   if (isLoading) {
     return <div className="App">Loading...</div>;

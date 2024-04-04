@@ -3,7 +3,6 @@ import axios from "axios";
 const API_URL = "https://practice-tmdb-server.vercel.app/api/content";
 
 class ContentService {
-  
   //發文
   post(title, content, tags, TMDBId, TMDBImg) {
     let token;
@@ -59,7 +58,7 @@ class ContentService {
     );
   }
 
-  // 以TMDBId，找到所有發文
+  // 以TMDBId，找到所有影評
   getReviewsByTMDBId(_id) {
     let token;
     if (localStorage.getItem("user")) {
@@ -76,8 +75,8 @@ class ContentService {
     );
   }
 
-  // 以文章Id，找到發文
-  getContentByContentId(_id) {
+  // 以影評Id，找到影評
+  getReviewByReviewId(_id) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -93,26 +92,8 @@ class ContentService {
     );
   }
 
-  // 以用戶id，找到回文
-  getEnrolledContents(_id) {
-    let token;
-    if (localStorage.getItem("user")) {
-      token = JSON.parse(localStorage.getItem("user")).token;
-    } else {
-      token = "";
-    }
-
-    return axios.get(API_URL + "/student/" + _id,
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
-  }
-
-  // 以用戶id，找到發文
-  getContentByUserId(_id) {
+  // 以用戶id，找到影評
+  getReviewByUserId(_id) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -125,40 +106,6 @@ class ContentService {
         Authorization: token,
       },
     });
-  }
-
-  getContentByName(name) {
-    let token;
-    if (localStorage.getItem("user")) {
-      token = JSON.parse(localStorage.getItem("user")).token;
-    } else {
-      token = "";
-    }
-
-    return axios.get(API_URL + "/findByName/" + name, {
-      headers: {
-        Authorization: token,
-      },
-    });
-  }
-
-  enroll(_id) {
-    let token;
-    if (localStorage.getItem("user")) {
-      token = JSON.parse(localStorage.getItem("user")).token;
-    } else {
-      token = "";
-    }
-
-    return axios.post(
-      API_URL + "/enroll/" + _id,
-      {},
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
   }
 }
 

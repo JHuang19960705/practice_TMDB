@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const User = require("../models").user;
-const Content = require("../models").content;
 const jwt = require("jsonwebtoken");
 
 router.use((req, res, next) => {
@@ -141,7 +140,6 @@ router.post("/login", async (req, res) => {
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
       console.log(foundUser);
       return res.send({
-        message: "成功登入",
         token: "JWT " + token,
         user: foundUser,
       });

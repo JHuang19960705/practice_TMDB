@@ -5,28 +5,50 @@ import SlideAfterSearch from "./SlideAfterSearch";
 import axios from "axios";
 import CurrentSlide from "./CurrentSlide/CurrentSlide";
 import ChoosedImg from "./ChoosedImg/ChoosedImg";
-import Search2 from "../../../../components/Search2";
-import "../../../../styles/handleSlide.css"
+import Search from "../../../../components/Search";
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function HandleSlide({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
   const [newSlide, setNewSlide] = useState([]);
   const [data, setData] = useState(false);
-  const [message, setMessage] = useState([]);
   const [input, setInput] = useState("");
   const [selectedLink, setSelectedLink] = useState("search");
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
 
+  // 當 currentUser 改變時執行的效果函數
+  useEffect(() => {
+    const updatedSlides = [];
+    // 如果 currentUser 中有 tmdbImgBackdrop
+    if (currentUser.user.slide.tmdbImgBackdrop) {
+      // 將每個 tmdbImgBackdrop 與對應的 tmdbImgPoster 添加到 updatedSlides 中
+      for (let i = 0; i < currentUser.user.slide.tmdbImgBackdrop.length; i++) {
+        updatedSlides.push({
+          slideBackdrop: currentUser.user.slide.tmdbImgBackdrop[i],
+          slidePoster: currentUser.user.slide.tmdbImgPoster[i]
+        });
+      }
+    }
+    setNewSlide(updatedSlides); // 更新新幻燈片狀態
+  }, [currentUser]);
+
+  // 點擊Link時的處理函式
+  const handleLinkClick = (linkName) => {
+    setSelectedLink(linkName);
+  };
+
   const handleNewSlide = (newSlideBackdrop, newSlidePoster) => {
+    // 檢查新幻燈片是否已存在
     const existingSlide = newSlide.find(slide => slide.slideBackdrop === newSlideBackdrop && slide.slidePoster === newSlidePoster);
     if (existingSlide) {
-      window.alert(`已經選過囉~`);
+      window.alert(`已經選過囉~`); // 若已存在則彈出提示
     } else {
       setNewSlide([...newSlide, { slideBackdrop: newSlideBackdrop, slidePoster: newSlidePoster }]);
     }
   }
 
+  // 將新的幻燈片資訊上傳至後端
   const handlePatchSlide = async () => {
     try {
       const tmdbImgBackdrop = newSlide.reduce((acc, cur) => {
@@ -42,42 +64,32 @@ export default function HandleSlide({ currentUser, setCurrentUser }) {
       setCurrentUser(AuthService.getCurrentUser());
       navigate(0);
     } catch (e) {
-      setMessage(e.response.data);
+      console.error(e);
     };
   }
-
+  
+  // 刪除幻燈片
   const deleteSlideImg = (choosedDeleteImg) => {
     setNewSlide(newSlide.filter((ns) => {
       return ns.slideBackdrop !== choosedDeleteImg.slideBackdrop;
     }))
   }
 
+  // 發送搜尋請求
   const search = async (URL) => {
-    let result = await axios.get(URL);
-    setData(result.data.results);
+    try {
+      const result = await axios.get(URL);
+      setData(result.data.results);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
+  // 按照類型進行排序
   const handleSortBy = async (genreId) => {
     let genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genreId}`
     await search(genresURL);
   }
-
-  useEffect(() => {
-    const updatedSlides = [];
-    if (currentUser.user.slide.tmdbImgBackdrop) {
-      for (let i = 0; i < currentUser.user.slide.tmdbImgBackdrop.length; i++) {
-        updatedSlides.push({
-          slideBackdrop: currentUser.user.slide.tmdbImgBackdrop[i],
-          slidePoster: currentUser.user.slide.tmdbImgPoster[i]
-        });
-      }
-    }
-    setNewSlide(updatedSlides);
-  }, [currentUser]);
-
-  const handleLinkClick = (linkName) => {
-    setSelectedLink(linkName);
-  };
 
 
   return (
@@ -205,7 +217,7 @@ export default function HandleSlide({ currentUser, setCurrentUser }) {
           {/* 右邊 */}
           <div className="dark:bg-gray-800">
             <div className="relative mt-2 px-3">
-              <Search2 search={() => { search(searchURL) }} setInput={setInput} />
+              <Search search={() => { search(searchURL) }} setInput={setInput} />
             </div>
             <div className="p-3 w-full flex flex-col rounded-md relative focus:outline-none">
               <table className="w-full text-left">
@@ -246,5 +258,5 @@ export default function HandleSlide({ currentUser, setCurrentUser }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
