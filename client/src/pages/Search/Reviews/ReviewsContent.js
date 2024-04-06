@@ -34,10 +34,10 @@ export default function ReviewsContent({ currentUser }) {
           .catch((e) => {
             console.log(e);
           });
-      }
+      };
     }
 
-  }, []);
+  }, [TMDBId]);
 
   if (isLoading) {
     return <div className="App">Loading...</div>;

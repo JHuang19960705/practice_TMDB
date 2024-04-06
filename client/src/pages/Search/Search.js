@@ -8,7 +8,7 @@ export default function Search({ currentUser, setCurrentUser }) {
 
   useEffect(() => {
     checkCurrentUser();
-  });
+  }, []);
 
   // 確保使用者已登入，否則導向首次註冊頁面
   const checkCurrentUser = () => {

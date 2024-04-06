@@ -32,7 +32,7 @@ export default function SearchMovie({ currentUser }) {
     } else {
       setClickMovie(true); // 隱藏呼籲點擊
     };
-  }
+  };
 
   // 點擊電影標題時的處理函數
   const handleClickTitle = (title) => {
