@@ -21,7 +21,7 @@ export default function CurrentTheater({ currentUser }) {
 
   const settings = {
     dots: false,
-    infinite: currentUser?.user?.theater?.releases?.tmdbImgBackdrop?.length >= 2,
+    infinite: currentUser.user.theater.releases.tmdbImgBackdrop.length >= 2,
     speed: 2500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -66,7 +66,7 @@ export default function CurrentTheater({ currentUser }) {
       <Slider ref={slider} {...settings}>
         {backdropElements}
       </Slider>
-      {currentUser?.user?.theater?.releases?.tmdbImgBackdrop?.length >= 2 &&
+      {currentUser.user.theater.releases.tmdbImgBackdrop.length >= 2 &&
         <div id="controls">
           <span id="prev" onClick={() => slider?.current?.slickPrev()}>
             <svg className="w-5 md:w-10 mx-1 text-blue-500 transform dark:text-gray-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
