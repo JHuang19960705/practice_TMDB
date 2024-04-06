@@ -8,33 +8,17 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 export default function SearchPic({ newOnTime, setNewOnTime }) {
   let [input, setInput] = useState("");
   let [data, setData] = useState(null);
-  // let [slide, setSlide] = useState([]);
-  // let [page, setPage] =useState(1);
-  // let [currentSearch, setCurrentSearch] = useState("");
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`;
-  const search = async(URL) => {
+
+  const search = async (URL) => {
     let result = await axios.get(URL);
     setData(result.data.results);
-  }
-  // const morePicture = async() => {
-  //   let newURL;
-  //   setPage(page + 1);
-  //   if( currentSearch === ""){
-  //     newURL = `https://api.themoviedb.org/3/tv/popular?language=ja-JP&page=${ page + 1 }&api_key=${API_KEY}`;
-  //   } else {
-  //     newURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=${ page + 1 }&include_adult=false`
-  //   }
-  //   let result = await axios.get(newURL);
-  //   setData(data.concat(result.data.results));
-  // };
-  // const handleSlide = (e) => {
-  //   let TMDBId = e.currentTarget.dataset.tmdbId;
-  //   setSlide([...slide, TMDBId]);
-  // }
+  };
+
   return (
     <div>
       <div className="relative mt-2" >
-        <Search2 search={() => {search(searchURL);}} setInput={setInput} />
+        <Search2 search={() => { search(searchURL); }} setInput={setInput} />
       </div>
       <button className="p-3 w-full flex flex-col rounded-md dark:bg-gray-800 relative focus:outline-none">
         <div className="flex w-full items-center mb-7">
@@ -81,15 +65,15 @@ export default function SearchPic({ newOnTime, setNewOnTime }) {
             </tr>
           </thead>
           {
-            data && data.map((d) => { 
-              if (d.poster_path && d.original_name ) {
+            data && data.map((d) => {
+              if (d.poster_path && d.original_name) {
                 return (
-                  <SlideAfterSearch data={d} newOnTime={newOnTime} setNewOnTime={setNewOnTime}/>
+                  <SlideAfterSearch data={d} newOnTime={newOnTime} setNewOnTime={setNewOnTime} />
                 )
               }
             })
           }
-         </table>
+        </table>
         <div className="flex w-full mt-5 space-x-2 justify-end">
           <button className="inline-flex items-center h-8 w-8 justify-center text-gray-400 rounded-md shadow border border-gray-200 dark:border-gray-800 leading-none">
             <svg className="w-4" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">

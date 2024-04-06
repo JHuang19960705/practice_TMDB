@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link, useParams } from "react-router-dom";
+import { Outlet, Link, useParams, useLocation } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 
 export default function ThisUser() {
   const [thisUser, setThisUser] = useState(null); // 定義用戶資料的狀態
-  const { userId } = useParams(); // 從路由中獲取用戶 ID
-  const [selectedLink, setSelectedLink] = useState("Reviews"); // 定義當前選擇的連結
+  const { userId } = useParams(); // 從URL中獲取用戶 ID
+  const [selectedLink, setSelectedLink] = useState(""); // 定義當前選擇的連結
+  const location = useLocation(); // 獲取URL
 
-  // 從後端獲取該用戶的資料
   useEffect(() => {
+    fatchData();
+    checkURL();
+  }, [location.pathname]);
+  
+  // 從後端獲取該用戶的資料
+  const fatchData = () => {
     AuthService.getUserById(userId)
       .then((data) => {
         setThisUser(data.data);
@@ -16,7 +22,21 @@ export default function ThisUser() {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  };
+
+  // 根據URL判斷點擊
+  const checkURL = () => {
+    // 抓取URL最後的字母
+    const lastChar  = location.pathname.charAt(location.pathname.length - 1);
+    
+    if (lastChar === "s") {
+      setSelectedLink("Reviews");
+    } else if (lastChar === "d") {
+      setSelectedLink("Recommend");
+    } else if (lastChar === "r") {
+      setSelectedLink("Theater")
+    }
+  };
 
   // 點擊連結時更新 selectedLink 的函式
   const handleLinkClick = (linkName) => {

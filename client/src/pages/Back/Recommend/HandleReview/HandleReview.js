@@ -14,9 +14,9 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
 
   useEffect(() => {
     if (currentUser) {
-      getAllReviews()
+      getAllReviews();
     }
-  }, [currentUser])
+  }, [currentUser]);
 
   // 取得所有影評
   const getAllReviews = () => {
@@ -33,22 +33,22 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
           console.log(e);
         });
     }
-  }
+  };
 
   // 篩選推薦影評
   const getRecommendReviews = () => {
     setRecommendReviews(prevReviews => prevReviews.filter(r => currentUser.user.contentId.includes(r._id)));
-  }
+  };
 
   // 開啟變更影評視窗
   const handleChangeOpen = () => {
     setIsOpen(true)
-  }
+  };
 
   // 關閉變更影評視窗
   const handleChangeClose = () => {
     setIsOpen(false)
-  }
+  };
 
   // 檢查是否為重複影評並加入推薦列表
   const checkIfDouble = (newR) => {
@@ -64,12 +64,12 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
       setRecommendReviews([...recommendReviews, newR]);
       setIsOpen(false)
     }
-  }
+  };
 
   // 刪除所選影評
   const deleteReview = (id) => {
     setRecommendReviews(recommendReviews.filter(r => r !== id))
-  }
+  };
 
   // 修改影評
   const patchReview = async (upDatedRecommendReviewsId) => {
@@ -84,7 +84,7 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
       console.error(e);
     };
 
-  }
+  };
 
   return (
     <div>
@@ -122,5 +122,5 @@ export default function HandleReview({ currentUser, setCurrentUser }) {
         <ChangeReview newReview={newReview} checkIfDouble={checkIfDouble} handleChangeClose={handleChangeClose} currentUser={currentUser} setCurrentUser={setCurrentUser} />
       }
     </div>
-  )
+  );
 }

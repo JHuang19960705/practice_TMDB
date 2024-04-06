@@ -1,25 +1,48 @@
-import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 export default function Recommend() {
   const [clickTitle, setClickTitle] = useState(null);
   const [isHidden, setIsHidden] = useState("hidden");
-  const [isDisplay, setIsDisplay] = useState(null)
-  const [selectedLink, setSelectedLink] = useState("電影介紹");
+  const [isDisplay, setIsDisplay] = useState(null);
+  const [selectedLink, setSelectedLink] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    checkURL();
+  }, [location.pathname]);
+
+  // 根據URL判斷點擊
+  const checkURL = () => {
+    // 抓取URL的第26個字母
+    const char26 = location.pathname.charAt(26);
+
+    if (char26 === "S") {
+      setSelectedLink("電影介紹");
+    } else if (char26 === "C") {
+      setSelectedLink("當紅明星");
+    } else if (char26 === "R") {
+      setSelectedLink("影評推薦")
+    } else if (char26 === "T") {
+      setSelectedLink("主題分類")
+    } else if (char26 === "F") {
+      setSelectedLink("最愛人物")
+    };
+  };
 
   // 點擊標題的處理函數
   const handleClickTitle = (title) => {
     setClickTitle(title);
     setIsHidden(null);
     setIsDisplay("hidden");
-  }
+  };
 
   // 控制導覽顯示的函數
   const handleNavDisplay = () => {
     setIsDisplay(null);
     setClickTitle(null);
     setIsHidden("hidden");
-  }
+  };
 
   // 點擊導覽連結的處理函數
   const handleLinkClick = (linkName) => {

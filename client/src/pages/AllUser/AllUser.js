@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserNav from "../../components/UserNav";
 
 export default function AllUser({ currentUser, setCurrentUser }) {
   const [allUser, setAllUser] = useState(null); // 定義所有用戶資料的狀態
-  const [clickUser, setClickUser] = useState(null);
+  const [clickUser, setClickUser] = useState(true);
   const [clickTitle, setClickTitle] = useState(null);
   const [isHidden, setIsHidden] = useState("hidden");
   const [isDisplay, setIsDisplay] = useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 如果沒有當前用戶，導向首次登錄頁面
+    checkCurrentUser();
+    fetchData();
+    handleClick();
+  }, [location.pathname]);
+
+  // 如果沒有當前用戶，導向首次登錄頁面
+  const checkCurrentUser = () => {
     if (!currentUser) {
       navigate("/firstEnroll");
-    }
+    };
+  };
 
-    // 從後端獲取所有用戶資訊
+  // 從後端獲取所有用戶資訊
+  const fetchData = () => {
     AuthService.getAllUser()
       .then((data) => {
         setAllUser(data.data);
@@ -25,7 +34,16 @@ export default function AllUser({ currentUser, setCurrentUser }) {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  };
+
+  // 根據路由的字來決定呼籲點擊的顯示與否
+  const handleClick = () => {
+    if (location.pathname === "/allUser") {
+      setClickUser(false); // 顯示呼籲點擊
+    } else {
+      setClickUser(true); // 隱藏呼籲點擊
+    };
+  };
 
   // 當點擊用戶名稱時的處理函數
   const handleClickTitle = (title) => {
@@ -107,7 +125,7 @@ export default function AllUser({ currentUser, setCurrentUser }) {
             {/* 右內容 */}
             <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
               {!clickUser && <div className="flex justify-center text-center md:text-2xl md:pt-32">點選一位用戶 <br /> 觀看他的影評、推薦片單、電影院</div>}
-              <Outlet key={clickUser} />
+              <Outlet />
             </div>
           </div>
         </div>

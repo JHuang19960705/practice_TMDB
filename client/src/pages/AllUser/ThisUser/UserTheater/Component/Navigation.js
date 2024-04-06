@@ -3,18 +3,18 @@ import React, { useState } from "react";
 export default function Navigation({ toggleOpen }) {
   const [selectedLink, setSelectedLink] = useState("現正熱播");
 
-  // 點擊按鈕事件處理
-  const handleLinkClick = (linkName, tabNumber) => {
-    setSelectedLink(linkName); // 設置選擇的連結
-    toggleOpen(tabNumber); // 切換分類展開狀態
-  };
-
   // 按鈕資料
   const buttons = [
     { id: 1, name: "現正熱播" },
     { id: 2, name: "準備下檔電影" },
     { id: 3, name: "下個月上映電影" }
   ];
+
+  // 點擊按鈕事件處理
+  const handleLinkClick = (linkName, tabNumber) => {
+    setSelectedLink(linkName); // 設置選擇的連結
+    toggleOpen(tabNumber); // 切換分類展開狀態
+  };
 
   return (
     <div className="navigation navigation-start">

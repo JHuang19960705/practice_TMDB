@@ -15,7 +15,7 @@ export default function SearchCast({ setNewCast, handleChangeClose1, handleChang
       setData(result.data.results);
     } catch (error) {
       console.error("Error fetching cast:", error);
-    }
+    };
   };
 
   const inputHandler = (e) => {

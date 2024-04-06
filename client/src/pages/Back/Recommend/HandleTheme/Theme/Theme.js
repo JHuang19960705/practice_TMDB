@@ -25,7 +25,7 @@ export default function Theme({ genre, setNewThemeId, handleOpenChange }) {
 
   // 如果資料正在加載，則顯示 Loading...
   if (isLoading) {
-    return <div className="App">Loading...</div>;
+    return <div className="App"></div>;
   }
 
   return (

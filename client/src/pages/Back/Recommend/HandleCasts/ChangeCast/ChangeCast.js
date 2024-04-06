@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import AuthService from "../../../../../services/auth.service";
 
 export default function ChangeCast({newCast, oldCast, handleChangeClose2, castAll, currentUser, setCurrentUser, handleChangeClose1}) {
@@ -16,7 +16,7 @@ export default function ChangeCast({newCast, oldCast, handleChangeClose2, castAl
       castAll.cast4 = newCast;
       ChangeServerCast();
     }
-  }
+  };
 
   const ChangeServerCast = async() => {
     try{  
@@ -29,7 +29,7 @@ export default function ChangeCast({newCast, oldCast, handleChangeClose2, castAl
     } catch (e) {
       console.error("Error fetching cast:", e);
     };
-  }
+  };
 
   return (
     <div className="bg-white dark:bg-gray-900 box-border p-5 rounded-xl shadow-md absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 md:w-2/5 z-10 flex flex-col">
@@ -41,5 +41,5 @@ export default function ChangeCast({newCast, oldCast, handleChangeClose2, castAl
         <button onClick={() => {handleChangeCast(oldCast.id, newCast.id)}} className="ml-2 bg-blue-500 text-white px-2 py-1 rounded-md">確定</button>
       </div>
     </div>
-  )
+  );
 }

@@ -17,11 +17,11 @@ export default function SearchFavorite({ setNewFavorite, handleChangeClose1, han
     } catch (error) {
       console.error("An error occurred while fetching data:", error);
     }
-  }
+  };
 
   const inputHandler = (e) => {
     setInput(e.target.value);
-  }
+  };
 
   return (
     <div className="bg-white dark:bg-gray-800 px-6 py-3 rounded-xl shadow-md absolute h-3/5 left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4/5 z-10 flex flex-col">

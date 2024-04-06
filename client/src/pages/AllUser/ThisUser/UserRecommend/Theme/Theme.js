@@ -22,18 +22,18 @@ export default function Theme({ userRecommend }) {
     { "id": "10765", "name": "科幻片" }
   ];
 
-  const search = async (URL) => {
-    let result = await axios.get(URL);
-    setVideo(result.data.results);
-    setLoading(false);
-  };
-
   useEffect(() => {
     if (userRecommend) {
       const genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${userRecommend.theme[0]}`
       search(genresURL)
     }
   }, [userRecommend]);
+
+  const search = async (URL) => {
+    let result = await axios.get(URL);
+    setVideo(result.data.results);
+    setLoading(false);
+  };
 
   if (isLoading) {
     return <div className="App">Loading...</div>;

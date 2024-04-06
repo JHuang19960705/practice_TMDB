@@ -19,7 +19,13 @@ export default function HandleSlide({ currentUser, setCurrentUser }) {
 
   // 當 currentUser 改變時執行的效果函數
   useEffect(() => {
-    const updatedSlides = [];
+    const updatedSlidesArray = [];
+    handleUpdatedSlides(updatedSlidesArray);
+    setNewSlide(updatedSlidesArray); // 更新新幻燈片狀態
+  }, [currentUser]);
+
+  // 處裡待上傳區的幻燈片
+  const handleUpdatedSlides = (updatedSlides) => {
     // 如果 currentUser 中有 tmdbImgBackdrop
     if (currentUser.user.slide.tmdbImgBackdrop) {
       // 將每個 tmdbImgBackdrop 與對應的 tmdbImgPoster 添加到 updatedSlides 中
@@ -30,14 +36,14 @@ export default function HandleSlide({ currentUser, setCurrentUser }) {
         });
       }
     }
-    setNewSlide(updatedSlides); // 更新新幻燈片狀態
-  }, [currentUser]);
+  }
 
   // 點擊Link時的處理函式
   const handleLinkClick = (linkName) => {
     setSelectedLink(linkName);
   };
 
+  // 處理新幻燈片資料
   const handleNewSlide = (newSlideBackdrop, newSlidePoster) => {
     // 檢查新幻燈片是否已存在
     const existingSlide = newSlide.find(slide => slide.slideBackdrop === newSlideBackdrop && slide.slidePoster === newSlidePoster);
@@ -46,7 +52,7 @@ export default function HandleSlide({ currentUser, setCurrentUser }) {
     } else {
       setNewSlide([...newSlide, { slideBackdrop: newSlideBackdrop, slidePoster: newSlidePoster }]);
     }
-  }
+  };
 
   // 將新的幻燈片資訊上傳至後端
   const handlePatchSlide = async () => {
@@ -66,14 +72,14 @@ export default function HandleSlide({ currentUser, setCurrentUser }) {
     } catch (e) {
       console.error(e);
     };
-  }
-  
+  };
+
   // 刪除幻燈片
   const deleteSlideImg = (choosedDeleteImg) => {
     setNewSlide(newSlide.filter((ns) => {
       return ns.slideBackdrop !== choosedDeleteImg.slideBackdrop;
     }))
-  }
+  };
 
   // 發送搜尋請求
   const search = async (URL) => {
@@ -83,14 +89,13 @@ export default function HandleSlide({ currentUser, setCurrentUser }) {
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   // 按照類型進行排序
   const handleSortBy = async (genreId) => {
     let genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genreId}`
     await search(genresURL);
-  }
-
+  };
 
   return (
     <div className="px-8 pb-5">

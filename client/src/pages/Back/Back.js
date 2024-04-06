@@ -1,28 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import UserNav from "../../components/UserNav";
 
 export default function Back({ currentUser, setCurrentUser }) {
-  const [selectedLink, setSelectedLink] = useState("yourReviews");
+  const [selectedLink, setSelectedLink] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    checkCurrentUser();
+    checkURL();
+  },[location.pathname]);
+
+  // 根據URL判斷點擊
+  const checkURL = () => {
+    // 抓取URL的第12個字母
+    const char12 = location.pathname.charAt(12);
+
+    if (char12 === "v") {
+      setSelectedLink("yourReviews");
+    } else if (char12 === "c") {
+      setSelectedLink("yourRecommend/handleSlide"); 
+    } else if (char12 === "e") {
+      setSelectedLink("yourTheater/onTime")
+    };
+  };
+
+  // 如果沒有當前用戶，導向首次登錄頁面
+  const checkCurrentUser = () => {
+    if (!currentUser) {
+      navigate("/firstEnroll");
+    }
+  }
 
   // 點擊導覽連結的處理函數
   const handleLinkClick = (linkName) => {
     setSelectedLink(linkName);
   };
 
-  useEffect(() => {
-    // 如果沒有當前用戶，導向首次登錄頁面
-    if (!currentUser) {
-      navigate("/firstEnroll");
-    }
-  });
-  
   // 導覽連結
   const links = [
     { name: "yourReviews", label: "Reviews" },
-    { name: "yourRecommend", label: "Recommend" },
-    { name: "yourTheater", label: "Theater" }
+    { name: "yourRecommend/handleSlide", label: "Recommend" },
+    { name: "yourTheater/onTime", label: "Theater" }
   ];
 
   return (

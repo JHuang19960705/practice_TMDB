@@ -6,17 +6,21 @@ export default function Search({ currentUser, setCurrentUser }) {
   const [selectedLink, setSelectedLink] = useState("Movie");
   const navigate = useNavigate();
 
-  // 點擊連結時觸發的函式
-  const handleLinkClick = (linkName) => {
-    setSelectedLink(linkName); 
-  };
+  useEffect(() => {
+    checkCurrentUser();
+  });
 
   // 確保使用者已登入，否則導向首次註冊頁面
-  useEffect(() => {
+  const checkCurrentUser = () => {
     if (!currentUser) {
       navigate("/firstEnroll");
     }
-  });
+  };
+
+  // 點擊連結時觸發的函式
+  const handleLinkClick = (linkName) => {
+    setSelectedLink(linkName);
+  };
 
   // 定義影片和電視連結
   const links = [
@@ -41,9 +45,8 @@ export default function Search({ currentUser, setCurrentUser }) {
               key={name}
               to={name}
               onClick={() => handleLinkClick(name)}
-              className={`cursor-pointer h-full border-b-2 inline-flex mr-8 items-center ${
-                selectedLink === name ? "border-blue-500 text-blue-500 dark:text-white dark:border-white" : "dark:text-gray-400 border-transparent"
-              }`}
+              className={`cursor-pointer h-full border-b-2 inline-flex mr-8 items-center ${selectedLink === name ? "border-blue-500 text-blue-500 dark:text-white dark:border-white" : "dark:text-gray-400 border-transparent"
+                }`}
             >
               {label}
             </Link>
@@ -61,9 +64,8 @@ export default function Search({ currentUser, setCurrentUser }) {
             key={name}
             to={name}
             onClick={() => handleLinkClick(name)}
-            className={`pb-1 cursor-pointer flex flex-grow justify-center w-full truncate border-b-2 ${
-              selectedLink === name ? "border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100" : "dark:text-gray-400 border-transparent"
-            }`}
+            className={`pb-1 cursor-pointer flex flex-grow justify-center w-full truncate border-b-2 ${selectedLink === name ? "border-blue-500 text-blue-500 dark:border-gray-100  dark:text-gray-100" : "dark:text-gray-400 border-transparent"
+              }`}
           >
             {label}
           </Link>

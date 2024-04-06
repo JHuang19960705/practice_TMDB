@@ -1,11 +1,33 @@
-import React, { useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 export default function Layout() {
-  const [selectedLink, setSelectedLink] = useState("allUser");
+  const location = useLocation();
+  const [selectedLink, setSelectedLink] = useState("");
 
-  const handleLinkClick = (linkName) => {
-    setSelectedLink(linkName);
+  useEffect(() => {
+    handleClick();
+  }, [location.pathname]);
+
+  // 根據URL判斷點擊
+  const handleClick = () => {
+    // 獲取URL中的第一個字母
+    const firstLetter = location.pathname.charAt(1); // 抓取URL第一個字母
+
+    switch (firstLetter) {
+      case 'a':
+        setSelectedLink("allUser");
+        break;
+      case 'b':
+        setSelectedLink("back");
+        break;
+      case 's':
+        setSelectedLink("search");
+        break;
+      default:
+        setSelectedLink("");
+        break;
+    };
   };
 
   return (
@@ -22,21 +44,21 @@ export default function Layout() {
           {/* 子分頁 */}
           <div className="flex w-full items-center justify-around text-gray-400 md:mx-auto md:mt-4 md:flex-col md:space-y-4">
             {/* 大廳 */}
-            <Link to="allUser" onClick={() => handleLinkClick("allUser")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "allUser" ? "bg-blue-100 text-blue-500 dark:text-gray-500" : "hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white"}`}>
+            <Link to="allUser" onClick={() => setSelectedLink("allUser")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "allUser" ? "bg-blue-100 text-blue-500 dark:text-gray-500" : "hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white"}`}>
               <svg viewBox="0 0 24 24" className="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
             </Link>
             {/* 後台 */}
-            <Link to="back/yourReviews" onClick={() => handleLinkClick("back")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "back" ? "bg-blue-100 text-blue-500 dark:text-gray-500" : "hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white"}`}>
+            <Link to="back/yourReviews" onClick={() => setSelectedLink("back")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "back" ? "bg-blue-100 text-blue-500 dark:text-gray-500" : "hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white"}`}>
               <svg viewBox="0 0 24 24" className="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
               </svg>
             </Link>
             {/* 搜尋 */}
-            <Link to="search/movie" onClick={() => handleLinkClick("search")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "search" ? "bg-blue-100 text-blue-500 dark:text-gray-500" : "hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white"}`}>
+            <Link to="search/movie" onClick={() => setSelectedLink("search")} className={`h-10 w-12 rounded-md flex items-center justify-center ${selectedLink === "search" ? "bg-blue-100 text-blue-500 dark:text-gray-500" : "hover:bg-gray-100 hover:dark:bg-gray-700 hover:dark:text-white"}`}>
               <svg viewBox="0 0 24 24" className="h-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="3" width="7" height="7"></rect>
                 <rect x="14" y="3" width="7" height="7"></rect>

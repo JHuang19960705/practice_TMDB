@@ -9,6 +9,10 @@ export default function UserReviewsComment({ currentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    fatchData();
+  }, [reviewId, currentUser, navigate]);
+
+  const fatchData = () => {
     if (currentUser?.user?.role === "standard" || currentUser?.user?.role === "premium") {
       ContentService.getReviewByReviewId(reviewId)
         .then((data) => {
@@ -21,11 +25,11 @@ export default function UserReviewsComment({ currentUser }) {
     } else if (currentUser?.user?.role === "free") {
       navigate("/");
     }
-  }, [reviewId, currentUser, navigate]);
+  }
 
   if (isLoading) {
     return <div className="App">Loading...</div>;
-  }
+  };
 
   return (
     <div className="movie-comment-system">
@@ -48,7 +52,7 @@ export default function UserReviewsComment({ currentUser }) {
             <div className="movie-user-title">
               {/* 頭像 */}
               <div className="movie-user-title-pic">
-                <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" />
+                <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&amp;format=auto&amp;height=512&amp;version=1582611188&amp;width=512" alt="" />
                 {/* <!-- 使用者名稱 --> */}
                 {contentData && (
                   <div className="movie-user-name">

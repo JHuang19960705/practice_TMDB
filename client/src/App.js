@@ -92,7 +92,7 @@ export default function App() {
               <Route path="reviews/:TMDBId" element={<Reviews currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
             </Route>
           </Route>
-          <Route path="*" element={<Page404 />}/>
+          <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>
     </Router>

@@ -7,6 +7,10 @@ export default function ReviewsPic({ reviewId }) {
   const [reviewData, setReviewData] = useState(null);
 
   useEffect(() => {
+    fatchData();
+  }, []);
+
+  const fatchData = () => {
     ContentService.getReviewByReviewId(reviewId)
       .then((data) => {
         setReviewData(data.data[0]);
@@ -14,7 +18,7 @@ export default function ReviewsPic({ reviewId }) {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  };
 
   return (
     <div className="media-studies-article">

@@ -4,34 +4,34 @@ import axios from "axios";
 const API_KEY = process.env.REACT_APP_API_KEY;
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
-export default function Favorite ({ favoriteId, setOldFavorite, handleChangeOpen1 }) {
+export default function Favorite({ favoriteId, setOldFavorite, handleChangeOpen1 }) {
   const [isLoading, setLoading] = useState(true);
   const [favorite, setFavorite] = useState({});
   const [favoriteVideoImg, setFavoriteVideoImg] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (favoriteId) {
-          const favoriteURL = `https://api.themoviedb.org/3/person/${favoriteId}?api_key=${API_KEY}`;
-          const favoriteVidoeImgURL = `https://api.themoviedb.org/3/person/${favoriteId}/combined_credits?&api_key=${API_KEY}`;
-          const [result1, result2] = await Promise.all([axios.get(favoriteURL), axios.get(favoriteVidoeImgURL)]);
-          setFavorite(result1.data);
-          setFavoriteVideoImg(result2.data.cast);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("An error occurred while fetching data:", error);
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, [favoriteId]);
 
+  const fetchData = async () => {
+    try {
+      if (favoriteId) {
+        const favoriteURL = `https://api.themoviedb.org/3/person/${favoriteId}?api_key=${API_KEY}`;
+        const favoriteVidoeImgURL = `https://api.themoviedb.org/3/person/${favoriteId}/combined_credits?&api_key=${API_KEY}`;
+        const [result1, result2] = await Promise.all([axios.get(favoriteURL), axios.get(favoriteVidoeImgURL)]);
+        setFavorite(result1.data);
+        setFavoriteVideoImg(result2.data.cast);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching data:", error);
+      setLoading(false);
+    }
+  };
+
   if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
+    return <div className="App"></div>;
+  };
 
   return (
     <div>

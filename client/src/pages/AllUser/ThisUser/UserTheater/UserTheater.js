@@ -10,13 +10,17 @@ export default function UserTheater() {
   const [isOpen, setIsOpen] = useState(1); // 展開狀態，預設為展開熱映中
   const navigate = useNavigate(); // 導航功能
 
+  useEffect(() => {
+    fatchData();
+  }, [userId]);
+
   // 返回上一頁
   const goBackHandler = () => {
     navigate(`/allUser/${userId}/userReviews`);
   };
 
   // 獲取使用者推薦資料
-  useEffect(() => {
+  const fatchData = () => {
     AuthService.getUserRecommendById(userId)
       .then((data) => {
         setUserRecommend(data.data);
@@ -24,7 +28,7 @@ export default function UserTheater() {
       .catch((e) => {
         console.log(e);
       });
-  }, [userId]);
+  };
 
   // 處理展開的函式
   const toggleOpen = (tabNumber) => {
@@ -76,7 +80,7 @@ export default function UserTheater() {
     scrollableContent.addEventListener("touchstart", handleTouchStart);
     scrollableContent.addEventListener("touchmove", handleTouchMove);
     scrollableContent.addEventListener("touchend", handleTouchEnd);
-  }
+  };
 
   return (
     <div>

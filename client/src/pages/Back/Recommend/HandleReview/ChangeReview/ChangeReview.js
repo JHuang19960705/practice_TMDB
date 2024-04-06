@@ -14,5 +14,5 @@ export default function ChangeReview({ handleChangeClose, newReview, checkIfDoub
         <button className={`ml-2 bg-blue-500 text-white px-2 py-1 rounded-md ${newReview ? '' : 'cursor-not-allowed opacity-50'}`} onClick={newReview ? () => checkIfDouble(newReview) : null}>確定</button>
       </div>
     </div>
-  )
+  );
 }

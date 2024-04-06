@@ -11,8 +11,12 @@ export default function UserRecommend() {
   const { userId } = useParams(); // 從路由中獲取用戶 ID
   const [userRecommend, setUserRecommend] = useState();
 
-  // 從後端獲取該用戶的推薦的資料
   useEffect(() => {
+    fatchData();
+  }, []);
+
+  // 從後端獲取該用戶的推薦的資料
+  const fatchData = () => {
     AuthService.getUserRecommendById(userId)
       .then((data) => {
         setUserRecommend(data.data);
@@ -20,7 +24,7 @@ export default function UserRecommend() {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  };
 
   return (
     <div>

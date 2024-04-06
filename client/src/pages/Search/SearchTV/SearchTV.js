@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import Search from "../../../components/Search";
 
@@ -12,12 +12,20 @@ export default function SearchTV({ currentUser }) {
   const [data, setData] = useState(null); // 儲存搜尋結果的影集資料
   const [page, setPage] = useState(1); // 儲存當前頁碼
   const [currentSearch, setCurrentSearch] = useState(""); // 儲存當前搜尋關鍵字
+  const [clickTV, setClickTV] = useState(true); // 呼籲點擊
   const [clickTitle, setClickTitle] = useState(null); // 儲存用戶點擊的影集標題
   const [isHidden, setIsHidden] = useState("hidden"); // 控制手機板導覽的顯示與隱藏
   const [isDisplay, setIsDisplay] = useState(null); // 控制手機板導覽的顯示與隱藏
+  const location = useLocation();
   const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`絕命`}&page=1&include_adult=false`; // 初始搜尋URL，預設搜尋關鍵字為"絕命"
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`; // 搜尋URL，根據用戶輸入的關鍵字動態生成
-  
+
+  // 初始加載時進行一次搜尋
+  useEffect(() => {
+    search(initialURL);
+    handleClick();
+  }, [location.pathname]);
+
   // 點擊影集標題時的處理函數
   const handleClickTitle = (title) => {
     setClickTitle(title);
@@ -25,12 +33,21 @@ export default function SearchTV({ currentUser }) {
     setIsDisplay("hidden");
   }
   
+  // 根據路由中的字來決定呼籲點擊的顯示與否
+  const handleClick = () => {
+    if (location.pathname === "/search/TV") {
+      setClickTV(false); // 顯示呼籲點擊
+    } else {
+      setClickTV(true); // 隱藏呼籲點擊
+    };
+  };
+
   // 控制手機板導覽顯示與隱藏的處理函數
   const handleNavDisplay = () => {
     setIsDisplay(null);
     setClickTitle(null);
     setIsHidden("hidden");
-  }
+  };
 
   // 搜尋影集的函數，向TMDB API發送請求並更新搜尋結果資料
   const search = async (URL) => {
@@ -38,11 +55,6 @@ export default function SearchTV({ currentUser }) {
     setData(result.data.results);
     setCurrentSearch(input);
   };
-
-  // 初始加載時進行一次搜尋
-  useEffect(() => {
-    search(initialURL);
-  }, [])
 
   // 點擊“更多”按鈕時加載更多搜尋結果的函數
   const morePicture = async () => {
@@ -121,8 +133,8 @@ export default function SearchTV({ currentUser }) {
         </div>
         {/* <!--    右內容    --> */}
         <div className="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
-          {!tv && <div className="flex justify-center text-center md:text-2xl md:pt-32">選擇一部影集、寫影評、看影評</div>}
-          <Outlet key={tv} />
+          {!clickTV && <div className="flex justify-center text-center md:text-2xl md:pt-32">選擇一部影集、寫影評、看影評</div>}
+          <Outlet />
         </div>
       </div>
     </div>

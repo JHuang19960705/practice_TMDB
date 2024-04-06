@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import ContentService from "../../../services/content.service";
 
 export default function YourReviews({ currentUser }) {
   const [isLoading, setLoading] = useState(true);
   const [contentData, setContentData] = useState(null);
-  const [clickContent, setClickContent] = useState(null);
+  const [clickContent, setClickContent] = useState(true);
   const [clickTitle, setClickTitle] = useState(null);
   const [isHidden, setIsHidden] = useState("hidden");
   const [isDisplay, setIsDisplay] = useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(); // 從後端拿全部的影評
+  }, [clickTitle]);
 
+  useEffect(() => {
+    handleClick();
+  }, [location.pathname]);
+  
+  // 從後端拿全部的影評
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -35,6 +41,15 @@ export default function YourReviews({ currentUser }) {
       setLoading(false);
     }
   };
+
+  // 根據路由中的字來決定呼籲點擊的顯示與否
+  const handleClick = () => {
+    if (location.pathname === "/back/yourReviews") {
+      setClickContent(false); // 顯示呼籲點擊
+    } else {
+      setClickContent(true); // 隱藏呼籲點擊
+    };
+  }
 
   const displayContent = (id) => {
     setClickContent(id)
@@ -93,7 +108,7 @@ export default function YourReviews({ currentUser }) {
         {/* <!--   右內容    --> */}
         <div className="h-full flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
           {!clickContent && <div className="flex justify-center text-center md:text-2xl md:pt-32">編輯你的影評</div>}
-          <Outlet key={clickContent} />
+          <Outlet />
         </div>
       </div>
     </div>

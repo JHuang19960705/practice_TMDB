@@ -10,31 +10,31 @@ export default function Cast({ castId, setOldCast, handleChangeOpen1 }) {
   const [castVideoImg, setCastVideoImg] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (castId) {
-          const castURL = `https://api.themoviedb.org/3/person/${castId}?api_key=${API_KEY}`;
-          const castVidoeImgURL = `https://api.themoviedb.org/3/person/${castId}/combined_credits?&api_key=${API_KEY}`;
-          const [castResponse, castVideoImgResponse] = await Promise.all([
-            axios.get(castURL),
-            axios.get(castVidoeImgURL)
-          ]);
-          setCast(castResponse.data);
-          setCastVideoImg(castVideoImgResponse.data.cast);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error fetching cast data:", error);
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, [castId]);
 
+  const fetchData = async () => {
+    try {
+      if (castId) {
+        const castURL = `https://api.themoviedb.org/3/person/${castId}?api_key=${API_KEY}`;
+        const castVidoeImgURL = `https://api.themoviedb.org/3/person/${castId}/combined_credits?&api_key=${API_KEY}`;
+        const [castResponse, castVideoImgResponse] = await Promise.all([
+          axios.get(castURL),
+          axios.get(castVidoeImgURL)
+        ]);
+        setCast(castResponse.data);
+        setCastVideoImg(castVideoImgResponse.data.cast);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching cast data:", error);
+      setLoading(false);
+    };
+  };
+
   if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
+    return <div className="App"></div>;
+  };
 
   return (
     <div>
@@ -70,5 +70,5 @@ export default function Cast({ castId, setOldCast, handleChangeOpen1 }) {
         </div>
       }
     </div>
-  )
+  );
 }

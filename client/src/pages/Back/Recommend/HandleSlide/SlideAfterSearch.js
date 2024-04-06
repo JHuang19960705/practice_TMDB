@@ -45,5 +45,5 @@ export default function SlideAfterSearch({ data, handleNewSlide }) {
         </div>
       </div>
     </tbody>
-  )
+  );
 }
