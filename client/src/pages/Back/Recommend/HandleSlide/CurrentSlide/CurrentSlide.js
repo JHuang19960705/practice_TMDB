@@ -10,7 +10,7 @@ export default function CurrentSlide({ currentUser }) {
   const slider = React.useRef(null);
   
   useEffect(() => {
-    if(currentUser) {
+    if(currentUser.user.slide.tmdbImgBackdrop) {
       setLoading(false)
     }
   }, [currentUser]);
