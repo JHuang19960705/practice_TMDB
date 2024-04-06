@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -6,7 +6,18 @@ import "slick-carousel/slick/slick-theme.css";
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 export default function CurrentSlide({ currentUser }) {
+  const [loading, setLoading] = useState(true);
   const slider = React.useRef(null);
+  
+  useEffect(() => {
+    if(currentUser) {
+      setLoading(false)
+    }
+  }, [currentUser]);
+
+  if(loading) {
+    return <div>Loading...</div>
+  };
 
   const settings = {
     dots: false,
