@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import UserNav from "../../components/UserNav";
 
 export default function Search({ currentUser, setCurrentUser }) {
   const [selectedLink, setSelectedLink] = useState("Movie");
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     checkCurrentUser();
-  }, []);
+    handleLinkClick();
+  }, [location.pathname]);
 
   // 確保使用者已登入，否則導向首次註冊頁面
   const checkCurrentUser = () => {
@@ -19,7 +21,14 @@ export default function Search({ currentUser, setCurrentUser }) {
 
   // 點擊連結時觸發的函式
   const handleLinkClick = (linkName) => {
+    const Char8  = location.pathname.charAt(8)
+
     setSelectedLink(linkName);
+    if (Char8 === "M") {
+      setSelectedLink("Movie"); // 顯示呼籲點擊
+    } else if (Char8 === "T") {
+      setSelectedLink("TV"); // 隱藏呼籲點擊
+    };
   };
 
   // 定義影片和電視連結

@@ -29,7 +29,7 @@ export default function PostTVContent () {
   // 初始載入時進行資料搜尋
   useEffect(()=>{
     search(TVURL); 
-  }, [])
+  }, [TMDBId])
 
   let [title, setTitle] = useState(""); // 標題
   let [content, setContent] = useState(""); // 內容

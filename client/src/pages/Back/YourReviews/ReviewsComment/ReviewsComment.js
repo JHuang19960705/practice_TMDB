@@ -10,7 +10,7 @@ export default function YourReviewsComment({ currentUser }) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, []); // 初始加載時進行一次
 
   const fetchData = () => {
     if (currentUser) {
@@ -27,11 +27,11 @@ export default function YourReviewsComment({ currentUser }) {
         navigate("*")
       }
     }
-  }
+  };
 
   if (isLoading) {
-    return <div className="App"></div>;
-  }
+    return <div className="App">Loading...</div>;
+  };
 
   return (
     <div className="movie-comment-system">

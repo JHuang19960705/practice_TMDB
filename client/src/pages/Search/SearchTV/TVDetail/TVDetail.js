@@ -25,7 +25,7 @@ export default function TVDetail() {
 
   useEffect(()=>{
     search(TVURL, CastURL); // 初始載入時進行資料搜尋
-  }, [])
+  }, [TMDBId])
 
   // 如果正在加載，顯示"Loading..."
   if (isLoading) {

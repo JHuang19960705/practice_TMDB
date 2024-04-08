@@ -28,7 +28,7 @@ export default function PostMovieContent () {
 
   useEffect(()=>{
     search(movieURL); // 初始載入時進行資料搜尋
-  }, [])
+  }, [TMDBId])
 
   let [title, setTitle] = useState(""); // 標題
   let [content, setContent] = useState(""); // 內容

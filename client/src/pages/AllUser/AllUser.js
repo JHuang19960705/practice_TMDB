@@ -9,6 +9,7 @@ export default function AllUser({ currentUser, setCurrentUser }) {
   const [clickTitle, setClickTitle] = useState(null);
   const [isHidden, setIsHidden] = useState("hidden");
   const [isDisplay, setIsDisplay] = useState(null);
+  const [isLoading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ export default function AllUser({ currentUser, setCurrentUser }) {
     AuthService.getAllUser()
       .then((data) => {
         setAllUser(data.data);
+        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -105,6 +107,7 @@ export default function AllUser({ currentUser, setCurrentUser }) {
             <div className={`${isDisplay} w-full flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
               {/* 各個User */}
               <div className="space-y-4 mt-3">
+                {  isLoading &&  <div className="App">Loading...</div> }
                 {allUser && allUser.map((user) => {
                   return (
                     <Link to={`${user._id}/userReviews`} onClick={() => { handleChange(user._id); handleClickTitle(user.username) }} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">

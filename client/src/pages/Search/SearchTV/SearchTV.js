@@ -7,7 +7,6 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function SearchTV({ currentUser }) {
-  const [tv, setTV] = useState(null); // 儲存用戶點擊的影集ID
   const [input, setInput] = useState(""); // 儲存用戶輸入的搜尋關鍵字
   const [data, setData] = useState(null); // 儲存搜尋結果的影集資料
   const [page, setPage] = useState(1); // 儲存當前頁碼
@@ -20,9 +19,11 @@ export default function SearchTV({ currentUser }) {
   const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`絕命`}&page=1&include_adult=false`; // 初始搜尋URL，預設搜尋關鍵字為"絕命"
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`; // 搜尋URL，根據用戶輸入的關鍵字動態生成
 
-  // 初始加載時進行一次搜尋
   useEffect(() => {
-    search(initialURL);
+    search(initialURL); // 初始加載時進行一次搜尋
+  });
+
+  useEffect(() => {
     handleClick();
   }, [location.pathname]);
 
@@ -31,7 +32,7 @@ export default function SearchTV({ currentUser }) {
     setClickTitle(title);
     setIsHidden(null);
     setIsDisplay("hidden");
-  }
+  };
   
   // 根據路由中的字來決定呼籲點擊的顯示與否
   const handleClick = () => {
@@ -69,11 +70,6 @@ export default function SearchTV({ currentUser }) {
     setData(data.concat(result.data.results));
   };
 
-  // 點擊影集時更新選擇的影集ID
-  const handleChange = (id) => {
-    setTV(id);
-  }
-
   return (
     <div className="flex flex-col flex-grow overflow-x-hidden mb-10 md:mb-0">
       {/* 手機板返回導覽 */}
@@ -98,16 +94,16 @@ export default function SearchTV({ currentUser }) {
                     <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
                       <div className="w-full">
                         <p className="truncate pb-2">{d.original_name}</p>
-                        <Link to={`${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }}>
+                        <Link to={`${d.id}`} onClick={() => { handleClickTitle(d.original_name) }}>
                           <img src={tmdbBaseURL + d.poster_path} />
                         </Link>
                       </div>
                       {currentUser && currentUser.user.role !== "free" && (
                         <div className="w-full flex justify-around text-base text-gray-400 pt-3">
-                          <Link to={`postTVContent/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
+                          <Link to={`postTVContent/${d.id}`} onClick={() => { handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                             寫影評
                           </Link>
-                          <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
+                          <Link to={`reviews/${d.id}`} onClick={() => { handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                             看影評
                           </Link>
                         </div>
@@ -115,7 +111,7 @@ export default function SearchTV({ currentUser }) {
                       }
                       {currentUser && currentUser.user.role == "free" && (
                         <div className="w-full flex justify-around text-base text-gray-400 pt-3">
-                          <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
+                          <Link to={`reviews/${d.id}`} onClick={() => { handleClickTitle(d.original_name) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                             看影評
                           </Link>
                         </div>
@@ -138,5 +134,5 @@ export default function SearchTV({ currentUser }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

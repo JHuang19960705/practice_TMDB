@@ -42,7 +42,7 @@ export default function Homepage({ currentUser, setCurrentUser }) {
               <ul className="list-none flex flex-col md:space-y-6">
                 <li onClick={() => { navigate("/allUser") }} className="cursor-pointer text-base text-white">View Users</li>
                 <li onClick={() => { navigate("/back/yourReviews") }} className="cursor-pointer text-base text-white">Admin Dashboard</li>
-                <li onClick={() => { navigate("/search/movie") }} className="cursor-pointer text-base text-white">Search Video</li>
+                <li onClick={() => { navigate("/search/Movie") }} className="cursor-pointer text-base text-white">Search Video</li>
               </ul>
             </nav>
           </div>

@@ -7,7 +7,6 @@ const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function SearchMovie({ currentUser }) {
-  const [movie, setMovie] = useState(null); // 儲存用戶點擊的電影ID
   const [input, setInput] = useState(""); // 儲存用戶輸入的搜尋關鍵字
   const [data, setData] = useState(null); // 儲存搜尋結果的電影資料
   const [page, setPage] = useState(1); // 儲存當前頁碼
@@ -22,6 +21,9 @@ export default function SearchMovie({ currentUser }) {
 
   useEffect(() => {
     search(initialURL); // 初始加載時進行一次搜尋
+  },[]);
+
+  useEffect(() => {
     handleClick();
   }, [location.pathname]);
   
@@ -68,11 +70,6 @@ export default function SearchMovie({ currentUser }) {
     setData(data.concat(result.data.results));
   };
 
-  // 點擊電影時更新選擇的電影ID
-  const handleChange = (id) => {
-    setMovie(id);
-  };
-
   return (
     <div className="flex flex-col flex-grow overflow-x-hidden mb-10 md:mb-0">
       {/* 手機板返回導覽 */}
@@ -94,23 +91,23 @@ export default function SearchMovie({ currentUser }) {
                 <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
                   <div className="w-full">
                     <p className="truncate pb-2">{d.title}</p>
-                    <Link to={`${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.title) }}>
+                    <Link to={`${d.id}`} onClick={() => { handleClickTitle(d.title) }}>
                       <img src={tmdbBaseURL + d.poster_path} alt={d.title} />
                     </Link>
                   </div>
                   {currentUser && currentUser.user.role !== "free" && (
                     <div className="w-full flex justify-around text-base text-gray-400 pt-3">
-                      <Link to={`postMovieContent/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
+                      <Link to={`postMovieContent/${d.id}`} onClick={() => { handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                         寫影評
                       </Link>
-                      <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
+                      <Link to={`reviews/${d.id}`} onClick={() => { handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                         看影評
                       </Link>
                     </div>
                   )}
                   {currentUser && currentUser.user.role === "free" && (
                     <div className="w-full flex justify-around text-base text-gray-400 pt-3">
-                      <Link to={`reviews/${d.id}`} onClick={() => { handleChange(d.id); handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
+                      <Link to={`reviews/${d.id}`} onClick={() => { handleClickTitle(d.title) }} className="border-b border-transparent hover:text-gray-800 hover:border-b hover:border-gray-800 dark:hover:border-gray-300 dark:hover:text-gray-300">
                         看影評
                       </Link>
                     </div>

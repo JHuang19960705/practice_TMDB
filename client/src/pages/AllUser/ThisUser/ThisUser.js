@@ -9,12 +9,12 @@ export default function ThisUser() {
   const location = useLocation(); // 獲取URL
 
   useEffect(() => {
-    fatchData();
+    fetchData();
     checkURL();
   }, [location.pathname]);
   
   // 從後端獲取該用戶的資料
-  const fatchData = () => {
+  const fetchData = () => {
     AuthService.getUserById(userId)
       .then((data) => {
         setThisUser(data.data);

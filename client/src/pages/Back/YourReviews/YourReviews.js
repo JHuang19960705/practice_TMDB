@@ -13,8 +13,8 @@ export default function YourReviews({ currentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData(); // 從後端拿全部的影評
-  }, [clickTitle]);
+    fetchData();
+  }, []); // 初始加載時進行一次
 
   useEffect(() => {
     handleClick();

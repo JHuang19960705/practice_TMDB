@@ -13,7 +13,7 @@ export default function UserRecommend() {
 
   useEffect(() => {
     fatchData();
-  }, []);
+  }, [userId]);
 
   // 從後端獲取該用戶的推薦的資料
   const fatchData = () => {

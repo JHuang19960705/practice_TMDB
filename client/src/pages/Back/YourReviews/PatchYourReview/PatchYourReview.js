@@ -15,6 +15,11 @@ export default function PatchYourReview({ currentUser }) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetchData();
+  }, [reviewId]); // 初始加載時進行一次
+
+  // 從後台拿該影評內容
+  const fetchData = () => {
     if (currentUser) {
       if (currentUser.user.role === "standard" || currentUser.user.role === "premium") {
         ContentService.getReviewByReviewId(reviewId)
@@ -33,7 +38,7 @@ export default function PatchYourReview({ currentUser }) {
         navigate("/");
       }
     }
-  }, []);
+  };
 
   const handleChangeTitle = (e) => {
     setTitle(e.target.value);

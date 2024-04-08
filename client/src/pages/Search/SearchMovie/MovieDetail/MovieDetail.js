@@ -26,7 +26,7 @@ export default function MovieDetail() {
   // 初始載入時進行資料搜尋
   useEffect(()=>{
     search(movieURL, CastURL); 
-  }, [])
+  }, [TMDBId])
 
   if (isLoading) {
     return <div className="App">Loading...</div>;
