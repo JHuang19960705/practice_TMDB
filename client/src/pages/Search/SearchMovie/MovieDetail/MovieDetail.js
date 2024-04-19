@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Information from "../../Video/Information";  
 import Charater from "../../Video/Charater";  
+import Loader from "../../../../components/Loader";
 
 const API_KEY = process.env.REACT_APP_API_KEY;  
 
@@ -26,14 +27,11 @@ export default function MovieDetail() {
   // 初始載入時進行資料搜尋
   useEffect(()=>{
     search(movieURL, CastURL); 
-  }, [TMDBId])
-
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
+  }, [TMDBId]);
   
   return (
     <div className="kondo-wrap">
+      {isLoading && <div>Loading...<Loader /></div>}
       {/* 顯示影片資訊 */}
       {movieAll && <Information videoAll={movieAll} />}
       {/* 如果角色數量大於4，顯示角色元件 */}

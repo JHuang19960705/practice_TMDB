@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ContentService from "../../../../services/content.service"; 
 import axios from "axios";
+import Loader from "../../../../components/Loader";
 
 const API_KEY = process.env.REACT_APP_API_KEY; 
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
@@ -64,14 +65,10 @@ export default function PostTVContent () {
         setMessage(error.response.data);
       });
   };
-  
-  // 如果正在加載，顯示"Loading..."
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
 
   return (
     <div className="box-border p-4 pb-8 md:p-8">
+      {isLoading && <div>Loading...<Loader /></div>}
       {/* 顯示TMDB圖片 */}
       <img className="mb-5 rounded-2xl" src={ tmdbBaseURL + TMDBImg} />
       <div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserNav from "../../components/UserNav";
+import Loader from "../../components/Loader";
 
 export default function AllUser({ currentUser, setCurrentUser }) {
   const [allUser, setAllUser] = useState(null); // 定義所有用戶資料的狀態
@@ -106,8 +107,8 @@ export default function AllUser({ currentUser, setCurrentUser }) {
             {/* <!--   左導覽   --> */}
             <div className={`${isDisplay} w-full flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
               {/* 各個User */}
-              <div className="space-y-4 mt-3">
-                {  isLoading &&  <div className="App">Loading...</div> }
+              <div className="space-y-4 mt-3 relative">
+                {isLoading && <div>Loading...<Loader /></div>}
                 {allUser && allUser.map((user) => {
                   return (
                     <Link to={`${user._id}/userReviews`} onClick={() => { handleChange(user._id); handleClickTitle(user.username) }} className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">

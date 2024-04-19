@@ -148,3 +148,10 @@
   top: -2px;
   width: 2rem;
 }
+
+@media (prefers-color-scheme: dark) {
+  .pricing-container {
+    color: #ffffff;
+    background-color: rgb(17 24 39);
+  }
+}

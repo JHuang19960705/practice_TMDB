@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import ContentService from "../../../services/content.service";
+import Loader from "../../../components/Loader";
 
 export default function YourReviews({ currentUser }) {
   const [isLoading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ export default function YourReviews({ currentUser }) {
   useEffect(() => {
     handleClick();
   }, [location.pathname]);
-  
+
   // 從後端拿全部的影評
   const fetchData = async () => {
     setLoading(true);
@@ -32,14 +33,14 @@ export default function YourReviews({ currentUser }) {
           data = await ContentService.getReviewByUserId(_id);
         } else if (currentUser.user.role === "free") {
           navigate("/");
-        }
+        };
         setContentData(data.data);
-      }
+      };
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
-    }
+    };
   };
 
   // 根據路由中的字來決定呼籲點擊的顯示與否
@@ -49,7 +50,7 @@ export default function YourReviews({ currentUser }) {
     } else {
       setClickContent(true); // 隱藏呼籲點擊
     };
-  }
+  };
 
   const displayContent = (id) => {
     setClickContent(id)
@@ -65,10 +66,6 @@ export default function YourReviews({ currentUser }) {
     setIsDisplay(null);
     setClickTitle(null);
     setIsHidden("hidden");
-  };
-
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
   };
 
   return (
@@ -87,6 +84,7 @@ export default function YourReviews({ currentUser }) {
         {/* <!--   左導覽  --> */}
         <div className={`${isDisplay} w-full flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
           <div className="space-y-4 mt-3">
+            {isLoading && <div>Loading...<Loader /></div>}
             {contentData && contentData.map((content) => {
               return (
                 <Link

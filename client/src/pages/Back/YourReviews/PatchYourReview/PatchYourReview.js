@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link, Outlet } from "react-router-dom";
 import ContentService from "../../../../services/content.service";
+import Loader from "../../../../components/Loader";
 
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 export default function PatchYourReview({ currentUser }) {
   const navigate = useNavigate();
   const { reviewId } = useParams();
-  const [reviewData, setReviewData] = useState(null);
+  const [reviewData, setReviewData] = useState({});
   const [title, setTitle] = useState("");
   const [review, setReview] = useState("");
   const [tags, setTags] = useState("");
@@ -76,12 +77,9 @@ export default function PatchYourReview({ currentUser }) {
     }
   };
 
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  };
-
   return (
     <div className="box-border p-4 pb-8 md:p-8">
+      {isLoading && <div>Loading...<Loader /></div>}
       <img className="mb-5 rounded-2xl" src={tmdbBaseURL + reviewData.TMDBImg} alt={reviewData.title} />
       <div>
         <div className="mb-5 h-full">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import Search from "../../../components/Search";
+import Loader from "../../../components/Loader";
 
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -15,18 +16,19 @@ export default function SearchMovie({ currentUser }) {
   const [clickTitle, setClickTitle] = useState(null); // 儲存用戶點擊的電影標題
   const [isHidden, setIsHidden] = useState("hidden"); // 控制手機板導覽的顯示與隱藏
   const [isDisplay, setIsDisplay] = useState(null); // 控制手機板導覽的顯示與隱藏
+  const [isLoading, setLoading] = useState(true);
   const location = useLocation();
   const initialURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${`黑暗騎士`}&page=1&include_adult=false`; // 初始搜尋URL，預設搜尋關鍵字為"黑暗騎士"
   const searchURL = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${input}&page=1&include_adult=false`; // 搜尋URL，根據用戶輸入的關鍵字動態生成
 
   useEffect(() => {
     search(initialURL); // 初始加載時進行一次搜尋
-  },[]);
+  }, []);
 
   useEffect(() => {
     handleClick();
   }, [location.pathname]);
-  
+
   // 根據路由中的字來決定呼籲點擊的顯示與否
   const handleClick = () => {
     if (location.pathname === "/search/Movie") {
@@ -55,6 +57,7 @@ export default function SearchMovie({ currentUser }) {
     const result = await axios.get(URL);
     setData(result.data.results);
     setCurrentSearch(input);
+    setLoading(false);
   };
 
   // 點擊“更多”按鈕時加載更多搜尋結果的函數
@@ -86,6 +89,7 @@ export default function SearchMovie({ currentUser }) {
         <div className={`${isDisplay} w-full flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
           <Search search={() => { search(searchURL); }} setInput={setInput} />
           <div className="space-y-4 mt-3">
+            {isLoading && <div>Loading...<Loader /></div>}
             {data &&
               data.map((d) => (
                 <button className="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">

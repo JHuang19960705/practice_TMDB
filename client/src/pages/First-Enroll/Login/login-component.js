@@ -39,7 +39,7 @@ export default function LoginComponent({ currentUser, setCurrentUser }) {
   }, [currentUser, navigate]);
 
   return (
-    <div className="fixed left-1/2 top-44 z-10 w-3/5 min-w-52 -translate-x-1/2 rounded-lg border border-blue-400 bg-blue-100 p-5 shadow-xl">
+    <div className="fixed left-1/2 top-44 z-10 w-3/5 min-w-52 -translate-x-1/2 rounded-lg border border-blue-400 bg-blue-100 p-5 shadow-xl dark:bg-gray-700 dark:border-gray-400">
       {/* 返回按鈕 */}
       <div onClick={() => { navigate("/firstEnroll") }} className="absolute right-1 top-1 h-5 w-5 cursor-pointer bg-white">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -53,7 +53,7 @@ export default function LoginComponent({ currentUser, setCurrentUser }) {
         <input
           onChange={handleEmail}
           type="text"
-          className="h-9 w-full cursor-text rounded-2xl bg-gray-50 pl-4 text-xs outline-none hover:border hover:border-blue-500"
+          className="h-9 w-full cursor-text rounded-2xl bg-gray-50 pl-4 text-xs outline-none hover:border hover:border-blue-500 dark:text-black"
           name="email"
         />
       </div>
@@ -63,7 +63,7 @@ export default function LoginComponent({ currentUser, setCurrentUser }) {
         <input
           onChange={handlePassword}
           type="password"
-          className="h-9 w-full cursor-text rounded-2xl bg-gray-50 pl-4 text-xs outline-none hover:border hover:border-blue-500"
+          className="h-9 w-full cursor-text rounded-2xl bg-gray-50 pl-4 text-xs outline-none hover:border hover:border-blue-500 dark:text-black"
           name="password"
         />
       </div>

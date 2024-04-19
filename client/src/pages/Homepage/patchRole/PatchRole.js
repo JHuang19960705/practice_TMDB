@@ -20,11 +20,11 @@ export default function PatchRole({ currentUser, setCurrentUser }) {
   };
 
   return (
-    <div className="flex h-full flex-grow flex-col justify-between overflow-x-hidden">
+    <div className="flex h-full flex-grow flex-col justify-between overflow-x-hidden dark:bg-gray-900 dark:text-white">
       {/* 返回按鈕 */}
       <div className="mb-1 flex items-center justify-end"><button onClick={() => { navigate("/") }} type="button" className="m-1 rounded-lg bg-blue-500 p-2 text-white" >返回</button></div>
       {/* 選擇方案提示 */}
-      <div className="flex justify-center"><p className="text-3xl">請選擇你的身份</p></div>
+      <div className="flex justify-center"><p className="text-3xl">選擇你的新身份</p></div>
       {/* 方案選擇卡片 */}
       <div className="pricing-container">
         {/* Free方案 */}

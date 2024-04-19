@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link, useParams, useLocation } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
+import Loader from "../../../components/Loader";
 
 export default function ThisUser() {
   const [thisUser, setThisUser] = useState(null); // 定義用戶資料的狀態
+  const [isLoading, setLoading] = useState(true);
   const { userId } = useParams(); // 從URL中獲取用戶 ID
   const [selectedLink, setSelectedLink] = useState(""); // 定義當前選擇的連結
   const location = useLocation(); // 獲取URL
@@ -18,6 +20,7 @@ export default function ThisUser() {
     AuthService.getUserById(userId)
       .then((data) => {
         setThisUser(data.data);
+        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -45,6 +48,7 @@ export default function ThisUser() {
 
   return (
     <div className="flex-grow bg-white dark:bg-gray-900">
+      {isLoading && <div>Loading...<Loader /></div>}
       {/* 用戶頭像 */}
       {thisUser && (
         <div className="md:px-7 md:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800">

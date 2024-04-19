@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ContentService from "../../../services/content.service";
+import Loader from "../../../components/Loader";
 
 const tmdbBaseURL = "https://image.tmdb.org/t/p/original";
 
 export default function ReviewsContent({ currentUser }) {
   const { TMDBId } = useParams(); // 從URL中獲取TMDBId
-  const [contentData, setContentData] = useState(null); // 影評資料
+  const [contentData, setContentData] = useState([]); // 影評資料
   const [isLoading, setLoading] = useState(true); // 加載狀態
 
   useEffect(() => {
@@ -39,14 +40,11 @@ export default function ReviewsContent({ currentUser }) {
 
   }, [TMDBId]);
 
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  }
-
   const last = contentData.length - 1;
 
   return (
     <div className="blog">
+      {isLoading && <div>Loading...<Loader /></div>}
       {/* 如果沒有影評資料，顯示提示 */}
       {!contentData[contentData.length - 1] && <div className="flex items-center mt-20 md:mt-10 justify-center text-base md:text-2xl">這篇還沒有影評唷～</div>}
       {/* 如果有影評資料，顯示最後一篇影評 */}

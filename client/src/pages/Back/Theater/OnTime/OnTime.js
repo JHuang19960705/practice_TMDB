@@ -26,8 +26,8 @@ export default function OnTime({ currentUser, setCurrentUser }) {
           slideBackdrop: currentUser.user.theater.releases.tmdbImgBackdrop[i],
           slidePoster: currentUser.user.theater.releases.tmdbImgPoster[i]
         });
-      }
-    }
+      };
+    };
     setNewOnTime(updatedSlides);
   }, [currentUser]);
 
@@ -37,8 +37,8 @@ export default function OnTime({ currentUser, setCurrentUser }) {
       window.alert(`已經選過囉~`);
     } else {
       setNewOnTime([...newOnTime, { slideBackdrop: newOnTimeBackdrop, slidePoster: newOnTimePoster }]);
-    }
-  }
+    };
+  };
 
   const handleTheater = async () => {
     try {
@@ -54,28 +54,27 @@ export default function OnTime({ currentUser, setCurrentUser }) {
       window.alert("修改成功~");
       localStorage.setItem("user", JSON.stringify(response.data));
       setCurrentUser(AuthService.getCurrentUser());
-      navigate(0)
+      navigate(0);
     } catch (e) {
       setMessage(e.response.data);
     };
-  }
+  };
 
   const deleteSlideImg = (choosedDeleteImg) => {
     setNewOnTime(newOnTime.filter((not) => {
       return not.slideBackdrop !== choosedDeleteImg.slideBackdrop;
-    }))
-
-  }
+    }));
+  };
 
   const search = async (URL) => {
     let result = await axios.get(URL);
     setData(result.data.results);
-  }
+  };
 
   const handleSortBy = async (genreId) => {
     let genresURL = `https://api.themoviedb.org/3/discover/tv?with_origin_country=JP&api_key=${API_KEY}&with_genres=${genreId}`
     await search(genresURL);
-  }
+  };
 
   const handleLinkClick = (linkName) => {
     setSelectedLink(linkName);
