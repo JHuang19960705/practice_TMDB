@@ -48,7 +48,7 @@ export default function ThisUser() {
 
   return (
     <div className="flex-grow bg-white dark:bg-gray-900">
-      {isLoading && <div>Loading...<Loader /></div>}
+      {isLoading && <div><Loader /></div>}
       {/* 用戶頭像 */}
       {thisUser && (
         <div className="md:px-7 md:pt-7 px-4 pt-4 flex flex-col w-full border-b border-gray-200 bg-white dark:bg-gray-900 dark:text-white dark:border-gray-800">
