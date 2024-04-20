@@ -1,13 +1,28 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const contentSchema = new Schema ({
+const commentSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+const contentSchema = new Schema({
   id: {
     type: String,
   },
   title: {
     type: String,
-    trquired: true,
+    required: true,
   },
   content: {
     type: String,
@@ -18,13 +33,10 @@ const contentSchema = new Schema ({
     default: Date.now,
   },
   writer: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
   },
-  commenters: {
-    type: [String],
-    default: [],
-  },
+  commenters: [commentSchema], 
   tags: {
     type: [String],
     default: [],
@@ -38,7 +50,7 @@ const contentSchema = new Schema ({
   like: {
     type: [String],
     default: [],
-  } 
+  }
 });
 
 module.exports = mongoose.model("Content", contentSchema);

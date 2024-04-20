@@ -12,7 +12,7 @@ export default function YourReviewsComment({ currentUser }) {
 
   useEffect(() => {
     fetchData();
-  }, []); // 初始加載時進行一次
+  }, [reviewData]); // 初始加載時進行一次
 
   const fetchData = () => {
     if (currentUser) {
@@ -29,6 +29,19 @@ export default function YourReviewsComment({ currentUser }) {
         navigate("*")
       }
     }
+  };
+
+  const handleClickLike = async () => {
+    try {
+      await ContentService.patchLike(reviewId, currentUser.user._id);
+      window.alert("按讚成功");
+    } catch (error) {
+      if (error.response && error.response.data) {
+        window.alert(error.response.data);
+      } else {
+        window.alert("按讚時發生錯誤。");
+      }
+    };
   };
 
   return (
@@ -54,7 +67,7 @@ export default function YourReviewsComment({ currentUser }) {
             <div className="movie-user-title">
               {/* 頭像 */}
               <div className="movie-user-title-pic">
-                <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" />
+                <img src="https://images.unsplash.com/photo-1640960543409-dbe56ccc30e2?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
                 {/* <!-- 使用者名稱 --> */}
                 {reviewData && (
                   <div className="movie-user-name">
@@ -84,9 +97,9 @@ export default function YourReviewsComment({ currentUser }) {
             {reviewData && (
               <p>{reviewData.content}</p>
             )}
-            {/* <!-- 時間 --> */}
+            {/* <!-- 喜歡、時間 --> */}
             <div className="movie-user-like-time">
-              <div className="movie-user-like">
+              <div onClick={handleClickLike} className="movie-user-like">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -101,7 +114,7 @@ export default function YourReviewsComment({ currentUser }) {
                     d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
                   ></path>
                 </svg>
-                <div>1 個讚</div>
+                <div>{reviewData && reviewData.like.length} 個讚</div>
               </div>
               {reviewData && (
                 <div className="movie-user-detail">
@@ -115,38 +128,8 @@ export default function YourReviewsComment({ currentUser }) {
               )}
             </div>
           </div>
-
-          {/* <!-- 他人的評論 --> */}
-          {/* <div className="movie-user-right-other">
-                        <div className="movie-user-right-other-comment">
-                            <div className="movie-user-right-other-comment-pic">
-                                <img src="img/Behind/E3CN_2OUYBAXtjp.jpg" alt="" />
-                            </div>
-                            <div className="movie-user-right-other-detail">
-                                <div className="movie-user-right-other-detail-user">
-                                    <div className="movie-user-right-other-detail-user-name">
-                                        <p>${ }</p>
-                                    </div>
-                                    <div className="movie-user-right-other-detail-user-comment">
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <div className="movie-user-right-other-detail-data">
-                                    <div className="movie-user-right-other-detail-data-self">
-                                        <div className="movie-user-right-other-detail-data-self-place">
-                                            <p>B1</p>
-                                        </div>
-                                        <div className="movie-user-right-other-detail-data-self-date">
-                                            <p>2022年9月20日</p>
-                                        </div>
-                                        <div className="movie-user-right-other-detail-data-self-device">
-                                            <p>PCから投稿</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
+          {/* 留言 */}
+          <div className="movie-user-comment-quantity">1 則留言 </div>
           {/* <!-- 待輸入的評論 --> */}
           <div className="movie-user-new-comment">
             {/* <!-- 自己的頭像 --> */}
@@ -167,6 +150,25 @@ export default function YourReviewsComment({ currentUser }) {
                     留言
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+          {/* <!-- 他人的評論 --> */}
+          <div className="movie-user-right-other">
+            <div className="movie-user-right-other-comment-pic">
+              <img src="https://images.unsplash.com/photo-1640951613773-54706e06851d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+            </div>
+            <div className="movie-user-right-other-detail">
+              <div className="movie-user-right-other-detail-user">
+                <div className="movie-user-right-other-detail-user-name">
+                  <p>Adam</p>
+                </div>
+                <div className="movie-user-right-other-detail-date">
+                  <p>2022年9月20日</p>
+                </div>
+              </div>
+              <div className="movie-user-right-other-detail-user-comment">
+                <p>sdasdasdasdasdasdasd</p>
               </div>
             </div>
           </div>

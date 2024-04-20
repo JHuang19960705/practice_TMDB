@@ -30,15 +30,15 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  slide: { 
-    tmdbImgBackdrop: {type: [String], default: []},
-    tmdbImgPoster: {type: [String], default: []}
+  slide: {
+    tmdbImgBackdrop: { type: [String], default: [] },
+    tmdbImgPoster: { type: [String], default: [] }
   },
   cast: {
-    cast1: {type: String, default: "1257220"},
-    cast2: {type: String, default: "100765"},
-    cast3: {type: String, default: "585211"},
-    cast4: {type: String, default: "100766"},
+    cast1: { type: String, default: "1257220" },
+    cast2: { type: String, default: "100765" },
+    cast3: { type: String, default: "585211" },
+    cast4: { type: String, default: "100766" },
   },
   contentId: {
     type: [String],
@@ -53,17 +53,17 @@ const userSchema = new Schema({
     default: "87661",
   },
   theater: {
-    releases: { 
-      tmdbImgBackdrop: {type: [String], default: []},
-      tmdbImgPoster: {type: [String], default: []}
+    releases: {
+      tmdbImgBackdrop: { type: [String], default: [] },
+      tmdbImgPoster: { type: [String], default: [] }
     },
-    leaving: { 
-      tmdbImgBackdrop: {type: [String], default: []},
-      tmdbImgPoster: {type: [String], default: []}
+    leaving: {
+      tmdbImgBackdrop: { type: [String], default: [] },
+      tmdbImgPoster: { type: [String], default: [] }
     },
-    upcoming: { 
-      tmdbImgBackdrop: {type: [String], default: []},
-      tmdbImgPoster: {type: [String], default: []}
+    upcoming: {
+      tmdbImgBackdrop: { type: [String], default: [] },
+      tmdbImgPoster: { type: [String], default: [] }
     },
   }
 

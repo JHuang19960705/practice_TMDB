@@ -23,7 +23,7 @@ export default function PatchRole({ currentUser, setCurrentUser }) {
   };
 
   return (
-    <div className="flex h-full flex-grow flex-col justify-between overflow-x-hidden dark:bg-gray-900 dark:text-white">
+    <div className="flex h-full flex-grow flex-col justify-between overflow-y-scroll dark:bg-gray-900 dark:text-white">
       {/* 返回按鈕 */}
       <div className="mb-1 flex items-center justify-end"><button onClick={() => { navigate("/") }} type="button" className="m-1 rounded-lg bg-blue-500 p-2 text-white" >返回</button></div>
       {/* 選擇方案提示 */}

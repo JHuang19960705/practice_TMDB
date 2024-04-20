@@ -21,7 +21,7 @@ export default function ReviewsContent({ currentUser }) {
         ContentService.getReviewsByTMDBId(_id)
           .then((data) => {
             setContentData(data.data); // 設定影評資料
-            setLoading(false); 
+            setLoading(false);
           })
           .catch((e) => {
             console.log(e);
@@ -30,7 +30,7 @@ export default function ReviewsContent({ currentUser }) {
         ContentService.getReviewsByTMDBId(_id)
           .then((data) => {
             setContentData(data.data); // 設定影評資料
-            setLoading(false); 
+            setLoading(false);
           })
           .catch((e) => {
             console.log(e);
@@ -97,6 +97,9 @@ export default function ReviewsContent({ currentUser }) {
                 </div>
                 <div className="blog-articale-paragraph">
                   {contentData[last].content}
+                </div>
+                <div className="blog-title-like">
+                  <p>{contentData[last].like.length} 個讚</p>
                 </div>
               </div>
             </div>

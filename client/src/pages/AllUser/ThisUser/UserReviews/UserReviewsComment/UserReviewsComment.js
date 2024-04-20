@@ -12,7 +12,7 @@ export default function UserReviewsComment({ currentUser }) {
 
   useEffect(() => {
     fatchData();
-  }, [reviewId, currentUser, navigate]);
+  }, [contentData, reviewId, currentUser, navigate]);
 
   const fatchData = () => {
     if (currentUser?.user?.role === "standard" || currentUser?.user?.role === "premium") {
@@ -27,7 +27,20 @@ export default function UserReviewsComment({ currentUser }) {
     } else if (currentUser?.user?.role === "free") {
       navigate("/");
     }
-  }
+  };
+
+  const handleClickLike = async () => {
+    try {
+      await ContentService.patchLike(reviewId, currentUser.user._id);
+      window.alert("按讚成功");
+    } catch (error) {
+      if (error.response && error.response.data) {
+        window.alert(error.response.data);
+      } else {
+        window.alert("按讚時發生錯誤。");
+      }
+    };
+  };
 
   return (
     <>
@@ -83,18 +96,39 @@ export default function UserReviewsComment({ currentUser }) {
               {contentData && (
                 <p>{contentData.content}</p>
               )}
-              {/* <!-- 時間 --> */}
-              {contentData && (
-                <div className="movie-user-detail">
-                  <div className="movie-user-detail-date">
-                    {contentData.date.slice(0, 10)}
-                  </div>
-                  <div className="movie-user-detail-time">
-                    {contentData.date.slice(11, 16)}
-                  </div>
+              {/* <!-- 喜歡、時間 --> */}
+              <div className="movie-user-like-time">
+                <div onClick={handleClickLike} className="movie-user-like">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#1e478a"
+                    stroke-width="1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    className="movie-user-like-svg"
+                  >
+                    <path
+                      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                    ></path>
+                  </svg>
+                  <div>{contentData && contentData.like.length} 個讚</div>
                 </div>
-              )}
+                {contentData && (
+                  <div className="movie-user-detail">
+                    <div className="movie-user-detail-date">
+                      {contentData.date.slice(0, 10)}
+                    </div>
+                    <div className="movie-user-detail-time">
+                      {contentData.date.slice(11, 16)}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+            {/* 留言 */}
+            <div className="movie-user-comment-quantity">1 則留言 </div>
             {/* <!-- 待輸入的評論 --> */}
             <div className="movie-user-new-comment">
               {/* <!-- 自己的頭像 --> */}
@@ -115,6 +149,25 @@ export default function UserReviewsComment({ currentUser }) {
                       留言
                     </button>
                   </div>
+                </div>
+              </div>
+            </div>
+            {/* <!-- 他人的評論 --> */}
+            <div className="movie-user-right-other">
+              <div className="movie-user-right-other-comment-pic">
+                <img src="https://images.unsplash.com/photo-1640951613773-54706e06851d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+              </div>
+              <div className="movie-user-right-other-detail">
+                <div className="movie-user-right-other-detail-user">
+                  <div className="movie-user-right-other-detail-user-name">
+                    <p>Adam</p>
+                  </div>
+                  <div className="movie-user-right-other-detail-date">
+                    <p>2022年9月20日</p>
+                  </div>
+                </div>
+                <div className="movie-user-right-other-detail-user-comment">
+                  <p>sdasdasdasdasdasdasd</p>
                 </div>
               </div>
             </div>

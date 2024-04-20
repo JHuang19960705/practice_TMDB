@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const Content = require("../models").content;
+const User = require("../models").user;
+const jwt = require("jsonwebtoken");
 
 router.use("/", (req, res, next) => {
   next();
@@ -18,19 +20,19 @@ router.post("/", async (req, res) => {
   let { title, content, tags, TMDBId, TMDBImg } = req.body;
   try {
     let newContent = new Content({
-      title, 
+      title,
       content,
       tags,
       TMDBId,
       TMDBImg,
-      writer: req.user._id, 
+      writer: req.user._id,
     });
     let savedContent = await newContent.save();
     return res.send({
       message: "新文章已經保存",
       savedContent
     });
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法新增內容");
   };
 });
@@ -60,13 +62,13 @@ router.patch("/:_id", async (req, res) => {
     } else {
       return res.status(403).send("只有此文章的用戶才能刪除課程。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改內容");
   };
 });
 
 // 刪文
-router.delete("/:_id", async(req, res) => {
+router.delete("/:_id", async (req, res) => {
   if (req.user.isFree()) {
     return res.status(400).send("只有加入會員才可以發文唷~");
   }
@@ -92,15 +94,15 @@ router.delete("/:_id", async(req, res) => {
 
 // 獲得系統中的所有發文
 router.get("/", async (req, res) => {
-  try{
+  try {
     let contentFound = await Content.find({})
       .populate(
-        "writer", 
+        "writer",
         ["username", "email"]
-        )
+      )
       .exec();
     return res.send(contentFound);
-  } catch(e){
+  } catch (e) {
     return res.status(500).send(e);
   }
 });
@@ -151,6 +153,39 @@ router.get("/findByContentId/:_id", async (req, res) => {
   } catch (e) {
     return res.status(500).send(e);
   }
+});
+
+// 按讚
+router.patch("/clickLike/:contentId", async (req, res) => {
+  let { contentId } = req.params;
+  let { commenterId } = req.body;
+  try {
+    // 檢查用戶是否已經按過讚
+    let content = await Content.findById(contentId).exec();
+    if (content.like.includes(commenterId)) {
+      return res.status(400).send("按過讚囉～");
+    }
+
+    // 確認真有其人後，再存進去
+    let profileFound = await User.findOne({ _id: commenterId }).exec();
+    if (!profileFound) {
+      return res.status(400).send("找不到個資，無法按讚。");
+    }
+
+    if (profileFound._id.equals(commenterId)) {
+      const token = jwt.sign(profileFound.toJSON(), process.env.PASSPORT_SECRET);
+      let ContentLikes = await Content.findByIdAndUpdate(contentId, { $push: { like: commenterId } }, { new: true, runValidators: true }).exec();
+      return res.send({
+        message: "按讚成功～",
+        content: ContentLikes,
+        token: token
+      });
+    } else {
+      return res.status(403).send("只有用戶本人才能按讚。");
+    }
+  } catch (e) {
+    return res.status(500).send("無法按讚");
+  };
 });
 
 

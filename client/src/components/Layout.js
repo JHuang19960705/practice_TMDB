@@ -34,7 +34,7 @@ export default function Layout() {
     <div className="relative">
       <div className="h-screen overflow-hidden bg-gray-100 text-sm text-gray-600 md:flex flex-grow dark:bg-gray-900 dark:text-white">
         {/* <!-- 左導覽 --> */}
-        <div className="absolute bottom-0 z-20 flex w-full flex-shrink-0 border-t md:border-r border-gray-200 bg-white md:static md:w-20 md:flex-col dark:border-gray-800 dark:bg-gray-900">
+        <div className="fixed bottom-0 z-20 flex w-full flex-shrink-0 border-t md:border-r border-gray-200 bg-white md:static md:w-20 md:flex-col dark:border-gray-800 dark:bg-gray-900">
           {/* 首頁 */}
           <Link to="/" className="hidden h-16 items-center justify-center text-blue-500 md:flex dark:text-blue-700">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-9" viewBox="0 0 24 24" fill="currentColor">

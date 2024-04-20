@@ -1,6 +1,6 @@
 import axios from "axios";
-// const API_URL = "http://localhost:3999/api/content";
-const API_URL = "https://practice-tmdb-server.vercel.app/api/content";
+const API_URL = "http://localhost:3999/api/content";
+// const API_URL = "https://practice-tmdb-server.vercel.app/api/content";
 
 class ContentService {
   //發文
@@ -23,14 +23,14 @@ class ContentService {
   }
 
   // 刪文
-  delete( _id ) {
+  delete(_id) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
     } else {
       token = "";
     }
-    return axios.delete(API_URL +  "/" + _id,
+    return axios.delete(API_URL + "/" + _id,
       {
         headers: {
           Authorization: token,
@@ -40,7 +40,7 @@ class ContentService {
   }
 
   // 改文
-  patch( _id, title, content, tags ) {
+  patch(_id, title, content, tags) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -48,7 +48,7 @@ class ContentService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/" + _id,
+      API_URL + "/" + _id,
       { title, content, tags },
       {
         headers: {
@@ -106,6 +106,25 @@ class ContentService {
         Authorization: token,
       },
     });
+  }
+
+  // 按讚
+  patchLike(contentId, commenterId) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+    return axios.patch(
+      API_URL + "/clickLike/" + contentId,
+      { commenterId },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
   }
 }
 

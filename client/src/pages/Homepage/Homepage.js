@@ -40,9 +40,9 @@ export default function Homepage({ currentUser, setCurrentUser }) {
           <div className="mb-8 md:mt-12 flex-grow overflow-y-auto">
             <nav>
               <ul className="list-none flex flex-col md:space-y-6">
-                <li onClick={() => { navigate("/allUser") }} className="cursor-pointer text-base text-white">View Users</li>
-                <li onClick={() => { navigate("/back/yourReviews") }} className="cursor-pointer text-base text-white">Admin Dashboard</li>
-                <li onClick={() => { navigate("/search/Movie") }} className="cursor-pointer text-base text-white">Search Video</li>
+                <li onClick={() => { navigate("/allUser") }} className="cursor-pointer text-base text-white" style={{textShadow: "1px 1px 0px rgb(34 197 94)"}}>View Users</li>
+                <li onClick={() => { navigate("/back/yourReviews") }} className="cursor-pointer text-base text-white" style={{textShadow: "1px 1px 0px rgb(34 197 94)"}}>Admin Dashboard</li>
+                <li onClick={() => { navigate("/search/Movie") }} className="cursor-pointer text-base text-white" style={{textShadow: "1px 1px 0px rgb(34 197 94)"}}>Search Video</li>
               </ul>
             </nav>
           </div>

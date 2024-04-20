@@ -81,7 +81,7 @@ export default function FirstEnroll({ currentUser, setCurrentUser }) {
           </article>
           {/* Pro方案 */}
           <article className="pricing-card pricing-card--primary">
-            <h3>Pro</h3>
+            <h3>Premium</h3>
             <div>高級功能</div>
             <div className="pricing-card__price--original"><s>$25.00</s></div>
             <div className="pricing-card__price">$5.49</div>

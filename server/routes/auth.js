@@ -9,11 +9,11 @@ router.use((req, res, next) => {
 
 // 獲得系統中的所有會員
 router.get("/", async (req, res) => {
-  try{
+  try {
     let userFound = await User.find({}, { username: 1, email: 1, role: 1, _id: 1, date: 1 })
       .exec();
     return res.send(userFound);
-  } catch(e){
+  } catch (e) {
     return res.status(500).send(e);
   }
 });
@@ -21,11 +21,11 @@ router.get("/", async (req, res) => {
 // 透過Id拿到該會員基本資料
 router.get("/getUserById/:userId", async (req, res) => {
   let { userId } = req.params;
-  try{
+  try {
     let userFound = await User.findOne({ _id: userId }, { username: 1, email: 1, role: 1, _id: 1, date: 1 })
       .exec();
     return res.send(userFound);
-  } catch(e){
+  } catch (e) {
     return res.status(500).send(e);
   }
 });
@@ -33,11 +33,11 @@ router.get("/getUserById/:userId", async (req, res) => {
 // 透過Id拿到該會員recommend資料
 router.get("/getUserRecommendById/:userId", async (req, res) => {
   let { userId } = req.params;
-  try{
-    let userFound = await User.findOne({ _id: userId }, { slide: 1, cast: 1, favoritePerson: 1, theme: 1, _id: 1, contentId: 1, theater: 1})
+  try {
+    let userFound = await User.findOne({ _id: userId }, { slide: 1, cast: 1, favoritePerson: 1, theme: 1, _id: 1, contentId: 1, theater: 1 })
       .exec();
     return res.send(userFound);
-  } catch(e){
+  } catch (e) {
     return res.status(500).send(e);
   }
 });
@@ -47,19 +47,19 @@ router.post("/register", async (req, res) => {
   let { email, username, password, role } = req.body;
   let newUser = new User({ email, username, password, role });
 
-  try{
+  try {
     let savedUser = await newUser.save();
     return res.send({
       msg: "歡迎加入",
       savedUser,
     })
-  } catch(e) {
+  } catch (e) {
     res.status(500).send("無法儲存使用者...");
   }
 })
 
 // 修改名字、信箱
-router.patch("/patchProfile/:_id", async(req, res) => {
+router.patch("/patchProfile/:_id", async (req, res) => {
   // 身分確認後確認文章存在，再儲存新資料
   let { _id } = req.params;
   try {
@@ -83,13 +83,13 @@ router.patch("/patchProfile/:_id", async(req, res) => {
     } else {
       return res.status(403).send("只有用戶本人才能修改資料。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改資料");
   };
 })
 
 // 修改身分
-router.patch("/patchRole/:_id", async(req, res) => {
+router.patch("/patchRole/:_id", async (req, res) => {
   // 身分確認後確認文章存在，再儲存新資料
   // 新身分不能跟舊身分一致
   let { _id } = req.params;
@@ -100,7 +100,7 @@ router.patch("/patchRole/:_id", async(req, res) => {
       return res.status(400).send("找不到個資。無法刪除課程。");
     }
     let roleFound = await User.findOne({ role }).exec();
-    if ( profileFound.equals(roleFound) ) {
+    if (profileFound.equals(roleFound)) {
       return res.status(400).send("與原本身分一致，無法更改");
     }
 
@@ -119,38 +119,51 @@ router.patch("/patchRole/:_id", async(req, res) => {
     } else {
       return res.status(403).send("只有用戶本人才能修改資料。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改資料");
   };
 })
 
 // 登入
 router.post("/login", async (req, res) => {
-  const foundUser = await User.findOne( { email: req.body.email } );
-  if ( !foundUser ){
+  const foundUser = await User.findOne({ email: req.body.email });
+
+  if (!foundUser) {
     return res.status(401).send("這個信箱沒註冊過喔...");
-  } 
+  };
 
   foundUser.comparePassword(req.body.password, (err, isMatch) => {
-    if(err) return res.status(500).send(err);
+    if (err) return res.status(500).send(err);
 
     if (isMatch) {
       // 製作json web token
       const tokenObject = { _id: foundUser._id, email: foundUser.email };
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
-      console.log(foundUser);
       return res.send({
         token: "JWT " + token,
-        user: foundUser,
+        user: {
+          _id: foundUser._id,
+          username: foundUser.username,
+          email: foundUser.email,
+          role: foundUser.role,
+          date: foundUser.date,
+          slide: foundUser.slide,
+          slideImg: foundUser.slideImg,
+          contentId: foundUser.contentId,
+          cast: foundUser.cast,
+          favoritePerson: foundUser.favoritePerson,
+          theme: foundUser.theme,
+          theater: foundUser.theater
+        }
       });
-    }else {
+    } else {
       return res.status(401).send("密碼錯誤");
-    }
+    };
   });
 })
 
 // 刪除
-router.delete("/:_id", async(req, res) => {
+router.delete("/:_id", async (req, res) => {
   let { _id } = req.params;
   // 確認用戶存在
   try {
@@ -168,7 +181,7 @@ router.delete("/:_id", async(req, res) => {
 
 
 //放入幻燈片
-router.patch("/patchSlide/:_id", async(req, res) => {
+router.patch("/patchSlide/:_id", async (req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
@@ -190,13 +203,13 @@ router.patch("/patchSlide/:_id", async(req, res) => {
     } else {
       return res.status(403).send("只有用戶本人才能放入幻燈片。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改資料");
   };
 })
 
 //放入文章Id
-router.patch("/patchReviews/:_id", async(req, res) => {
+router.patch("/patchReviews/:_id", async (req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
@@ -219,13 +232,13 @@ router.patch("/patchReviews/:_id", async(req, res) => {
     } else {
       return res.status(403).send("只有用戶本人才能放入幻燈片。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改資料");
   };
 })
 
 //修改人物
-router.patch("/patchCast/:_id", async(req, res) => {
+router.patch("/patchCast/:_id", async (req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
@@ -237,8 +250,8 @@ router.patch("/patchCast/:_id", async(req, res) => {
       const tokenObject = { _id: profileFound._id, email: profileFound.email };
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
       let patchCast = await User.findOneAndUpdate(
-        { _id }, 
-        req.body, 
+        { _id },
+        req.body,
         { new: true, runValidators: true },
       );
       return res.send({
@@ -249,13 +262,13 @@ router.patch("/patchCast/:_id", async(req, res) => {
     } else {
       return res.status(403).send("只有用戶本人才能放入幻燈片。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改資料");
   };
 })
 
 //修改人物主題
-router.patch("/patchFavoritePerson/:_id", async(req, res) => {
+router.patch("/patchFavoritePerson/:_id", async (req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
@@ -267,8 +280,8 @@ router.patch("/patchFavoritePerson/:_id", async(req, res) => {
       const tokenObject = { _id: profileFound._id, email: profileFound.email };
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
       let patchFavoritePerson = await User.findOneAndUpdate(
-        { _id }, 
-        req.body, 
+        { _id },
+        req.body,
         { new: true, runValidators: true },
       );
       return res.send({
@@ -279,13 +292,13 @@ router.patch("/patchFavoritePerson/:_id", async(req, res) => {
     } else {
       return res.status(403).send("只有用戶本人才能放入幻燈片。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改資料");
-  };  
+  };
 })
 
 //修改主題
-router.patch("/patchTheme/:_id", async(req, res) => {
+router.patch("/patchTheme/:_id", async (req, res) => {
   let { _id } = req.params;
   try {
     let profileFound = await User.findOne({ _id }).exec();
@@ -297,8 +310,8 @@ router.patch("/patchTheme/:_id", async(req, res) => {
       const tokenObject = { _id: profileFound._id, email: profileFound.email };
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
       let patchTheme = await User.findOneAndUpdate(
-        { _id }, 
-        req.body, 
+        { _id },
+        req.body,
         { new: true, runValidators: true },
       );
       return res.send({
@@ -309,9 +322,9 @@ router.patch("/patchTheme/:_id", async(req, res) => {
     } else {
       return res.status(403).send("只有用戶本人才能放入幻燈片。");
     }
-  } catch(e) {
+  } catch (e) {
     return res.status(500).send("無法修改資料");
-  };  
+  };
 })
 
 //放入電影院
@@ -368,10 +381,10 @@ router.patch("/patchTheater/leaving/:_id", async (req, res) => {
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
 
       let updateFields = {};
-      if (req.body.leaving !== undefined) { 
+      if (req.body.leaving !== undefined) {
         updateFields['theater.leaving'] = req.body.leaving;
       } else {
-        return res.status(400).send("前端資料為null。"); 
+        return res.status(400).send("前端資料為null。");
       }
 
       let patchTheater = await User.findOneAndUpdate(
@@ -407,10 +420,10 @@ router.patch("/patchTheater/upcoming/:_id", async (req, res) => {
       const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
 
       let updateFields = {};
-      if (req.body.upcoming !== undefined) { 
+      if (req.body.upcoming !== undefined) {
         updateFields['theater.upcoming'] = req.body.upcoming;
       } else {
-        return res.status(400).send("前端資料為null。"); 
+        return res.status(400).send("前端資料為null。");
       }
 
       let patchTheater = await User.findOneAndUpdate(
