@@ -8,6 +8,7 @@ import Theme from "./Theme/Theme";
 import AuthService from "../../../../services/auth.service";
 
 export default function UserRecommend() {
+  const [isLoading, setLoading] = useState(true);
   const { userId } = useParams(); // 從路由中獲取用戶 ID
   const [userRecommend, setUserRecommend] = useState();
 
@@ -20,6 +21,7 @@ export default function UserRecommend() {
     AuthService.getUserRecommendById(userId)
       .then((data) => {
         setUserRecommend(data.data);
+        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -28,6 +30,7 @@ export default function UserRecommend() {
 
   return (
     <div>
+      {isLoading && <div>Loading...<Loader /></div>}
       {userRecommend && (
         <>
           <Slide userRecommend={userRecommend} />
