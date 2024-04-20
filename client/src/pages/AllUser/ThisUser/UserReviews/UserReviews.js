@@ -6,6 +6,7 @@ import ContentService from "../../../../services/content.service";
 export default function UserReviews() {
   const { userId } = useParams();
   const [userAllReviews, setUserAllReviews] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     getAllReviews(userId);
@@ -16,6 +17,7 @@ export default function UserReviews() {
     ContentService.getReviewByUserId(_id)
       .then((data) => {
         setUserAllReviews(data.data);
+        setLoading(false); // 資料取得後設置 loading 為 false
       })
       .catch((e) => {
         console.log(e);
@@ -24,7 +26,7 @@ export default function UserReviews() {
 
   return (
     <div>
-      {!userAllReviews.length && <div className="flex justify-center text-xl pt-24">該用戶無影評!</div>}
+      {!loading && !userAllReviews.length && <div className="flex justify-center text-xl pt-24">該用戶無影評!</div>}
       <section className="archive">
         <div>
           {userAllReviews &&
