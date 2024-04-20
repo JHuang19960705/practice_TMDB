@@ -4,17 +4,17 @@ const API_URL = "https://practice-tmdb-server.vercel.app/api/user";
 
 class AuthService {
   // 登入
-  login(email, password ) {
+  login(email, password) {
     return axios.post(API_URL + "/login", { email, password });
   }
-  
+
   // 登出
   logout() {
     localStorage.removeItem("user");
   }
 
   // 註冊
-  register(username, email, password, role ) {
+  register(username, email, password, role) {
     return axios.post(API_URL + "/register", { username, email, password, role });
   }
 
@@ -34,7 +34,7 @@ class AuthService {
   }
 
   // 改個資
-  patchProfile( _id, username, email ) {
+  patchProfile(_id, username, email) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -42,7 +42,7 @@ class AuthService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/patchProfile/" + _id,
+      API_URL + "/patchProfile/" + _id,
       { username, email },
       {
         headers: {
@@ -53,7 +53,7 @@ class AuthService {
   }
 
   // 改身分
-  patchRole(_id, role ) {
+  patchRole(_id, role) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -61,18 +61,18 @@ class AuthService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/patchRole/" + _id,
+      API_URL + "/patchRole/" + _id,
       { role },
       {
         headers: {
           Authorization: token,
         },
       }
-    );    
+    );
   }
 
   // 改slide
-  patchSlide(_id, slide ) {
+  patchSlide(_id, slide) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -80,18 +80,18 @@ class AuthService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/patchSlide/" + _id,
+      API_URL + "/patchSlide/" + _id,
       { slide },
       {
         headers: {
           Authorization: token,
         },
       }
-    );    
+    );
   }
 
   // 改評論
-  patchReviews(_id, contentId ) {
+  patchReviews(_id, contentId) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -99,18 +99,18 @@ class AuthService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/patchReviews/" + _id,
+      API_URL + "/patchReviews/" + _id,
       { contentId },
       {
         headers: {
           Authorization: token,
         },
       }
-    );    
+    );
   }
 
   // 改卡司
-  patchCast(_id, cast ) {
+  patchCast(_id, cast) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -118,18 +118,18 @@ class AuthService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/patchCast/" + _id,
+      API_URL + "/patchCast/" + _id,
       { cast },
       {
         headers: {
           Authorization: token,
         },
       }
-    );    
+    );
   }
 
   // 改人物
-  patchFavoritePerson(_id, favoritePerson ) {
+  patchFavoritePerson(_id, favoritePerson) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -137,18 +137,18 @@ class AuthService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/patchFavoritePerson/" + _id,
+      API_URL + "/patchFavoritePerson/" + _id,
       { favoritePerson },
       {
         headers: {
           Authorization: token,
         },
       }
-    );    
+    );
   }
 
   // 改主題
-  patchTheme(_id, theme ) {
+  patchTheme(_id, theme) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -156,15 +156,15 @@ class AuthService {
       token = "";
     }
     return axios.patch(
-      API_URL +  "/patchTheme/" + _id,
+      API_URL + "/patchTheme/" + _id,
       { theme },
       {
         headers: {
           Authorization: token,
         },
       }
-    );    
-  } 
+    );
+  }
 
   // 放電影院
   // 更新 releases 屬性
@@ -227,6 +227,11 @@ class AuthService {
   //拿到登入後的會員
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
+  }
+  
+  //刪除用戶
+  deleteUser(_id) {
+    return axios.delete(API_URL + "/" + _id);
   }
 }
 

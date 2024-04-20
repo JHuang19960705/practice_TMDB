@@ -21,7 +21,7 @@ export default function SearchTV({ currentUser }) {
 
   useEffect(() => {
     search(initialURL); // 初始加載時進行一次搜尋
-  });
+  }, []);
 
   useEffect(() => {
     handleClick();

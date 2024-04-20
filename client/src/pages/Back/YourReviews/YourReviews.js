@@ -5,7 +5,7 @@ import Loader from "../../../components/Loader";
 
 export default function YourReviews({ currentUser }) {
   const [isLoading, setLoading] = useState(true);
-  const [contentData, setContentData] = useState(null);
+  const [contentData, setContentData] = useState([]);
   const [clickContent, setClickContent] = useState(true);
   const [clickTitle, setClickTitle] = useState(null);
   const [isHidden, setIsHidden] = useState("hidden");
@@ -85,6 +85,7 @@ export default function YourReviews({ currentUser }) {
         <div className={`${isDisplay} w-full flex-shrink-0 overflow-y-auto border-r border-gray-200 bg-gray-100 p-5 md:static md:block md:w-1/4 md:bg-gray-100 dark:border-gray-800 dark:bg-gray-900 md:dark:bg-gray-900`}>
           <div className="space-y-4 mt-3">
             {isLoading && <div>Loading...<Loader /></div>}
+            {!contentData.length && <div className="flex justify-center text-xl pt-24">無影評!</div>}
             {contentData && contentData.map((content) => {
               return (
                 <Link

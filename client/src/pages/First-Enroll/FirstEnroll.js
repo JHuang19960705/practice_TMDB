@@ -12,7 +12,7 @@ export default function FirstEnroll({ currentUser, setCurrentUser }) {
     try {
       setLoading(true); // 設置加載狀態為 true，顯示 Loader
       let response = await AuthService.login(email, password);
-      
+
       if (response) {
         localStorage.setItem("user", JSON.stringify(response.data)); // 將登入用戶存在localStorage中
         window.alert("登入成功。您現在將被重新導向到個人資料頁面。");
@@ -47,14 +47,14 @@ export default function FirstEnroll({ currentUser, setCurrentUser }) {
           {/* Free方案 */}
           <article className="pricing-card">
             <h3>Free</h3>
-            <div>Essential features</div>
+            <div>基本功能</div>
             <div className="pricing-card__price--original"><s>$0.99</s></div>
             <div className="pricing-card__price">$0.00</div>
-            <div className="period">/ month</div>
+            <div className="period">/ 月</div>
             <ul>
-              <li>Basic search to movie, TV series.</li>
-              <li>Browse various film enthusiasts" movie reviews.</li>
-              <li>Provide feedback on the movie reviews you like.</li>
+              <li>基本電影、電視節目搜尋功能。</li>
+              <li>瀏覽各種影迷的電影評論。</li>
+              <li>對您喜歡的電影評論提供回饋。</li>
             </ul>
             {/* 註冊Free方案按鈕 */}
             <Link to="register/free" className="enroll">註冊free方案</Link>
@@ -64,14 +64,14 @@ export default function FirstEnroll({ currentUser, setCurrentUser }) {
           {/* Standard方案 */}
           <article className="pricing-card">
             <h3>Standard</h3>
-            <div>Advanced features</div>
+            <div>進階功能</div>
             <div className="pricing-card__price--original"><s>$15.00</s></div>
             <div className="pricing-card__price">$4.99</div>
-            <div className="period">/ month</div>
+            <div className="period">/ 月</div>
             <ul>
-              <li>All features of the Essential Plan.</li>
-              <li>Create your own curated list of recommended movies.</li>
-              <li>Write movie reviews to document your impressions and experiences.</li>
+              <li>所有基本方案功能。</li>
+              <li>建立自己的推薦電影精選列表。</li>
+              <li>撰寫電影評論以記錄您的印象和經歷。</li>
             </ul>
             {/* 註冊Standard方案按鈕 */}
             <Link to="register/standard" className="enroll">註冊standard方案</Link>
@@ -81,14 +81,14 @@ export default function FirstEnroll({ currentUser, setCurrentUser }) {
           {/* Pro方案 */}
           <article className="pricing-card pricing-card--primary">
             <h3>Pro</h3>
-            <div>Premium features</div>
+            <div>高級功能</div>
             <div className="pricing-card__price--original"><s>$25.00</s></div>
             <div className="pricing-card__price">$5.49</div>
-            <div className="period">/ month</div>
+            <div className="period">/ 月</div>
             <ul>
-              <li>All features of the Advanced Plan.</li>
-              <li>Write movie reviews to document your impressions and experiences.</li>
-              <li>Launch a movie theater with your own unique taste.</li>
+              <li>所有進階方案功能。</li>
+              <li>撰寫電影評論以記錄您的印象和經歷。</li>
+              <li>發布具有您獨特品味的電影院。</li>
             </ul>
             {/* 註冊Premium方案按鈕 */}
             <Link to="register/premium" className="enroll">註冊premium方案</Link>

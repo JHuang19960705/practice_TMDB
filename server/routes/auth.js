@@ -150,17 +150,16 @@ router.post("/login", async (req, res) => {
 })
 
 // 刪除
-router.delete("/:username", async(req, res) => {
-  let { username } = req.params;
+router.delete("/:_id", async(req, res) => {
+  let { _id } = req.params;
   // 確認用戶存在
   try {
-    let userFound = await User.findOne({ username }).exec();
+    let userFound = await User.findOne({ _id }).exec();
     if (!userFound) {
-      return res.status(400).send("找不到這位User。無法刪除課程。");
+      return res.status(400).send("找不到User。無法刪除。");
     } else {
-      // 使用者必須是此課程講師，才能刪
-      await User.deleteOne({ username }).exec();
-      return res.send("用戶刪除成功~");
+      await User.deleteOne({ _id }).exec();
+      return res.send("刪除成功~");
     }
   } catch (e) {
     return res.status(500).send(e);

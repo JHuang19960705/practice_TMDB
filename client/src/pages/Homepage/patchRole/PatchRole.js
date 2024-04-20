@@ -7,16 +7,19 @@ export default function PatchRole({ currentUser, setCurrentUser }) {
 
   // 處理更改方案功能，根據選擇的方案進行更新
   const handlePlanChanging = async (e) => {
-    try {
-      let newRole = e.target.dataset.role; // 獲取選擇的新方案
-      let response = await AuthService.patchRole(currentUser.user._id, newRole); 
-      window.alert("身分修改成功。您現在將被導向到個人資料頁面");
-      localStorage.setItem("user", JSON.stringify(response.data)); 
-      setCurrentUser(AuthService.getCurrentUser());
-      navigate("/"); // 導航至首頁
-    } catch (e) {
-      console.error(e); // 處理錯誤，顯示錯誤訊息
-    }
+    const confirmResult = window.confirm("您確定要修改身分嗎？");
+    if (confirmResult) {
+      try {
+        let newRole = e.target.dataset.role; // 獲取選擇的新方案
+        let response = await AuthService.patchRole(currentUser.user._id, newRole);
+        window.alert("身分修改成功。您現在將被導向到個人資料頁面");
+        localStorage.setItem("user", JSON.stringify(response.data));
+        setCurrentUser(AuthService.getCurrentUser());
+        navigate("/"); // 導航至首頁
+      } catch (e) {
+        console.error(e); // 處理錯誤，顯示錯誤訊息
+      };
+    };
   };
 
   return (

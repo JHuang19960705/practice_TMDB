@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
+import Loader from "../../../components/Loader";
 
 export default function LoginComponent({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); // 初始化加載狀態為 false
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -21,13 +23,18 @@ export default function LoginComponent({ currentUser, setCurrentUser }) {
   // 處理登入
   const handleLogin = async () => {
     try {
+      setLoading(true); // 設置加載狀態為 true，顯示 Loader
       let response = await AuthService.login(email, password);
-      localStorage.setItem("user", JSON.stringify(response.data)); // 將登入用戶存在localStorage中
-      window.alert("登入成功。您現在將被導向到首頁。"); 
-      setCurrentUser(AuthService.getCurrentUser()); 
-      navigate("/"); // 導航至首頁
+      if (response) {
+        localStorage.setItem("user", JSON.stringify(response.data)); // 將登入用戶存在localStorage中
+        window.alert("登入成功。您現在將被導向到首頁。");
+        setCurrentUser(AuthService.getCurrentUser());
+        navigate("/"); // 導航至首頁
+      };
     } catch (e) {
-      setMessage(e.response.data); 
+      setMessage(e.response.data);
+    } finally {
+      setLoading(false); // 無論登入成功與否，都隱藏 Loader
     }
   };
 
@@ -40,6 +47,7 @@ export default function LoginComponent({ currentUser, setCurrentUser }) {
 
   return (
     <div className="fixed left-1/2 top-44 z-10 w-3/5 min-w-52 -translate-x-1/2 rounded-lg border border-blue-400 bg-blue-100 p-5 shadow-xl dark:bg-gray-700 dark:border-gray-400">
+      {loading && <Loader />} {/* 如果 loading 為 true，顯示 Loader */}
       {/* 返回按鈕 */}
       <div onClick={() => { navigate("/firstEnroll") }} className="absolute right-1 top-1 h-5 w-5 cursor-pointer bg-white">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">

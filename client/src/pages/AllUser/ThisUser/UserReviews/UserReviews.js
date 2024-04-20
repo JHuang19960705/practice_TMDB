@@ -11,6 +11,7 @@ export default function UserReviews() {
     getAllReviews(userId);
   }, [userId]);
 
+  // 拿取該用戶的全部影評
   const getAllReviews = (_id) => {
     ContentService.getReviewByUserId(_id)
       .then((data) => {
@@ -23,6 +24,7 @@ export default function UserReviews() {
 
   return (
     <div>
+      {!userAllReviews.length && <div className="flex justify-center text-xl pt-24">該用戶無影評!</div>}
       <section className="archive">
         <div>
           {userAllReviews &&

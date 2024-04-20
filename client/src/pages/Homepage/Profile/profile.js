@@ -11,7 +11,7 @@ export default function Profile({ currentUser, setCurrentUser }) {
     window.alert("登出成功。您現在將被重新導向到首頁。");
     setCurrentUser(null);
     AuthService.logout();
-    navigate("/");
+    navigate("/firstEnroll");
   };
 
   // 導航至修改個人資料頁面
