@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import UserAllReview from "./UserAllReview/UserAllReview";
 import ContentService from "../../../../services/content.service";
+import Loader from "../../../../components/Loader";
 
 export default function UserReviews() {
   const { userId } = useParams();
@@ -26,6 +27,7 @@ export default function UserReviews() {
 
   return (
     <div>
+      {loading && <div>Loading...<Loader /></div>}
       {!loading && userAllReviews.length === 0 && (<div className="flex justify-center text-xl pt-24">該用戶無影評!</div>)}
       <section className="archive">
         <div>
