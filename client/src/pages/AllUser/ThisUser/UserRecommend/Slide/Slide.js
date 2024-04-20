@@ -11,30 +11,10 @@ export default function Slide({ userRecommend }) {
   const settings = {
     dots: false,
     infinite: userRecommend.slide.tmdbImgBackdrop.length >= 2,
-    speed: 2500,
+    speed: 2000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false,
-    responsive: [
-      {
-        breakpoint: 1025,
-        settings: {
-          slidesToShow: 1,
-        }
-      },
-      {
-        breakpoint: 769,
-        settings: {
-          slidesToShow: 1,
-        }
-      },
-      {
-        breakpoint: 426,
-        settings: {
-          slidesToShow: 1,
-        }
-      }
-    ]
+    arrows: false
   };
 
   // 將圖片存在backdropElements中

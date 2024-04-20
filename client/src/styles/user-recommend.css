@@ -243,6 +243,7 @@
 
 /* 右邊圖片 */
 .media-studies-wrap-right {
+  color: #f3f4f6;
   padding: 40px 0;
 }
 
@@ -262,7 +263,6 @@
 }
 
 .media-studies-article-title {
-  color: #000;
   text-decoration: none;
 }
 
@@ -286,7 +286,6 @@
   font-size: 16px;
   text-align: justify;
   box-sizing: border-box;
-  color: #000;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -295,6 +294,12 @@
 
 .media-studies-controls {
   display: none;
+}
+
+.media-studies-wrap-right-slider {
+  display: none;
+  color: #f3f4f6;
+  margin: auto;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -324,54 +329,34 @@
   }
 
   /* 右邊圖片 */
-  .media-studies-long {
-    height: 400px;
-    overflow: hidden;
-    background-color: #fff;
-    margin: auto;
-    display: flex;
-    justify-content: center;
+  .media-studies-wrap-right {
+    display: none;
+  }
+
+  .media-studies-wrap-right-slider {
+    display: block;
+    width: 90%;
     position: relative;
   }
-
-  .media-studies-wrap-right {
-    display: flex;
-    padding: 0;
-    margin: auto;
-    overflow: hidden;
-  }
-
+  
   .media-studies-article {
-    margin: 0 20px;
+    max-width: 100%;
+    margin-bottom: 10px;
   }
 
-  .media-studies-article img {
-    width: 250px;
+  .slick-dots {
+    position: static;
   }
 
-  .media-studies-article-title p {
-    font-size: 18px;
+  .slick-dots li button:before {
+    color: rgb(255, 255, 255);
+    opacity: 1;
+    font-size: large;
   }
 
-  .media-studies-article-text {
-    font-size: 12px;
-  }
-
-  .media-studies-controls {
-    display: block;
-    position: absolute;
-    top: calc(50% - 25px);
-    width: 100%;
-  }
-
-  .js-media-studies-prev {
-    float: left;
-    cursor: pointer;
-  }
-
-  .js-media-studies-next {
-    float: right;
-    cursor: pointer;
+  .slick-dots li.slick-active button:before {
+    opacity: 1;
+    color: rgb(59 130 246);
   }
 }
 

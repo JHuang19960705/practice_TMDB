@@ -34,6 +34,10 @@ const contentSchema = new Schema ({
   },
   TMDBImg: {
     type: String,
+  },
+  like: {
+    type: [String],
+    default: [],
   } 
 });
 

@@ -1,9 +1,34 @@
 import React from "react";
+import Slider from "react-slick";
 import ReviewsPic from "./ReviewsPic";
 import { useNavigate } from "react-router-dom";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function Reviews({ userRecommend }) {
   const navigate = useNavigate();
+  const slider = React.useRef(null);
+
+  const settings = {
+    dots: userRecommend.contentId.length >= 2,
+    infinite: userRecommend.contentId.length >= 2,
+    speed: 2000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false
+  };
+
+  // 將圖片存在contentIdElements中
+  let contentIdElements = null;
+  if (userRecommend && userRecommend.contentId) {
+    contentIdElements = userRecommend.contentId.map((id, index) => {
+      return (
+        <div key={index}>
+          <ReviewsPic reviewId={id} />
+        </div>
+      );
+    });
+  };
 
   return (
     <>
@@ -31,18 +56,17 @@ export default function Reviews({ userRecommend }) {
               </div>
             </div>
           </div>
-          <div className="media-studies-long">
-            <div className="media-studies-wrap-right js-media-studies-wrap">
-              {
-                userRecommend.contentId.map((id) => {
-                  return <ReviewsPic reviewId={id} />
-                })
-              }
-            </div>
-            <div className="media-studies-controls">
-              <span className="js-media-studies-prev"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/prev.png" /></span>
-              <span className="js-media-studies-next"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/next.png" /></span>
-            </div>
+          <div className="media-studies-wrap-right">
+            {
+              userRecommend.contentId.map((id) => {
+                return <ReviewsPic reviewId={id} />
+              })
+            }
+          </div>
+          <div className="media-studies-wrap-right-slider">
+            <Slider ref={slider} {...settings}>
+              {contentIdElements}
+            </Slider>
           </div>
         </div>
       }

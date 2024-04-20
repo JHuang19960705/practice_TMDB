@@ -205,6 +205,27 @@
   word-break: break-all;
 }
 
+.movie-user-like-time{
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 影評按讚數 */
+.movie-user-like {
+  width: 30%;
+  display: flex;
+}
+
+.movie-user-like-svg {
+  width: 25px;
+  padding-right: 5px;
+}
+
+.movie-user-like-svg:hover {
+  fill: #2570eb;
+  cursor: pointer;
+}
+
 /* 影評撰寫時間 */
 .movie-user-detail {
   display: flex;
