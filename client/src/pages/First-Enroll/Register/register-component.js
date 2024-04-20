@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AuthService from "../../../services/auth.service";
 
-export default function RegisterComponent({ currentUser, setCurrentUser }) {
+export default function RegisterComponent({ currentUser }) {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState(clickRole);
+  const [message, setMessage] = useState("");
   const { clickRole } = useParams(); // 獲取URL參數
-  const navigate = useNavigate(); 
-  const [username, setUsername] = useState(""); 
-  const [email, setEmail] = useState(""); 
-  const [password, setPassword] = useState(""); 
-  const [role, setRole] = useState(clickRole); 
-  const [message, setMessage] = useState(""); 
+  const navigate = useNavigate();
 
   // 處理用戶名輸入
   const handleUsername = (e) => {

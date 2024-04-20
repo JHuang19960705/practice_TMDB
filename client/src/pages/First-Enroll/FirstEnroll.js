@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import Loader from "../../components/Loader";
+import Overlay from "../../components/Overlay";
 
 export default function FirstEnroll({ currentUser, setCurrentUser }) {
   const [loading, setLoading] = useState(false); // 初始化加載狀態為 false
@@ -12,7 +13,6 @@ export default function FirstEnroll({ currentUser, setCurrentUser }) {
     try {
       setLoading(true); // 設置加載狀態為 true，顯示 Loader
       let response = await AuthService.login(email, password);
-
       if (response) {
         localStorage.setItem("user", JSON.stringify(response.data)); // 將登入用戶存在localStorage中
         window.alert("登入成功。您現在將被重新導向到個人資料頁面。");
@@ -36,6 +36,7 @@ export default function FirstEnroll({ currentUser, setCurrentUser }) {
   return (
     <div className="relative dark:bg-gray-900 dark:text-white">
       {loading && <Loader />} {/* 如果 loading 為 true，顯示 Loader */}
+      {loading && <Overlay />} {/* 如果 loading 為 true，顯示 Overlay */}
       {/* 選擇身份區域 */}
       <div>
         {/* 已經是會員，點擊跳轉至登入頁面 */}

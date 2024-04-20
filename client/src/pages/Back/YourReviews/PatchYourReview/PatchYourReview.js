@@ -73,8 +73,8 @@ export default function PatchYourReview({ currentUser }) {
         setTimeout(() => { navigate(0); }, 1);
       } catch (error) {
         setMessage(error.response);
-      }
-    }
+      };
+    };
   };
 
   return (

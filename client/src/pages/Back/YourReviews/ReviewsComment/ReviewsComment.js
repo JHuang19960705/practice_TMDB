@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ContentService from "../../../../services/content.service";
 import Loader from "../../../../components/Loader";
+import Overlay from "../../../../components/Loader";
 
 export default function YourReviewsComment({ currentUser }) {
   const [reviewData, setReviewData] = useState(null);
@@ -32,7 +33,8 @@ export default function YourReviewsComment({ currentUser }) {
 
   return (
     <div className="movie-comment-system">
-      {isLoading && <div>Loading...<Loader /></div>}
+      {isLoading && <Loader />}
+      {isLoading && <Overlay />}
       <button onClick={() => navigate(`/back/yourReviews/${reviewId}`)} className="absolute right-4 top-4 px-3 py-1 bg-gray-100 rounded-md dark:text-black">返回</button>
       <div className="movie-user">
         {/* <!-- 左半邊 --> */}

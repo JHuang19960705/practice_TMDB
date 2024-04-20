@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ContentService from "../../../../../services/content.service";
+import Loader from "../../../../../components/Loader";
+import Overlay from "../../../../../components/Overlay";
 
 export default function UserReviewsComment({ currentUser }) {
   const [contentData, setContentData] = useState(null);
@@ -27,98 +29,98 @@ export default function UserReviewsComment({ currentUser }) {
     }
   }
 
-  if (isLoading) {
-    return <div className="App">Loading...</div>;
-  };
-
   return (
-    <div className="movie-comment-system">
-      <button onClick={() => navigate(`/allUser/${userId}/userReviews`)} className="absolute right-4 top-4 px-3 py-1 bg-gray-100 rounded-md dark:text-black">返回</button>
-      <div className="movie-user">
-        {/* <!-- 左半邊 --> */}
-        <div className="movie-user-left">
-          <div className="movie-user-left-sticky">
-            {/* <!-- XX影片的評論 --> */}
-            <div className="movie-user-thought">
-              {contentData && (
-                <div className="movie-user-thought-title">
-                  <p>『{contentData.TMDBId}』に</p>
-                  <p>投稿された感想・評価</p>
-                </div>
-              )}
-              <div className="movie-user-thought-title-trangle"></div>
-            </div>
-            {/* <!-- 評論人的頭像、符號、標題 --> */}
-            <div className="movie-user-title">
-              {/* 頭像 */}
-              <div className="movie-user-title-pic">
-                <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&amp;format=auto&amp;height=512&amp;version=1582611188&amp;width=512" alt="" />
-                {/* <!-- 使用者名稱 --> */}
+    <>
+      {isLoading && <Loader />} {/* 如果 loading 為 true，顯示 Loader */}
+      {isLoading && <Overlay />} {/* 如果 loading 為 true，顯示 Overlay */}
+      <div className="movie-comment-system">
+        <button onClick={() => navigate(`/allUser/${userId}/userReviews`)} className="absolute right-4 top-4 px-3 py-1 bg-gray-100 rounded-md dark:text-black">返回</button>
+        <div className="movie-user">
+          {/* <!-- 左半邊 --> */}
+          <div className="movie-user-left">
+            <div className="movie-user-left-sticky">
+              {/* <!-- XX影片的評論 --> */}
+              <div className="movie-user-thought">
                 {contentData && (
-                  <div className="movie-user-name">
-                    {contentData.writer.username}
+                  <div className="movie-user-thought-title">
+                    <p>『{contentData.TMDBId}』に</p>
+                    <p>投稿された感想・評価</p>
+                  </div>
+                )}
+                <div className="movie-user-thought-title-trangle"></div>
+              </div>
+              {/* <!-- 評論人的頭像、符號、標題 --> */}
+              <div className="movie-user-title">
+                {/* 頭像 */}
+                <div className="movie-user-title-pic">
+                  <img src="https://assets.codepen.io/344846/internal/avatars/users/default.png?fit=crop&amp;format=auto&amp;height=512&amp;version=1582611188&amp;width=512" alt="" />
+                  {/* <!-- 使用者名稱 --> */}
+                  {contentData && (
+                    <div className="movie-user-name">
+                      {contentData.writer.username}
+                    </div>
+                  )}
+                </div>
+                {/* 符號 */}
+                <div className="movie-user-title-line">
+                  <div className="movie-user-title-line-one"></div>
+                  <div className="movie-user-title-line-two"></div>
+                </div>
+                {/* 標題 */}
+                {contentData && (
+                  <div className="movie-user-title-word">
+                    <p>{contentData.title}</p>
                   </div>
                 )}
               </div>
-              {/* 符號 */}
-              <div className="movie-user-title-line">
-                <div className="movie-user-title-line-one"></div>
-                <div className="movie-user-title-line-two"></div>
-              </div>
-              {/* 標題 */}
+            </div>
+          </div>
+          {/* <!-- 右半邊 --> */}
+          <div className="movie-user-right">
+            {/* 影評內容、時間 */}
+            <div className="movie-user-right-content">
+              {/* 內容 */}
               {contentData && (
-                <div className="movie-user-title-word">
-                  <p>{contentData.title}</p>
+                <p>{contentData.content}</p>
+              )}
+              {/* <!-- 時間 --> */}
+              {contentData && (
+                <div className="movie-user-detail">
+                  <div className="movie-user-detail-date">
+                    {contentData.date.slice(0, 10)}
+                  </div>
+                  <div className="movie-user-detail-time">
+                    {contentData.date.slice(11, 16)}
+                  </div>
                 </div>
               )}
             </div>
-          </div>
-        </div>
-        {/* <!-- 右半邊 --> */}
-        <div className="movie-user-right">
-          {/* 影評內容、時間 */}
-          <div className="movie-user-right-content">
-            {/* 內容 */}
-            {contentData && (
-              <p>{contentData.content}</p>
-            )}
-            {/* <!-- 時間 --> */}
-            {contentData && (
-              <div className="movie-user-detail">
-                <div className="movie-user-detail-date">
-                  {contentData.date.slice(0, 10)}
-                </div>
-                <div className="movie-user-detail-time">
-                  {contentData.date.slice(11, 16)}
-                </div>
+            {/* <!-- 待輸入的評論 --> */}
+            <div className="movie-user-new-comment">
+              {/* <!-- 自己的頭像 --> */}
+              <div className="movie-user-new-comment-pic">
+                <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" />
               </div>
-            )}
-          </div>
-          {/* <!-- 待輸入的評論 --> */}
-          <div className="movie-user-new-comment">
-            {/* <!-- 自己的頭像 --> */}
-            <div className="movie-user-new-comment-pic">
-              <img src="https://images.unsplash.com/photo-1521587765099-8835e7201186?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ" alt="" />
-            </div>
-            {/* <!-- 自己的評論輸入 --> */}
-            <div className="movie-user-new-comment-content">
-              {/* <!-- 輸入 --> */}
-              <input type="text" placeholder="發表留言..." />
-              {/* <!-- 取消、留言 --> */}
-              <div className="movie-user-new-comment-content-button">
-                <div className="movie-user-new-comment-content-button-cm">
-                  <button className="movie-user-new-comment-content-button-cm-cancel">
-                    取消
-                  </button>
-                  <button className="movie-user-new-comment-content-button-cm-message">
-                    留言
-                  </button>
+              {/* <!-- 自己的評論輸入 --> */}
+              <div className="movie-user-new-comment-content">
+                {/* <!-- 輸入 --> */}
+                <input type="text" placeholder="發表留言..." />
+                {/* <!-- 取消、留言 --> */}
+                <div className="movie-user-new-comment-content-button">
+                  <div className="movie-user-new-comment-content-button-cm">
+                    <button className="movie-user-new-comment-content-button-cm-cancel">
+                      取消
+                    </button>
+                    <button className="movie-user-new-comment-content-button-cm-message">
+                      留言
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
