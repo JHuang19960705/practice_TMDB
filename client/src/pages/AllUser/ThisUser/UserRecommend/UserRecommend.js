@@ -6,6 +6,7 @@ import Reviews from "./Reviews/Reviews";
 import BestChoose from "./BestChoose/BestChoose";
 import Theme from "./Theme/Theme";
 import AuthService from "../../../../services/auth.service";
+import Loader from "../../../../components/Loader";
 
 export default function UserRecommend() {
   const [isLoading, setLoading] = useState(true);
