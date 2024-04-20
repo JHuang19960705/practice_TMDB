@@ -26,7 +26,7 @@ export default function UserReviews() {
 
   return (
     <div>
-      {!loading && !userAllReviews.length && <div className="flex justify-center text-xl pt-24">該用戶無影評!</div>}
+      {!loading && userAllReviews.length === 0 && (<div className="flex justify-center text-xl pt-24">該用戶無影評!</div>)}
       <section className="archive">
         <div>
           {userAllReviews &&
