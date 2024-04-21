@@ -58,8 +58,8 @@ export default function UserReviewsComment({ currentUser }) {
 
   // 提交影評
   const handleClickComment = async () => {
-    window.confirm("確定送出這則評論嗎?");
-    if (!confirm) return;
+    const confirmed = window.confirm("確定送出這則評論嗎?");
+    if (!confirmed) return;
 
     try {
       await ContentService.postComment(reviewId, currentUser.user._id, newComment);
