@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const mongoose = require('mongoose');
 const Content = require("../models").content;
 const User = require("../models").user;
 const jwt = require("jsonwebtoken");
@@ -196,7 +197,7 @@ router.patch("/clickLike/:contentId", async (req, res) => {
 
 
 
-// 評論
+// 新增評論
 router.post("/addComment/:contentId", async (req, res) => {
   let { contentId } = req.params;
   let { commenterId, content } = req.body;
@@ -214,8 +215,10 @@ router.post("/addComment/:contentId", async (req, res) => {
       return res.status(400).send("找不到文章，無法進行評論。");
     }
 
+    console.log(contentFound);
+
     // 存儲評論到資料庫
-    contentFound.commenters.push({ _id: commenterId, content });
+    contentFound.commenters.push({ commenterId, content });
     await contentFound.save();
     return res.send({
       message: "按讚成功～",
@@ -225,6 +228,42 @@ router.post("/addComment/:contentId", async (req, res) => {
     return res.status(500).send("評論失敗＠＠");
   }
 });
+
+// 刪除評論
+router.delete("/deleteComment/:contentId/:commentId", async (req, res) => {
+  const { contentId, commentId } = req.params;
+  const { deleterId } = req.body;
+  try {
+    // 確認影評存在，並拿到內容，如果錯就跳error
+    let contentFound = await Content.findOne({ _id: contentId }).exec();
+
+    // 找到評論並删除
+    const commentToDelete = contentFound.commenters.find(comment => comment._id == commentId);
+    if (!commentToDelete) {
+      return res.status(404).send("找不到評論，無法刪除。");
+    }
+
+    // 確認刪除者與內容作者是同一人
+    if (deleterId !== contentFound.writer.toString()) {
+      return res.status(403).send("只有內容作者才能刪除評論。");
+    }
+
+    // 找到評論後直接删除
+    contentFound.commenters.pull(commentToDelete);
+
+    // 保存更新後的文章
+    await contentFound.save();
+    return res.send({ message: "評論刪除成功" });
+  } catch (error) {
+    if (error instanceof mongoose.Error.CastError) {
+      return res.status(400).send("找不到這篇影評。");
+    }
+    console.error(error);
+    return res.status(500).send("刪除評論失敗＠＠");
+  }
+});
+
+
 
 
 

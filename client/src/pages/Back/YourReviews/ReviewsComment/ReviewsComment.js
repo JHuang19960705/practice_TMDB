@@ -55,13 +55,13 @@ export default function YourReviewsComment({ currentUser }) {
   const handleChange = (event) => {
     setNewComment(event.target.value); // 監聽輸入框的變化並將其存入狀態
   };
-  
+
   // 清空輸入框
   const handleCancel = () => {
     setNewComment("");
   };
-  
-  // 提交影評
+
+  // 提交評論
   const handleClickComment = async () => {
     const confirmed = window.confirm("確定送出這則評論嗎?");
     if (!confirmed) return;
@@ -82,6 +82,36 @@ export default function YourReviewsComment({ currentUser }) {
     } finally {
       setLoading(false);
     };
+  };
+
+  // 刪除評論
+  const handleDeleteComment = async (commentId) => {
+    const confirmed = window.confirm("確定刪除這則評論嗎");
+    if (!confirmed) return;
+
+    setLoading(true);
+
+    try {
+      await ContentService.deleteComment(reviewId, commentId, currentUser.user._id);
+      window.alert("評論刪除成功");
+      fetchData();
+    } catch (error) {
+      if (error.response && error.response.data) {
+        window.alert(error.response.data);
+      } else {
+        window.alert("刪除評論时發生錯誤。");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 點擊編輯時顯示刪除按鈕
+  const handleToggleDeleteButton = (commentId) => {
+    const deleteButton = document.getElementById(`deleteButton-${commentId}`);
+    if (deleteButton) {
+      deleteButton.style.display = deleteButton.style.display === "none" ? "flex" : "none";
+    }
   };
 
   return (
@@ -207,11 +237,22 @@ export default function YourReviewsComment({ currentUser }) {
                 </div>
                 <div className="movie-user-right-other-detail">
                   <div className="movie-user-right-other-detail-user">
+                    {/* 用戶Id */}
                     <div className="movie-user-right-other-detail-user-name">
-                      <p>@{commenter._id}</p>
+                      <p>@{commenter.commenterId}</p>
                     </div>
+                    {/* 時間 */}
                     <div className="movie-user-right-other-detail-date">
                       <p>{commenter.date.slice(0, 10)}</p>
+                    </div>
+                    {/* 刪除鍵 */}
+                    <div className="movie-user-right-other-edit" onClick={() => handleToggleDeleteButton(commenter._id)}>
+                      <svg width="10px" height="100%" viewBox="0 0 10 16" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="5" cy="1" r="1.5" fill="#00000083" />
+                        <circle cx="5" cy="6" r="1.5" fill="#00000083" />
+                        <circle cx="5" cy="11" r="1.5" fill="#00000083" />
+                      </svg>
+                      <div id={`deleteButton-${commenter._id}`} style={{ display: "none" }} onClick={() => handleDeleteComment(commenter._id)} className="movie-user-right-other-edit-delete">刪除</div>
                     </div>
                   </div>
                   <div className="movie-user-right-other-detail-user-comment">

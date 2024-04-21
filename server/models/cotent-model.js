@@ -4,6 +4,11 @@ const { Schema } = mongoose;
 const commentSchema = new Schema({
   _id: {
     type: Schema.Types.ObjectId,
+    auto: true,
+    required: true
+  },
+  commenterId: {
+    type: Schema.Types.ObjectId,
     required: true
   },
   content: {
@@ -17,8 +22,10 @@ const commentSchema = new Schema({
 });
 
 const contentSchema = new Schema({
-  id: {
-    type: String,
+  _id: {
+    type: Schema.Types.ObjectId,
+    auto: true,
+    required: true
   },
   title: {
     type: String,
@@ -36,7 +43,7 @@ const contentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  commenters: [commentSchema], 
+  commenters: [commentSchema],
   tags: {
     type: [String],
     default: [],

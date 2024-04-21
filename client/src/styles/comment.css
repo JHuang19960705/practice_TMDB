@@ -280,6 +280,10 @@
   grid-template-columns: 12% 88%;
 }
 
+.movie-user-right-other-active {
+  background-color: #fff;
+}
+
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .movie-user-right-other {
     grid-template-columns: 15% 85%;
@@ -364,6 +368,25 @@
     margin-left: 0px;
     font-size: 12px;
   }
+}
+
+/* 編輯刪除 */
+.movie-user-right-other-edit {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  cursor: pointer;
+  position: relative;
+}
+
+.movie-user-right-other-edit-delete {
+  position: absolute;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  bottom: -25px;
+  right: 0px;
+  background-color: #f3f4f6;
 }
 
 /* 待輸入的評論 */
