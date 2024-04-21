@@ -35,6 +35,7 @@ export default function YourReviewsComment({ currentUser }) {
 
   // 提交按讚
   const handleClickLike = async () => {
+    setLoading(true);
     try {
       let response = await ContentService.patchLike(reviewId, currentUser.user._id);
       window.alert(response.data.message);
@@ -45,6 +46,8 @@ export default function YourReviewsComment({ currentUser }) {
       } else {
         window.alert("按讚時發生錯誤。");
       }
+    } finally {
+      setLoading(false);
     };
   };
 
@@ -63,6 +66,8 @@ export default function YourReviewsComment({ currentUser }) {
     const confirmed = window.confirm("確定送出這則評論嗎?");
     if (!confirmed) return;
 
+    setLoading(true);
+
     try {
       await ContentService.postComment(reviewId, currentUser.user._id, newComment);
       window.alert("評論成功");
@@ -74,6 +79,8 @@ export default function YourReviewsComment({ currentUser }) {
       } else {
         window.alert("評論時發生錯誤。");
       }
+    } finally {
+      setLoading(false);
     };
   };
 

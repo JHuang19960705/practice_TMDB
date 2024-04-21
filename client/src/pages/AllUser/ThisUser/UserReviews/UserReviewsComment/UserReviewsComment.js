@@ -33,6 +33,7 @@ export default function UserReviewsComment({ currentUser }) {
 
   // 提交按讚
   const handleClickLike = async () => {
+    setLoading(true);
     try {
       let response = await ContentService.patchLike(reviewId, currentUser.user._id);
       window.alert(response.data.message);
@@ -42,7 +43,9 @@ export default function UserReviewsComment({ currentUser }) {
         window.alert(error.response.data);
       } else {
         window.alert("按讚時發生錯誤。");
-      }
+      };
+    } finally {
+      setLoading(false);
     };
   };
 
@@ -60,6 +63,8 @@ export default function UserReviewsComment({ currentUser }) {
   const handleClickComment = async () => {
     const confirmed = window.confirm("確定送出這則評論嗎?");
     if (!confirmed) return;
+    
+    setLoading(true);
 
     try {
       await ContentService.postComment(reviewId, currentUser.user._id, newComment);
@@ -71,7 +76,9 @@ export default function UserReviewsComment({ currentUser }) {
         window.alert(error.response.data);
       } else {
         window.alert("評論時發生錯誤。");
-      }
+      };
+    } finally {
+      setLoading(false);
     };
   };
 
