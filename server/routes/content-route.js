@@ -188,6 +188,36 @@ router.patch("/clickLike/:contentId", async (req, res) => {
   };
 });
 
+// 評論
+router.post("/addComment/:contentId", async (req, res) => {
+  let { contentId } = req.params;
+  let { commenterId, content } = req.body;
+  try {
+
+    // 確認用戶存在
+    let profileFound = await User.findOne({ _id: commenterId }).exec();
+    if (!profileFound) {
+      return res.status(400).send("找不到用戶資訊，無法進行評論。");
+    }
+
+    // 確認文章存在
+    let contentFound = await Content.findById(contentId).exec();
+    if (!contentFound) {
+      return res.status(400).send("找不到文章，無法進行評論。");
+    }
+
+    // 存儲評論到資料庫
+    contentFound.commenters.push({ _id: commenterId, content });
+    await contentFound.save();
+    return res.send({
+      message: "按讚成功～",
+      content: contentFound.commenters[contentFound.commenters.length - 1]
+    });
+  } catch (e) {
+    return res.status(500).send("評論失敗＠＠");
+  }
+});
+
 
 
 

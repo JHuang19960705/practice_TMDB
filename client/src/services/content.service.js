@@ -1,6 +1,6 @@
 import axios from "axios";
-// const API_URL = "http://localhost:3999/api/content";
-const API_URL = "https://practice-tmdb-server.vercel.app/api/content";
+const API_URL = "http://localhost:3999/api/content";
+// const API_URL = "https://practice-tmdb-server.vercel.app/api/content";
 
 class ContentService {
   //發文
@@ -119,6 +119,32 @@ class ContentService {
     return axios.patch(
       API_URL + "/clickLike/" + contentId,
       { commenterId },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+  }
+
+  // 獲取評論
+  getComments(_id) {
+    let token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : "";
+    return axios.get(API_URL + "/findByContentId/" + _id,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+  }
+
+  // 添加評論
+  postComment(contentId, commenterId, commentContent) {
+    let token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : "";
+    return axios.post(
+      API_URL + "/addComment/" + contentId,
+      { commenterId: commenterId, content: commentContent },
       {
         headers: {
           Authorization: token,

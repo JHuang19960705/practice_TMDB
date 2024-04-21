@@ -6,15 +6,17 @@ import Overlay from "../../../../../components/Overlay";
 
 export default function UserReviewsComment({ currentUser }) {
   const [contentData, setContentData] = useState(null);
+  const [newComment, setNewComment] = useState("");
   const [isLoading, setLoading] = useState(true);
   const { reviewId, userId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fatchData();
-  }, [contentData, reviewId, currentUser, navigate]);
+    fetchData();
+  }, []); // 初始加載時進行一次
 
-  const fatchData = () => {
+  // 拿取影評內容
+  const fetchData = () => {
     if (currentUser?.user?.role === "standard" || currentUser?.user?.role === "premium") {
       ContentService.getReviewByReviewId(reviewId)
         .then((data) => {
@@ -29,15 +31,46 @@ export default function UserReviewsComment({ currentUser }) {
     }
   };
 
+  // 提交按讚
   const handleClickLike = async () => {
     try {
       await ContentService.patchLike(reviewId, currentUser.user._id);
       window.alert("按讚成功");
+      fetchData();
     } catch (error) {
       if (error.response && error.response.data) {
         window.alert(error.response.data);
       } else {
         window.alert("按讚時發生錯誤。");
+      }
+    };
+  };
+
+  // 監聽輸入框
+  const handleChange = (event) => {
+    setNewComment(event.target.value); // 監聽輸入框的變化並將其存入狀態
+  };
+
+  // 清空輸入框
+  const handleCancel = () => {
+    setNewComment("");
+  };
+
+  // 提交影評
+  const handleClickComment = async () => {
+    window.confirm("確定送出這則評論嗎?");
+    if (!confirm) return;
+
+    try {
+      await ContentService.postComment(reviewId, currentUser.user._id, newComment);
+      window.alert("評論成功");
+      fetchData();
+      setNewComment(""); // 清空輸入框
+    } catch (error) {
+      if (error.response && error.response.data) {
+        window.alert(error.response.data);
+      } else {
+        window.alert("評論時發生錯誤。");
       }
     };
   };
@@ -128,7 +161,7 @@ export default function UserReviewsComment({ currentUser }) {
               </div>
             </div>
             {/* 留言 */}
-            <div className="movie-user-comment-quantity">1 則留言 </div>
+            <div className="movie-user-comment-quantity">{contentData && contentData.commenters.length} 則留言 </div>
             {/* <!-- 待輸入的評論 --> */}
             <div className="movie-user-new-comment">
               {/* <!-- 自己的頭像 --> */}
@@ -138,14 +171,19 @@ export default function UserReviewsComment({ currentUser }) {
               {/* <!-- 自己的評論輸入 --> */}
               <div className="movie-user-new-comment-content">
                 {/* <!-- 輸入 --> */}
-                <input type="text" placeholder="發表留言..." />
+                <input
+                  type="text"
+                  placeholder="發表留言..."
+                  value={newComment}
+                  onChange={handleChange}
+                />
                 {/* <!-- 取消、留言 --> */}
                 <div className="movie-user-new-comment-content-button">
                   <div className="movie-user-new-comment-content-button-cm">
-                    <button className="movie-user-new-comment-content-button-cm-cancel">
+                    <button onClick={handleCancel} className={`movie-user-new-comment-content-button-cm-cancel ${newComment ? "button-active" : ""}`} >
                       取消
                     </button>
-                    <button className="movie-user-new-comment-content-button-cm-message">
+                    <button onClick={handleClickComment} className={`movie-user-new-comment-content-button-cm-message ${newComment ? "button-active" : ""}`}>
                       留言
                     </button>
                   </div>
@@ -153,24 +191,28 @@ export default function UserReviewsComment({ currentUser }) {
               </div>
             </div>
             {/* <!-- 他人的評論 --> */}
-            <div className="movie-user-right-other">
-              <div className="movie-user-right-other-comment-pic">
-                <img src="https://images.unsplash.com/photo-1640951613773-54706e06851d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-              </div>
-              <div className="movie-user-right-other-detail">
-                <div className="movie-user-right-other-detail-user">
-                  <div className="movie-user-right-other-detail-user-name">
-                    <p>Adam</p>
+            {contentData && contentData.commenters.length > 0 && contentData.commenters.map((commenter) => {
+              return (
+                <div className="movie-user-right-other">
+                  <div className="movie-user-right-other-comment-pic">
+                    <img src="https://images.unsplash.com/photo-1640951613773-54706e06851d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
                   </div>
-                  <div className="movie-user-right-other-detail-date">
-                    <p>2022年9月20日</p>
+                  <div className="movie-user-right-other-detail">
+                    <div className="movie-user-right-other-detail-user">
+                      <div className="movie-user-right-other-detail-user-name">
+                        <p>@{commenter._id}</p>
+                      </div>
+                      <div className="movie-user-right-other-detail-date">
+                        <p>{commenter.date.slice(0, 10)}</p>
+                      </div>
+                    </div>
+                    <div className="movie-user-right-other-detail-user-comment">
+                      <p>{commenter.content}</p>
+                    </div>
                   </div>
                 </div>
-                <div className="movie-user-right-other-detail-user-comment">
-                  <p>sdasdasdasdasdasdasd</p>
-                </div>
-              </div>
-            </div>
+              )
+            })}
           </div>
         </div>
       </div>
