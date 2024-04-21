@@ -34,8 +34,8 @@ export default function UserReviewsComment({ currentUser }) {
   // 提交按讚
   const handleClickLike = async () => {
     try {
-      await ContentService.patchLike(reviewId, currentUser.user._id);
-      window.alert("按讚成功");
+      let response = await ContentService.patchLike(reviewId, currentUser.user._id);
+      window.alert(response.data.message);
       fetchData();
     } catch (error) {
       if (error.response && error.response.data) {

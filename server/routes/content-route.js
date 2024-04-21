@@ -163,30 +163,38 @@ router.patch("/clickLike/:contentId", async (req, res) => {
     // 檢查用戶是否已經按過讚
     let content = await Content.findById(contentId).exec();
     if (content.like.includes(commenterId)) {
-      return res.status(400).send("按過讚囉～");
-    }
-
-    // 確認真有其人後，再存進去
-    let profileFound = await User.findOne({ _id: commenterId }).exec();
-    if (!profileFound) {
-      return res.status(400).send("找不到個資，無法按讚。");
-    }
-
-    if (profileFound._id.equals(commenterId)) {
-      const token = jwt.sign(profileFound.toJSON(), process.env.PASSPORT_SECRET);
-      let ContentLikes = await Content.findByIdAndUpdate(contentId, { $push: { like: commenterId } }, { new: true, runValidators: true }).exec();
+      // 如果已經按過讚，則刪除該用戶的讚
+      let ContentLikes = await Content.findByIdAndUpdate(contentId, { $pull: { like: commenterId } }, { new: true, runValidators: true }).exec();
       return res.send({
-        message: "按讚成功～",
-        content: ContentLikes,
-        token: token
+        message: "取消讚成功～",
+        content: ContentLikes
       });
     } else {
-      return res.status(403).send("只有用戶本人才能按讚。");
+      // 如果用戶還未按過讚，則執行用戶確認及新增讚的部分
+      // 確認真有其人後，再存進去
+      let profileFound = await User.findOne({ _id: commenterId }).exec();
+      if (!profileFound) {
+        return res.status(400).send("找不到個資，無法按讚。");
+      }
+
+      if (profileFound._id.equals(commenterId)) {
+        // 沒有按過讚，則新增用戶的讚
+        let ContentLikes = await Content.findByIdAndUpdate(contentId, { $push: { like: commenterId } }, { new: true, runValidators: true }).exec();
+        return res.send({
+          message: "按讚成功～",
+          content: ContentLikes,
+        });
+      } else {
+        return res.status(403).send("只有用戶本人才能按讚。");
+      }
     }
   } catch (e) {
     return res.status(500).send("無法按讚");
   };
 });
+
+
+
 
 // 評論
 router.post("/addComment/:contentId", async (req, res) => {

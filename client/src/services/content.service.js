@@ -1,6 +1,6 @@
 import axios from "axios";
-const API_URL = "http://localhost:3999/api/content";
-// const API_URL = "https://practice-tmdb-server.vercel.app/api/content";
+// const API_URL = "http://localhost:3999/api/content";
+const API_URL = "https://practice-tmdb-server.vercel.app/api/content";
 
 class ContentService {
   //發文
