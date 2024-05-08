@@ -31,13 +31,15 @@ export default function LoginComponent({ currentUser, setCurrentUser }) {
         window.alert("登入成功。您現在將被導向到首頁。");
         setCurrentUser(AuthService.getCurrentUser());
         navigate("/"); // 導航至首頁
-      };
-    } catch (e) {
-      setMessage(e.response.data);
+      }
+    } catch (error) {
+      // 捕獲錯誤並顯示訊息
+      setMessage(error.message);
     } finally {
       setLoading(false); // 無論登入成功與否，都隱藏 Loader
     }
   };
+
 
   // 檢查是否有登入，若有則導航至首頁
   useEffect(() => {

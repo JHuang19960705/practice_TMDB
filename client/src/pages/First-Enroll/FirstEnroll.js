@@ -18,13 +18,15 @@ export default function FirstEnroll({ currentUser, setCurrentUser }) {
         window.alert("登入成功。您現在將被重新導向到個人資料頁面。");
         setCurrentUser(AuthService.getCurrentUser());
         navigate("/"); // 導航至首頁
-      };
-    } catch (e) {
-      console.log(e);
+      }
+    } catch (error) {
+      // 捕獲錯誤並顯示訊息
+      window.alert("登入時發生錯誤: " + error.message);
     } finally {
       setLoading(false); // 無論登入成功與否，都隱藏 Loader
     }
   };
+
 
   // 檢查是否有登入，若有則導航至首頁
   useEffect(() => {
