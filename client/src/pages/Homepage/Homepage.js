@@ -1,15 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProfileComponent from "./Profile/profile";
 
 export default function Homepage({ currentUser, setCurrentUser }) {
+  const [fillColor, setFillColor] = useState("white");
   const navigate = useNavigate();
+
 
   // 檢查是否有用戶，若無則導航至首次註冊頁面
   useEffect(() => {
     if (!currentUser) {
       navigate("/firstEnroll");
     }
+    const intervalId = setInterval(() => {
+      setFillColor((prevColor) => (prevColor === "white" ? "none" : "white"));
+    }, 400);
+
+    return () => clearInterval(intervalId);
   }, [currentUser, navigate]);
 
   return (
@@ -40,9 +47,18 @@ export default function Homepage({ currentUser, setCurrentUser }) {
           <div className="mb-8 md:mt-12 flex-grow overflow-y-auto">
             <nav>
               <ul className="list-none flex flex-col md:space-y-6">
-                <li onClick={() => { navigate("/allUser") }} className="cursor-pointer text-base text-white" style={{textShadow: "1px 1px 0px rgb(34 197 94)"}}>View Users</li>
-                <li onClick={() => { navigate("/back/yourReviews") }} className="cursor-pointer text-base text-white" style={{textShadow: "1px 1px 0px rgb(34 197 94)"}}>Admin Dashboard</li>
-                <li onClick={() => { navigate("/search/Movie") }} className="cursor-pointer text-base text-white" style={{textShadow: "1px 1px 0px rgb(34 197 94)"}}>Search Video</li>
+                <li onClick={() => { navigate("/allUser") }} className="cursor-pointer text-base text-white flex items-center" style={{ textShadow: "1px 1px 0px rgb(34 197 94)" }}>
+                  <svg className="mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="14" height="14">
+                    <polygon points="0,0 100,50 0,100" fill={fillColor} />
+                  </svg>
+                  View Users
+                </li>
+                <li onClick={() => { navigate("/back/yourReviews") }} className="cursor-pointer text-base text-white flex items-center pl-4" style={{ textShadow: "1px 1px 0px rgb(34 197 94)" }}>
+                  Admin Dashboard
+                </li>
+                <li onClick={() => { navigate("/search/Movie") }} className="cursor-pointer text-base text-white flex items-center pl-4" style={{ textShadow: "1px 1px 0px rgb(34 197 94)" }}>
+                  Search Video
+                </li>
               </ul>
             </nav>
           </div>
