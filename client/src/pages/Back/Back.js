@@ -8,7 +8,7 @@ export default function Back({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkCurrentUser();
+    // checkCurrentUser();
     checkURL();
   },[location.pathname]);
 

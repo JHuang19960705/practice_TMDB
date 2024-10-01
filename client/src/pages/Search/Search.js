@@ -8,7 +8,7 @@ export default function Search({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkCurrentUser();
+    // checkCurrentUser();
     handleLinkClick();
   }, [location.pathname]);
 
