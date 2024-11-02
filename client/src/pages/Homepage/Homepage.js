@@ -8,16 +8,16 @@ export default function Homepage({ currentUser, setCurrentUser }) {
 
 
   // 檢查是否有用戶，若無則導航至首次註冊頁面
-  // useEffect(() => {
-  //   if (!currentUser) {
-  //     navigate("/firstEnroll");
-  //   }
-  //   const intervalId = setInterval(() => {
-  //     setFillColor((prevColor) => (prevColor === "white" ? "none" : "white"));
-  //   }, 400);
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/firstEnroll");
+    }
+    const intervalId = setInterval(() => {
+      setFillColor((prevColor) => (prevColor === "white" ? "none" : "white"));
+    }, 400);
 
-  //   return () => clearInterval(intervalId);
-  // }, [currentUser, navigate]);
+    return () => clearInterval(intervalId);
+  }, [currentUser, navigate]);
 
   return (
     <div className="h-full z-30 fixed overflow-y-auto flex flex-col md:flex-row w-screen bg-gradient-to-r from-indigo-900 to-blue-700">

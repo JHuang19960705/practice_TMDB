@@ -15,7 +15,7 @@ export default function AllUser({ currentUser, setCurrentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // checkCurrentUser();
+    checkCurrentUser();
     fetchData();
     handleClick();
   }, [location.pathname]);
